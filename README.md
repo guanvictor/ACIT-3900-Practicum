@@ -1,2 +1,2 @@
 # ACIT-3900-Practicum
-ACIT 3900 IT Practicum
+BCIT School of Energy Power Engineering Event Registration

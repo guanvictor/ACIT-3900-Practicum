@@ -1,6 +1,9 @@
 const express = require("express");
 const router = express.Router();
 
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+
 const mariadb = require("mariadb");
 const dbHost = "127.0.0.1";
 const pool = mariadb.createPool({
@@ -13,7 +16,7 @@ const pool = mariadb.createPool({
 
 const registerUser = async (request, response) => {
     let email = await request.body.email;
-    let password = await request.body.password;
+    let password = await bcrypt.hash(request.body.password, saltRounds);
     let title = await request.body.title;
     let firstName = await request.body.firstName;
     let lastName = await request.body.lastName;

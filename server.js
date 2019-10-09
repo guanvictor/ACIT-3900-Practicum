@@ -65,6 +65,14 @@ app.get('/agenda', (request, response) => {
     });
 });
 
+// Speaker Page
+app.get('/speaker', (request, response) => {
+    response.render("speakers.hbs", {
+        title: "Speaker",
+        heading: "Speaker"
+    });
+});
+
 // Contact Page
 app.get('/contact', (request, response) => {
     response.render("contact.hbs", {

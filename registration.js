@@ -1,3 +1,5 @@
+const db = require('./database.js');
+
 const express = require("express");
 const router = express.Router();
 
@@ -7,12 +9,6 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
 const mysql = require("mysql");
-const con = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "password",
-    database: "power_engineering_events"
-});
 
 const registerUser = async (request, response) => {
     let uuid = uuidv1();
@@ -43,46 +39,28 @@ const registerUser = async (request, response) => {
 
     let consent = await request.body.consent;
 
-    try {
-        con.connect(function (err) {
-            if (err) throw err;
-            console.log("Connected!");
+    con = db.getDb();
 
-            var sql = "INSERT INTO accounts (account_uuid, email, password, title, firstName, lastName, companyName, division, plantClassification, fieldPosition, businessPhone, homePhone, cellPhone, addressL1, addressL2, country, city, province_state, pc_zip, consent) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-            var values = [
-                uuid,
-                email,
-                password,
-                title,
-                firstName,
-                lastName,
-                companyName,
-                division,
-                plantClassification,
-                fieldPosition,
-                businessPhone,
-                homePhone,
-                cellPhone,
-                addressL1,
-                addressL2,
-                country,
-                city,
-                province_state,
-                pc_zip,
-                consent
-            ];
+    // checks that an account does NOT already exist
+    var sql = "SELECT * FROM accounts WHERE email=?";
+    con.query(sql, email, function(err, result){
+        if (err) throw err;
+        if (result.length > 0) {
+            console.log("Error: email already exists");
+            return response.redirect("/registration");
+        }
+        else {
+            // creates a new account
+            sql = "INSERT INTO accounts (account_uuid, email, password, title, firstName, lastName, companyName, division, plantClassification, fieldPosition, businessPhone, homePhone, cellPhone, addressL1, addressL2, country, city, province_state, pc_zip, consent) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            var values = [uuid, email, password, title, firstName, lastName, companyName, division, plantClassification, fieldPosition, businessPhone, homePhone, cellPhone, addressL1, addressL2, country, city, province_state, pc_zip, consent];
 
-            con.query(sql, values, function(err, result){
+            con.query(sql, values, function (err, result) {
                 if (err) throw err;
                 console.log("Number of records inserted: " + result.affectedRows);
             });
+        }
+    });
 
-        });
-
-    } catch(err) {
-        console.log(err);
-        throw err;
-    }
 };
 
 router.post("/registerUser", registerUser);

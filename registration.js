@@ -1,58 +1,65 @@
+const db = require('./database.js');
+
 const express = require("express");
 const router = express.Router();
+const uuidv1 = require('uuid/v1');
 
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
+
 const saltRounds = 10;
 
-const mariadb = require("mariadb");
-const dbHost = "127.0.0.1";
-const pool = mariadb.createPool({
-    host: dbHost,
-    user: "root",
-    password: "password",
-    database: "users",
-    connectionLimit: 5
-});
-
 const registerUser = async (request, response) => {
+    let uuid = uuidv1();
+
     let email = await request.body.email;
     let password = await bcrypt.hash(request.body.password, saltRounds);
+
     let title = await request.body.title;
     let firstName = await request.body.firstName;
     let lastName = await request.body.lastName;
+
     let companyName = await request.body.companyName;
-    let department = await request.body.department;
-    let plantLevel = await request.body.plantLevel;
-    let primaryPhone = await request.body.primaryPhone;
-    let altPhone = await request.body.altPhone;
-    let houseAddress = await request.body.houseAddress;
+    let division = await request.body.division;
+    let plantClassification = await request.body.plantClassification;
+    let fieldPosition = await request.body.fieldPosition;
+
+    let businessPhone = await request.body.businessPhone;
+    let homePhone = await request.body.homePhone;
+    let cellPhone = await request.body.cellPhone;
+
+    let addressL1 = await request.body.addressL1;
+    let addressL2 = await request.body.addressL2;
+
+    let country = await request.body.country;
     let city = await request.body.city;
-    let province = await request.body.province;
+    let province_state = await request.body.province_state;
+    let pc_zip = await request.body.pc_zip;
 
-    let conn;
+    let consent = await request.body.consent;
 
-    try {
-        conn = await pool.getConnection();
+    con = db.getDb();
 
-        if (await plantLevel == undefined){
-            plantLevel = null;
+    // checks that an account does NOT already exist
+    var sql = "SELECT * FROM accounts WHERE email=?";
+    con.query(sql, email, (err, result) => {
+        if (err) throw err;
+        if (result.length > 0) {
+            console.log("Error: email already exists");
+            return response.redirect("/registration");
         }
+        else {
+            // creates a new account
+            sql = "INSERT INTO accounts (account_uuid, email, password, title, firstName, lastName, companyName, division, plantClassification, fieldPosition, businessPhone, homePhone, cellPhone, addressL1, addressL2, country, city, province_state, pc_zip, consent) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            var values = [uuid, email, password, title, firstName, lastName, companyName, division, plantClassification, fieldPosition, businessPhone, homePhone, cellPhone, addressL1, addressL2, country, city, province_state, pc_zip, consent];
 
-        if (await province == undefined){
-            province = null;
+            con.query(sql, values, (err, result) => {
+                if (err) throw err;
+                console.log("Number of records inserted: " + result.affectedRows);
+            });
         }
-        
-        const insert = await conn.query("INSERT INTO users value (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [email, password, title, firstName, lastName, companyName, department, plantLevel, primaryPhone, altPhone, houseAddress, city, province]);
-        console.log(insert);
+    });
 
-        response.send("Successfully registered.");
-    } catch (err) {
-        console.log(err);
-        throw err;
-    } finally {
-        if (conn) return conn.end();
-    }
-}
+};
 
 router.post("/registerUser", registerUser);
 

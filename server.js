@@ -5,15 +5,17 @@ const express = require("express");
 const hbs = require("hbs");
 const _ = require("lodash");
 const bodyParser = require("body-parser");
-const mariadb = require("mariadb");
 
 // Files
 const register = require("./registration.js");
+const db = require("./database.js");
+const passport = require("./passport.js");
 
 const app = express();
 
 let server = app.listen(port, () => {
     console.log(`Server is up on the port ${port}`);
+    db.init();
 });
 
 hbs.registerPartials(__dirname + "/views/partials");
@@ -25,7 +27,9 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use(register);
+app.use(passport);
 
+// Home
 app.get("/", (request, response) => {
     response.render("home.hbs", {
         title: "Home",
@@ -33,11 +37,37 @@ app.get("/", (request, response) => {
     });
 });
 
-// Home Page
-app.get('/home', (request, response) => {
-    response.render("home.hbs", {
-        title:"Home",
-        heading: "Home"
+// Login Page
+app.get("/login", (request, response) => {
+    let sessionID = request.sessionID;
+    let sessionData_string = request.sessionStore.sessions[sessionID];
+    let sessionData = JSON.parse(sessionData_string);
+    let failureFlag = false;
+    let failureMessage = "";
+
+    if (sessionData.flash != undefined) {
+        failureFlag = true;
+        failureMessage = sessionData.flash.error[0];
+
+        delete sessionData["flash"];
+        let deletedError = JSON.stringify(sessionData);
+        request.sessionStore.sessions[sessionID] = deletedError;
+    }
+
+    response.render("login.hbs", {
+        title: "Login",
+        heading: "Log In",
+        failureFlag: failureFlag,
+        failureMessage: failureMessage
+    });
+});
+
+// Logout
+app.get("/logout", (request, response) => {
+    request.logout();
+    request.session.destroy(() => {
+        response.clearCookie("connect.sid");
+        response.redirect("/");
     });
 });
 

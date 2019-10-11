@@ -31,12 +31,12 @@
     <p><label for="companyName"><b>Company Name *</b></label></p>
     <input type="text" name="companyName" required>
 
-    <p><label for="department"><b>Department</b></label></p>
+    <p><label for="division"><b>Division</b></label></p>
     <input type="text" name="department">
 
-    <p><b>Plant Level</b></p>
-    <select name="plantLevel">
-        <option disabled selected value="null_value">select your plant level</option>
+    <p><b>Plant Classification</b></p>
+    <select name="plantClassification">
+        <option disabled selected value="null_value">select your plant classification</option>
         <option value="first">1st</option>
         <option value="second">2nd</option>
         <option value="third">3rd</option>
@@ -44,21 +44,35 @@
         <option value="fifth">5th</option>
     </select>
 
-    <p><label for="primaryPhone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"><b>Primary Phone Number *</b> (format: 123-456-7890)</label></p>
-    <input type="tel" name="primaryPhone" required>
+    <p><label for="fieldPosition"><b>Field Position</b></label></p>
+    <input type="text" name="fieldPosition">
 
-    <p><label for="altPhone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"><b>Alternative Phone Number</b> (format: 123-456-7890)</label></p>
-    <input type="tel" name="altPhone">
+    <p><label for="businessPhone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"><b>Business Phone Number</b> (format: 123-456-7890)</label></p>
+    <input type="tel" name="businessPhone">
 
-    <p><label for="houseAddress"><b>House Address</b></label></p>
-    <input type="text" name="houseAddress">
+    <p><label for="homePhone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"><b>Home phone Number</b> (format: 123-456-7890)</label></p>
+    <input type="tel" name="homePhone">
+
+    <p><label for="cellPhone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"><b>Cellular Phone Number</b> (format: 123-456-7890)</label></p>
+    <input type="tel" name="cellPhone">
+
+    <p><label for="address"><b>House Address</b></label></p>
+    <input type="text" name="addressL1" placeholder="Street and number">
+    <input type="text" name="addressL2" placeholder="Apartment, suite, unit, building, floor, etc.">
 
     <p><label for="City"><b>City</b></label></p>
     <input type="text" name="city">
 
+    <p><b>Country</b></p>
+    <select name="country">
+        <option disabled selected value="null_value">select your country</option>
+        <option value="Canada">Canada</option>
+        <option value="US">United States</option>
+    </select>
+
     <p><b>Province/Territory</b></p>
-    <select name="province/territory">
-        <option disabled selected value="null_value">select your province/territory</option>
+    <select name="province_state">
+        <option disabled selected value="null_value">select your province</option>
         <option value="Alberta">Alberta</option>
         <option value="British Columbia">British Columbia</option>
         <option value="Manitoba">Manitoba</option>
@@ -74,9 +88,20 @@
         <option value="Nunavut">Nunavut</option>
     </select>
 
+    <p><label for="pc_zip"><b>Postal Code</b></label></p>
+    <input type="text" name="pc_zip">
+
+    <br><br>
+
+    <input type="checkbox" name="consent" value="consent"> I consent to distribution of my contact information for networking purposes
+
+    <br><br>
+
     <p><input type="submit"></p>
 </form>
 </div>
 
 </body>
+
+{{> footer}}
 </html>

@@ -5,15 +5,16 @@ const express = require("express");
 const hbs = require("hbs");
 const _ = require("lodash");
 const bodyParser = require("body-parser");
-const mariadb = require("mariadb");
 
 // Files
 const register = require("./registration.js");
+const db = require("./database.js");
 
 const app = express();
 
 let server = app.listen(port, () => {
     console.log(`Server is up on the port ${port}`);
+    db.init();
 });
 
 hbs.registerPartials(__dirname + "/views/partials");
@@ -62,6 +63,14 @@ app.get('/agenda', (request, response) => {
     response.render("agenda.hbs", {
         title:"Agenda",
         heading: "Agenda"
+    });
+});
+
+// Speaker Page
+app.get('/speaker', (request, response) => {
+    response.render("speakers.hbs", {
+        title: "Speaker",
+        heading: "Speaker"
     });
 });
 

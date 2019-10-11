@@ -29,6 +29,7 @@ app.use(bodyParser.urlencoded({
 app.use(register);
 app.use(passport);
 
+// Home
 app.get("/", (request, response) => {
     response.render("home.hbs", {
         title: "Home",
@@ -58,6 +59,15 @@ app.get("/login", (request, response) => {
         heading: "Log In",
         failureFlag: failureFlag,
         failureMessage: failureMessage
+    });
+});
+
+// Logout
+app.get("/logout", (request, response) => {
+    request.logout();
+    request.session.destroy(() => {
+        response.clearCookie("connect.sid");
+        response.redirect("/");
     });
 });
 

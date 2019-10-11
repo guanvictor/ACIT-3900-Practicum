@@ -7,7 +7,6 @@ const flash = require("connect-flash");
 const passport = require("passport");
 const localStrategy = require("passport-local").Strategy;
 const bcrypt = require("bcrypt");
-const saltRounds = 10;
 
 const db = require('./database');
 

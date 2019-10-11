@@ -1,10 +1,18 @@
+html,
 body {
     margin: 0;
+    padding: 0;
+    height: 100%;
     font-family: Arial, Helvetica, sans-serif;
 }
 
 form {
     margin: 30px;
+}
+
+.container {
+    min-height: 100%;
+    position: relative;
 }
 
 .topnav {
@@ -48,9 +56,24 @@ form {
         margin-top:5%;
         margin-bottom: 5%;
         display:flex;
-        width: 100%;
-        height: 100%;
     }
+.home_slider {
+    font-size: 24pt;
+    width: 100%;
+    text-align: center;
+    border-top: 15pt solid #095E94;
+    border-bottom: 15pt solid #095E94;
+    line-height: 1.5em;
+    margin: 10px 0 20px;
+    background-color: #095E94;
+    word-spacing: 5px;
+}
+
+.home_slider span {
+    background: #095E94;
+    padding:0 15px;
+    color: white;
+}
     .child_1 img {
         width: 100%;
         height: 50%;
@@ -68,4 +91,154 @@ form {
     .child_2 img {
         width: 100%;
         height: auto;
+        float: right;
     }
+
+/*Sponsors css*/
+    .child_3 {
+        grid-area: 4 / 1 / 5 / 6;
+    }  
+.logo_col {
+    float: left;
+    width: 25%;
+    padding: 5px;
+}
+.our_sponsors {
+    font-size: 24pt;
+    width: 100%;
+    text-align: center;
+    border-top: 10pt solid #095E94;
+    border-bottom: 10pt solid #095E94;
+    line-height: 1.5em;
+    margin: 10px 0 20px;
+    background-color: #095E94;
+    word-spacing: 5px;
+}
+.our_sponsors span {
+    background: #095E94;
+    padding:0 15px;
+    color: white;
+}
+
+/*--------------*/
+
+.navbar-brand {
+    max-height: 80px;
+    max-width: 30%;
+    overflow: visible;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.nav-img {
+    height: 120px;
+    width: 230px
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: black!important;
+}
+
+
+.footer-img {
+    float: left;
+    width: 25%;
+    height: 25%;
+    margin-right: 15px;
+}
+
+.footer-p {
+    color: white;
+}
+
+footer {
+    background-color: black;
+    position: relative;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+
+.fa {
+    padding: 8px;
+    font-size: 30px !important;
+    width: 28%;
+    text-align: center;
+    text-decoration: none;
+    margin: 5px 2px;
+}
+
+.fa:hover {
+    opacity: 0.7;
+}
+
+.fa-facebook {
+    background: #3B5998;
+    color: white !important;
+}
+
+.fa-linkedin {
+    background: #007bb5;
+    color: white !important;
+}
+
+.fa-instagram {
+    background: #125688;
+    color: white !important;
+}
+
+.map {
+    float: right;
+    width: 70%;
+    height: 70%;
+    margin: 0px -220px 15px 30px;
+}
+
+.about-img {
+    float: right;
+    padding: 5px;
+}
+
+.address {
+    float: right;
+}
+
+#profile-container {
+    width: 150px;
+    height: 150px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    border-radius: 50%;
+}
+
+#profileImage {
+    float: left;
+    cursor: pointer;
+    height: 180px;
+    width: 180px;
+    margin-right: 20px;
+    border-radius: 50%;
+}
+
+.speaker-info {
+    float: left;
+}
+
+.grid-container {
+    display: grid;
+    grid-gap: 50px;
+    grid-template-columns: auto auto auto;
+    padding: 10px;
+}
+
+.item1 {
+    grid-row-start: 1;
+    grid-row-end: 3;
+}
+
+/*+++++++++++Slideshow++++++++++++++++++++*/
+
+

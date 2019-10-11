@@ -239,6 +239,7 @@ footer {
     grid-row-end: 3;
 }
 
-/*+++++++++++Slideshow++++++++++++++++++++*/
-
-
+p {
+    margin-top: 15px !important;
+    margin-bottom: 0rem !important;
+}

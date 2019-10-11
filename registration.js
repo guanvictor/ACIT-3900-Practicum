@@ -2,13 +2,11 @@ const db = require('./database.js');
 
 const express = require("express");
 const router = express.Router();
-
 const uuidv1 = require('uuid/v1');
 
 const bcrypt = require('bcrypt');
-const saltRounds = 10;
 
-const mysql = require("mysql");
+const saltRounds = 10;
 
 const registerUser = async (request, response) => {
     let uuid = uuidv1();
@@ -43,7 +41,7 @@ const registerUser = async (request, response) => {
 
     // checks that an account does NOT already exist
     var sql = "SELECT * FROM accounts WHERE email=?";
-    con.query(sql, email, function(err, result){
+    con.query(sql, email, (err, result) => {
         if (err) throw err;
         if (result.length > 0) {
             console.log("Error: email already exists");
@@ -54,7 +52,7 @@ const registerUser = async (request, response) => {
             sql = "INSERT INTO accounts (account_uuid, email, password, title, firstName, lastName, companyName, division, plantClassification, fieldPosition, businessPhone, homePhone, cellPhone, addressL1, addressL2, country, city, province_state, pc_zip, consent) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             var values = [uuid, email, password, title, firstName, lastName, companyName, division, plantClassification, fieldPosition, businessPhone, homePhone, cellPhone, addressL1, addressL2, country, city, province_state, pc_zip, consent];
 
-            con.query(sql, values, function (err, result) {
+            con.query(sql, values, (err, result) => {
                 if (err) throw err;
                 console.log("Number of records inserted: " + result.affectedRows);
             });

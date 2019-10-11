@@ -2,10 +2,10 @@ const db = require('./database.js');
 
 const express = require("express");
 const router = express.Router();
-
 const uuidv1 = require('uuid/v1');
 
 const bcrypt = require('bcrypt');
+
 const saltRounds = 10;
 
 const registerUser = async (request, response) => {

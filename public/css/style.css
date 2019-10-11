@@ -15,6 +15,7 @@ form {
     position: relative;
 }
 
+
 .topnav {
     overflow: auto;
     background-color: #FDFDFD;
@@ -193,4 +194,12 @@ footer {
 .item1 {
     grid-row-start: 1;
     grid-row-end: 3;
+}
+
+.contact-container {
+    display: grid;
+    grid-template-columns: 30%;
+    grid-template-rows: auto;
+    position: relative;
+    padding: 20px;
 }

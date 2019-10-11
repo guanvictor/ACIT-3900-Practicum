@@ -111,11 +111,3 @@ app.get('/contact', (request, response) => {
     });
 });
 
-//Admin Page
-app.get('/admin', (request, response) => {
-    response.render("admin.hbs", {
-        title: "Admin Panel",
-        heading: "Admin Panel"
-    });
-});
-

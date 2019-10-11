@@ -3,41 +3,6 @@
     {{> header}}
 <body>
     {{> menu}}
-    
-    <form method="POST" action="/confirmation">
-        <h1> Have a question? Contact us. </h1>
-        
-        <div class="contact-container">
-            <label for="name">Name</label>
-            <input id="name" name="name" type="text" />
-
-            <label for="email">Email Address</label>
-            <input id="email" name="email" type="text" />
-
-            <label for="phone number" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">Phone Number</label>
-            <input id="phone number" name="phone number" type="text" />
-        
-        
-            <br><br>
-
-            <label for="issue">What is your issue?</label>
-            <select id="issue" name="issue">
-                <option value="1"> General question</option>
-                <option value="2"> Other question</option>
-                <option value="3"> Miscellaneous</option>
-            </select>
-
-            <br><br>
-
-            <label for="text">Type your inquiry</label>
-            <textarea id="text" name="text" rows="5" cols="70"></textarea>
-
-            <br>
-
-            <p><input type="submit"></p>
-        </div>
-    
-    </form>
 </body>
 {{> footer}}
 </html>

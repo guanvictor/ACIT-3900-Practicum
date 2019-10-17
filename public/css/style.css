@@ -123,6 +123,10 @@ form {
 
 /*--------------*/
 
+.bg-light {
+    background-color: white !important;
+}
+
 .navbar-brand {
     max-height: 80px;
     max-width: 30%;
@@ -132,8 +136,8 @@ form {
 }
 
 .nav-img {
-    height: 120px;
-    width: 230px
+    height: 80px;
+    width: 90px
 }
 
 .navbar-light .navbar-nav .nav-link {
@@ -251,3 +255,69 @@ p {
     position: relative;
     padding: 20px;
 }
+
+.images {
+    position: relative;
+    display: inline-block;
+}
+
+.address {
+    position: absolute;
+    width: 100%;
+    text-align: right;
+    bottom: 70px;
+    left: 180px;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    /* position: absolute; */
+    position: fixed;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 3;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+@media only screen and (max-width: 600px) {
+    .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        text-indent: 10px;
+    }
+}
+
+/* .navbar-nav {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: row !important;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+} */

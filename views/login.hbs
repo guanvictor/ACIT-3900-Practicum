@@ -14,19 +14,24 @@
                 <div class="contact-container">
 
 
-            <hr>
+                    <hr>
 
-            {{#if failureFlag}}
-            <p id="failedLogin">{{failureMessage}}</p>
-            {{/if}}
+                    {{#if failureFlag}}
+                    <p id="failedLogin">{{failureMessage}}</p>
+                    {{/if}}
 
-            <label for="username"><b>Email</b></label>
-            <input type="text" placeholder="username" name="username" required>
+                    <div class="child-div">
 
-            <label for="password"><b>Password</b></label>
-            <input type="password" name="password" required>
+                    <label for="username"><b>Email</b></label>
+                    <input type="text" placeholder="username" name="username" required>
 
-            <input type="submit" class="form_button" value="Submit" id="login_button" />
+                    <label for="password"><b>Password</b></label>
+                    <input type="password" name="password" required>
+
+                    <br>
+                    <input type="submit" class="form_button" value="Login" id="login_button" />
+
+                    </div>
         {{!-- </div> --}}
                 </div>
             </div>

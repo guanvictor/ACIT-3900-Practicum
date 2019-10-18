@@ -8,3 +8,19 @@ th {
     text-align: left;
     padding: 8px;
 }
+
+tr:hover {
+    background-color: rgba(0,60,121,0.4);
+}
+
+td a {
+    display: block;
+}
+
+td a:hover {
+    text-decoration: none;
+}
+
+td a:visited {
+    text-decoration: none;
+}

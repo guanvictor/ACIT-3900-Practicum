@@ -174,3 +174,23 @@ app.get('/admin/events', async (request, response) => {
         event: events
     });
 });
+
+app.get('/admin/events/:event_id', async (request, response) => {
+    let event = await queries.getEvent(request.params.event_id);
+
+    let eventDate = await event.eventDate;
+
+    let x = new Date(eventDate);
+    var dd = x.getDate();
+    var mm = x.getMonth() + 1;
+    var yy = x.getFullYear();
+    let date = yy + "-" + mm + "-" + dd;
+
+    response.render("administrator/event.hbs", {
+        title: event.eventName,
+        heading: event.eventName,
+        name: event.eventName,
+        date: date,
+        desc: event.eventDescription
+    });
+});

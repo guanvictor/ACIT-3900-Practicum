@@ -62,6 +62,14 @@ app.get("/login", (request, response) => {
     });
 });
 
+// Login_2
+app.get('/login2', (request, response) => {
+    response.render("login2.hbs", {
+        title: "Login",
+        heading: "Login"
+    });
+});
+
 // Logout
 app.get("/logout", (request, response) => {
     request.logout();

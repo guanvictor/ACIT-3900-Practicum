@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/admin_style.css">
+    {{> head}}
+</head>
+
+<body>
+    {{> menu}}
+
+    <h1>{{heading}}</h1>
+    <button type="button">Add New</button>
+
+
+
+
+    <button type="button">Edit</button>
+
+    <div>
+        <table>
+            <tr>
+                <th>Event Name</th>
+                <th>Date</th>
+            </tr>
+
+            {{#each event}}
+            <tr>
+                <td>{{eventName}}</td>
+                <td>{{eventDate}}</td>
+            </tr>
+            {{/each}}
+        </table>
+    </div>
+
+</body>
+{{> footer}}
+
+</html>

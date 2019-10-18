@@ -10,6 +10,7 @@ const bodyParser = require("body-parser");
 const register = require("./registration.js");
 const db = require("./database.js");
 const passport = require("./passport.js");
+const queries = require("./queries.js");
 
 const app = express();
 
@@ -121,9 +122,27 @@ app.get('/contact', (request, response) => {
 
 //Admin Page
 app.get('/admin', (request, response) => {
-    response.render("admin.hbs", {
-        title: "Admin Panel",
-        heading: "Admin Panel"
+    response.render("administrator/index.hbs", {
+        title: "Administrator Panel",
+        heading: "Administrator Panel"
     });
 });
 
+app.get('/admin/events', async (request, response) => {
+    let events = await queries.eventPromise();
+
+    console.log(events);
+
+    response.render("administrator/events.hbs", {
+        title: "Events",
+        heading: "Events",
+        event: events
+    });
+});
+
+// app.get('/admin/events/add_event', (request, response) => {
+//     response.render("administrator/newevent.hbs", {
+//         title: "Create a New Event",
+//         heading: "New Event"
+//     });
+// });

@@ -8,9 +8,12 @@ var getDb = () => {
 
 var init = callback => {
     con = mysql.createConnection({
-        host: "webappdb.csfgujeij7vw.us-west-2.rds.amazonaws.com",
+        // host: "webappdb.csfgujeij7vw.us-west-2.rds.amazonaws.com",
+        // user: "root",
+        // password: "Pr0ject12",
+        host: "localhost",
         user: "root",
-        password: "Pr0ject12",
+        password: "password",
         database: "power_engineering_events"
     });
 

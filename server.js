@@ -11,6 +11,7 @@ const register = require("./registration.js");
 const db = require("./database.js");
 const passport = require("./passport.js");
 const queries = require("./queries.js");
+const events = require("./event.js");
 
 const app = express();
 
@@ -27,6 +28,7 @@ app.use(bodyParser.urlencoded({
     extended:true
 }));
 
+app.use(events);
 app.use(register);
 app.use(passport);
 
@@ -131,18 +133,9 @@ app.get('/admin', (request, response) => {
 app.get('/admin/events', async (request, response) => {
     let events = await queries.eventPromise();
 
-    console.log(events);
-
     response.render("administrator/events.hbs", {
         title: "Events",
         heading: "Events",
         event: events
     });
 });
-
-// app.get('/admin/events/add_event', (request, response) => {
-//     response.render("administrator/newevent.hbs", {
-//         title: "Create a New Event",
-//         heading: "New Event"
-//     });
-// });

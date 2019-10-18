@@ -7,8 +7,13 @@
     {{> menu}}
 
     <form method="post" action="/login">
-        <div class="form_container">
+        {{!-- <div class="form_container"> --}}
             <h1>{{heading}}</h1>
+
+            <div class="page-container">
+                <div class="contact-container">
+
+
             <hr>
 
             {{#if failureFlag}}
@@ -22,7 +27,10 @@
             <input type="password" name="password" required>
 
             <input type="submit" class="form_button" value="Submit" id="login_button" />
-        </div>
+        {{!-- </div> --}}
+                </div>
+            </div>
+    
     </form>
 </body>
 {{> footer}}

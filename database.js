@@ -11,6 +11,9 @@ var init = callback => {
         host: "webappdb.csfgujeij7vw.us-west-2.rds.amazonaws.com",
         user: "root",
         password: "Pr0ject12",
+        // host: "localhost",
+        // user: "root",
+        // password: "password",
         database: "power_engineering_events"
     });
 

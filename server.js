@@ -12,6 +12,7 @@ const db = require("./database.js");
 const passport = require("./passport.js");
 const queries = require("./queries.js");
 const events = require("./event.js");
+const profile = require("./profile.js");
 
 const app = express();
 
@@ -31,6 +32,7 @@ app.use(bodyParser.urlencoded({
 app.use(events);
 app.use(register);
 app.use(passport);
+app.use(profile);
 
 // Home
 app.get("/", (request, response) => {
@@ -65,20 +67,53 @@ app.get("/login", (request, response) => {
     });
 });
 
-// Login_2
-app.get('/login2', (request, response) => {
-    response.render("login2.hbs", {
-        title: "Login",
-        heading: "Login"
-    });
-});
-
 // Logout
 app.get("/logout", (request, response) => {
     request.logout();
     request.session.destroy(() => {
         response.clearCookie("connect.sid");
         response.redirect("/");
+    });
+});
+
+// Profile
+app.get("/profile/:account_uuid", async (request, response) => {
+    if (request.user == undefined) {
+        response.render("profile.hbs");
+    }
+
+    let user = request.user;
+
+    let profile_uuid = request.params.account_uuid;
+
+    response.render("profile.hbs", {
+        profile_uuid: profile_uuid,
+        current_uuid: user.account_uuid,
+
+        email: user.email,
+        title: user.title,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        companyName: user.companyName,
+        division: user.division,
+        plantClassification: user.plantClassification,
+        fieldPosition: user.fieldPosition,
+        businessPhone: user.businessPhone,
+        homePhone: user.homePhone,
+        cellPhone: user.cellPhone,
+        addressL1: user.addressL1,
+        addressL2: user.addressL2,
+        country: user.country,
+        city: user.city,
+        province_state: user.province_state,
+        pc_zip: user.pc_zip
+    });
+
+    hbs.registerHelper("compareUser", (profileUser, currentUser, options) => {
+        if (profileUser == currentUser) {
+            return options.fn(this);
+        }
+        return options.inverse(this);
     });
 });
 

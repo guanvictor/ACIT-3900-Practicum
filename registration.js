@@ -57,10 +57,9 @@ const registerUser = async (request, response) => {
                 console.log("Number of records inserted: " + result.affectedRows);
             });
 
-            return response.redirect("/login");
+            return response.redirect("/rsvp");
         }
     });
-
 };
 
 router.post("/registerUser", registerUser);

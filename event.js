@@ -1,5 +1,6 @@
 const express = require('express');
 const uuiv1 = require('uuid/v1');
+const _ = require('lodash');
 
 const db = require('./database');
 
@@ -24,6 +25,40 @@ const newEvent = async (request, response) => {
     });
 };
 
+const eventRSVP = async (request, response) => {
+    let rsvps = request.body.event_uuids;
+
+    if (typeof rsvps === "string") {
+        rsvps = [rsvps];
+    }
+
+    console.log(rsvps);
+
+    let account_uuid = request.body.account_uuid;
+
+    let con = db.getDb();
+    let sql = '';
+    let values = [];
+    let failure_array = [];
+
+    // console.log(rsvps.length);
+
+    for (let i=0; i<rsvps.length; i++){
+        sql = "INSERT INTO UserEventStatus (attendance_uuid, event_uuid, account_uuid) VALUES (?, ?, ?)";
+        values = [uuiv1(), rsvps[i], account_uuid];
+
+        con.query(sql, values, (err, result) => {
+            if (err){
+                console.log(err);
+            }
+        });
+    }
+
+    console.log(failure_array);
+};
+
+
 router.post("/newEvent", newEvent);
+router.post("/eventRSVP", eventRSVP);
 
 module.exports = router;

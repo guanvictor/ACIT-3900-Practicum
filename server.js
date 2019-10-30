@@ -157,6 +157,27 @@ app.get('/contact', (request, response) => {
     });
 });
 
+// RSVP
+app.get("/rsvp", async (request, response) => {
+    let events = await queries.eventPromise();
+
+    let account_uuid = "";
+    if (request.user != undefined) {
+        account_uuid = request.user.account_uuid;
+    }
+
+    let rsvps = await queries.getRSVPS(account_uuid);
+    let event_difference = _.differenceBy(events, rsvps, 'event_uuid');
+
+    response.render("rsvp.hbs", {
+        title: "RSVP",
+        heading: "Event RSVP",
+        event: event_difference,
+        account_uuid: account_uuid,
+        rsvps: rsvps,
+    });
+});
+
 //Admin Page
 app.get('/admin', (request, response) => {
     response.render("administrator/index.hbs", {

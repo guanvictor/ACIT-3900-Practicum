@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/admin_style.css">
+    {{> head}}
+</head>
+
+<body>
+{{> menu}}
+
+<h1>{{heading}}</h1>
+<h2>RSVP'd Events</h2>
+<table>
+    <tr>
+        <th>Event Name</th>
+        <th>Event Description</th>
+        <th>Date</th>
+        <th></th>
+    </tr>
+
+    {{#each rsvps}}
+    <tr>
+        <td>{{eventName}}</td>
+        <td>{{eventDescription}}</td>
+        <td>{{eventDate}}</td>
+        <td><a href="#">Cancel</a></td>
+    </tr>   
+    {{/each}}
+</table>
+
+<h2>RSVP to New Events!</h2>
+<form method="post" action="/eventRSVP">
+    {{#each event}}
+        <input type="checkbox" name="event_uuids" value="{{event_uuid}}"> {{eventName}}<br>
+        {{eventDescription}}<br>
+        {{eventDate}}<br><br>
+    {{/each}}
+
+    <input type="hidden" name="account_uuid" value="{{account_uuid}}">
+
+    <input type="submit" Value="Submit">
+</form>
+</body>
+{{> footer}}
+</html>

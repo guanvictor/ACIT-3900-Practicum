@@ -35,10 +35,16 @@ app.use(passport);
 app.use(profile);
 
 // Home
-app.get("/", (request, response) => {
+app.get("/", async (request, response) => {
+    let sponsorFolder = './public/images/index/sponsors';
+    let sponsorImgs = await queries.getFiles(sponsorFolder);
+
+    console.log(sponsorImgs);
+
     response.render("home.hbs", {
         title: "Home",
-        heading: "Home"
+        heading: "Home",
+        sponsorImgs: sponsorImgs
     });
 });
 
@@ -213,5 +219,12 @@ app.get('/admin/events/:event_id', async (request, response) => {
         name: event.eventName,
         date: date,
         desc: event.eventDescription
+    });
+});
+
+app.get('/admin/webcontent', async (request, response) => {
+    response.render("administrator/webcontent.hbs", {
+        title: "Website Content",
+        heading: "Manage Website Content"
     });
 });

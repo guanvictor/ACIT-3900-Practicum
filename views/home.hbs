@@ -29,18 +29,11 @@
         <br>
         <div class="child_3">
           <h1 class="our_sponsors"><span>Our Sponsors</span></h1>
-           <div class ="logo_col">
-              <img src="/images/Fortis_Inc_logo.png" width="100%">
-           </div>
-           <div class ="logo_col">
-               <img src="/images/Spartan_logo.jpg" width="100%">
-           </div>
-           <div class ="logo_col">
-               <img src="/images/cims-squarelogo.png" width="100%">
-           </div>
-           <div class ="logo_col">
-               <img src="/images/technical_safety_BC_logo.svg" width="100%">
-           </div>
+           {{#each sponsorImgs}}
+                <div class="logo_col">
+                    <img src="/images/index/sponsors/{{this}}" width="100%">
+                </div>
+           {{/each}}
         </div>
    
     </div>

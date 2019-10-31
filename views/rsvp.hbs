@@ -7,39 +7,47 @@
 
 <body>
 {{> menu}}
-
 <h1>{{heading}}</h1>
-<h2>RSVP'd Events</h2>
-<table>
-    <tr>
-        <th>Event Name</th>
-        <th>Event Description</th>
-        <th>Date</th>
-        <th></th>
-    </tr>
 
-    {{#each rsvps}}
-    <tr>
-        <td>{{eventName}}</td>
-        <td>{{eventDescription}}</td>
-        <td>{{eventDate}}</td>
-        <td><a href="#">Cancel</a></td>
-    </tr>   
-    {{/each}}
-</table>
+{{#if rsvps.length}}
+    <h2>RSVP'd Events</h2>
+    <table>
+        <tr>
+            <th>Event Name</th>
+            <th>Event Description</th>
+            <th>Date</th>
+            <th></th>
+        </tr>
 
-<h2>RSVP to New Events!</h2>
-<form method="post" action="/eventRSVP">
-    {{#each event}}
-        <input type="checkbox" name="event_uuids" value="{{event_uuid}}"> {{eventName}}<br>
-        {{eventDescription}}<br>
-        {{eventDate}}<br><br>
-    {{/each}}
+        {{#each rsvps}}
+        <tr>
+            <td>{{eventName}}</td>
+            <td>{{eventDescription}}</td>
+            <td>{{eventDate}}</td>
+            <td><a href="#">Cancel</a></td>
+        </tr>   
+        {{/each}}
+    </table>
+{{else}}
+    <h3>You haven't signed up for any events!</h3>
+{{/if}}
 
-    <input type="hidden" name="account_uuid" value="{{account_uuid}}">
+{{#if event.lengths}}
+    <h2>RSVP to New Events!</h2>
+    <form method="post" action="/eventRSVP">
+        {{#each event}}
+            <input type="checkbox" name="event_uuids" value="{{event_uuid}}"> {{eventName}}<br>
+            {{eventDescription}}<br>
+            {{eventDate}}<br><br>
+        {{/each}}
 
-    <input type="submit" Value="Submit">
-</form>
+        <input type="hidden" name="account_uuid" value="{{account_uuid}}">
+
+        <input type="submit" Value="Submit">
+    </form>
+{{else}}
+    <h3>Keep an eye out in your email for more updates</h3>
+{{/if}}
 </body>
 {{> footer}}
 </html>

@@ -24,3 +24,12 @@ td a:hover {
 td a:visited {
     text-decoration: none;
 }
+
+.filetable {
+    width: 50%;
+}
+
+.filetable form {
+    margin: 0;
+}
+

@@ -77,9 +77,6 @@ const eventRSVP = async (request, response) => {
     let con = db.getDb();
     let sql = '';
     let values = [];
-    let failure_array = [];
-
-    // console.log(rsvps.length);
 
     for (let i=0; i<rsvps.length; i++){
         sql = "INSERT INTO UserEventStatus (attendance_uuid, event_uuid, account_uuid) VALUES (?, ?, ?)";
@@ -89,10 +86,11 @@ const eventRSVP = async (request, response) => {
             if (err){
                 console.log(err);
             }
-        });
-    }
 
-    console.log(failure_array);
+            return response.redirect('/rsvp');
+        });
+        
+    }
 };
 
 router.post("/newEvent", newEvent);

@@ -56,8 +56,24 @@ hbs.registerHelper("setActive", index => {
     return "";
 });
 
+//Checks Authentication (is user logged in?)
+checkAuthentication = (request, response, next) => {
+    if (request.isAuthenticated()) {
+        return next();
+    } else {
+        response.redirect('/registration');
+    }
+};
+
+checkAuthentication_false = (request, response, next) => {
+    if (!request.isAuthenticated()) {
+        return next();
+    }
+    response.redirect('/');
+};
+
 // Login Page
-app.get("/login", (request, response) => {
+app.get("/login", checkAuthentication_false, (request, response) => {
     let sessionID = request.sessionID;
     let sessionData_string = request.sessionStore.sessions[sessionID];
     let sessionData = JSON.parse(sessionData_string);
@@ -82,7 +98,7 @@ app.get("/login", (request, response) => {
 });
 
 // Logout
-app.get("/logout", (request, response) => {
+app.get("/logout", checkAuthentication, (request, response) => {
     request.logout();
     request.session.destroy(() => {
         response.clearCookie("connect.sid");
@@ -91,7 +107,7 @@ app.get("/logout", (request, response) => {
 });
 
 // Profile
-app.get("/profile/:account_uuid", async (request, response) => {
+app.get("/profile/:account_uuid", checkAuthentication, async (request, response) => {
     if (request.user == undefined) {
         response.render("profile.hbs");
     }
@@ -140,7 +156,7 @@ app.get('/about', (request, response) => {
 });
 
 // Registration Page
-app.get('/registration', (request, response) => {
+app.get('/registration', checkAuthentication_false, (request, response) => {
     response.render("registration.hbs", {
         title:"Registration",
         heading: "Registration"
@@ -172,7 +188,7 @@ app.get('/contact', (request, response) => {
 });
 
 // RSVP
-app.get("/rsvp", async (request, response) => {
+app.get("/rsvp", checkAuthentication, async (request, response) => {
     let events = await queries.eventPromise();
 
     let account_uuid = "";
@@ -202,7 +218,6 @@ checkAdmin = (request, response, next) => {
         response.redirect('/');
     }
 };
-
 
 //Admin Page
 app.get('/admin', checkAdmin, (request, response) => {

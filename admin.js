@@ -14,7 +14,10 @@ const upload = (request, response) => {
     });
 
     form.on('fileBegin', (name, file) => {
-        file.path = path + file.name;
+        let name_split = (file.name).split(/[ ,]+/);
+        let file_name = name_split.join('_');
+
+        file.path = path + file_name;
     });
 
     form.on('file', (name, file) => {

@@ -48,6 +48,22 @@
     <h3>Event Description</h3>
     <p>{{desc}}</p>
 
+    <h3>Attendees</h3>
+    <p>Number of attendees: {{countAttendees}}</p>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Company</th>
+        </tr>
+        {{#each eventAttendees}}
+        <tr>
+            <td>{{firstName}} {{lastName}}</td>
+            <td>{{email}}</td>
+            <td>{{companyName}}</td>
+        </tr>
+        {{/each}}
+    </table>
 </body>
 {{> footer}}
 

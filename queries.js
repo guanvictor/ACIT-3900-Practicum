@@ -11,7 +11,6 @@ let eventPromise = () => {
             if (err) reject (err);
             resolve(result);
         });
-        
     });
 };
 
@@ -23,6 +22,21 @@ let getEvent = param_id => {
         con.query(sql, param_id, (err, result) => {
             if (err) reject (err);
             resolve(result[0]);
+        });
+    });
+};
+
+const getEventAttendees = (event_uuid) => {
+    return new Promise((resolve, reject) => {
+        let con = db.getDb();
+        let sql = "SELECT accounts.firstName, accounts.lastName, accounts.email, accounts.companyName FROM accounts  LEFT JOIN UserEventStatus ON accounts.account_uuid = UserEventStatus.account_uuid WHERE UserEventStatus.event_uuid = ?";
+
+        con.query(sql, event_uuid, (err, result) => {
+            if (err) {
+                reject (err);
+            }
+            // console.log(result);
+            resolve(result);
         });
     });
 };
@@ -56,6 +70,7 @@ let getFiles = folder => {
 module.exports = {
     eventPromise: eventPromise,
     getEvent: getEvent,
+    getEventAttendees: getEventAttendees,
     getRSVPS: getRSVPS,
     getFiles: getFiles
 };

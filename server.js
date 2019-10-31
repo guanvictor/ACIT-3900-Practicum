@@ -35,11 +35,25 @@ app.use(passport);
 app.use(profile);
 
 // Home
-app.get("/", (request, response) => {
+app.get("/", async (request, response) => {
+    let sponsorFolder = './public/images/index/sponsors';
+    let sponsorImgs = await queries.getFiles(sponsorFolder);
+    let carouselFolder = './public/images/index/carousel';
+    let carouselImgs = await queries.getFiles(carouselFolder);
+
     response.render("home.hbs", {
         title: "Home",
-        heading: "Home"
+        heading: "Home",
+        sponsorImgs: sponsorImgs,
+        carouselImgs: carouselImgs
     });
+});
+
+hbs.registerHelper("setActive", index => {
+    if (index == 0) {
+        return "active";
+    }
+    return "";
 });
 
 // Login Page
@@ -213,5 +227,12 @@ app.get('/admin/events/:event_id', async (request, response) => {
         name: event.eventName,
         date: date,
         desc: event.eventDescription
+    });
+});
+
+app.get('/admin/webcontent', async (request, response) => {
+    response.render("administrator/webcontent.hbs", {
+        title: "Website Content",
+        heading: "Manage Website Content"
     });
 });

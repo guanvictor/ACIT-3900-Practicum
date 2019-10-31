@@ -1,4 +1,5 @@
 const db = require("./database");
+const fs = require("fs");
 
 // Populates event table with eventName and date
 let eventPromise = () => {
@@ -39,8 +40,22 @@ let getRSVPS = account_id => {
     });
 };
 
+let getFiles = folder => {
+    return new Promise((resolve, reject) => {
+        let imgs = [];
+
+        fs.readdir(folder, (err, files) => {
+            files.forEach(file => {
+                imgs.push(file);
+            });
+            resolve(imgs);
+        });  
+    });
+};
+
 module.exports = {
     eventPromise: eventPromise,
     getEvent: getEvent,
-    getRSVPS: getRSVPS
+    getRSVPS: getRSVPS,
+    getFiles: getFiles
 };

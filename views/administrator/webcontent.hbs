@@ -7,15 +7,31 @@
 </head>
 
 <body>
-    {{> menu}}
 
-    <h1>{{heading}}</h1>
-    <h2><a href="/admin/webcontent/home">Home</a></h2>
-    <h2><a href="/admin/webcontent/about">About</a></h2>
-    <h2><a href="/admin/webcontent/agenda">Agenda</a></h2>
-    <h2><a href="/admin/webcontent/speakers">Speakers</a></h2>
-    <h2><a href="/admin/webcontent/contact">Contact</a></h2>
+    <div class="sidenav">
+        <p class="sidenav_panel">Admin Panel</p>
+        <a href="/admin/events">Events</a>
+        <a href="/admin/useraccounts">User Accounts</a>
+        <a href="/admin/adminaccount">Administrator Accounts</a>
+        <a href="/admin/webcontent" class="active">Website Content</a>
+    </div>
+    
+    <div class="maincontent">
+        {{> menu}}
+
+        <h1>{{heading}}</h1>
+
+        <h2><a href="/admin/webcontent/home">Home</a></h2>
+        <h2><a href="/admin/webcontent/about">About</a></h2>
+        <h2><a href="/admin/webcontent/agenda">Agenda</a></h2>
+        <h2><a href="/admin/webcontent/speakers">Speakers</a></h2>
+        <h2><a href="/admin/webcontent/contact">Contact</a></h2>
+
+    </div>
+
 </body>
-{{> footer}}
+<div class="maincontent">
+    {{> footer}}
+</div>
 
 </html>

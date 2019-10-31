@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-{{> head}}
+
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/admin_style.css">
+    {{> head}}
+</head>
 
 <body>
-
     <div class="sidenav">
         <p class="sidenav_panel">Admin Panel</p>
         <a href="/admin/events">Events</a>
-        <a href="/admin/useraccounts">User Accounts</a>
+        <a href="/admin/useraccounts" class="active">User Accounts</a>
         <a href="/admin/adminaccount">Administrator Accounts</a>
         <a href="/admin/webcontent">Website Content</a>
     </div>
@@ -17,7 +20,10 @@
 
         <h1>{{heading}}</h1>
     </div>
-</body>
 
+</body>
+<div class="maincontent">
+    {{> footer}}
+</div>
 
 </html>

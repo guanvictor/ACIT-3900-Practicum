@@ -10,7 +10,7 @@ th {
 }
 
 tr:hover {
-    background-color: rgba(0,60,121,0.4);
+    background-color: rgba(0,60,121,0.1);
 }
 
 td a {

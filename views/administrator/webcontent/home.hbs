@@ -7,6 +7,10 @@
 </head>
 
 <body>
+    {{> admin_menu}}
+
+    <div class="maincontent">
+
     {{> menu}}
 
     <h1>{{heading}}</h1>
@@ -110,7 +114,11 @@
         {{/each}}
     </table>
 
+    </div>
+
 </body>
+<div class="maincontent">
 {{> footer}}
+</div>
 
 </html>

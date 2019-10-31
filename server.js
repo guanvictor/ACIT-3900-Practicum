@@ -201,6 +201,8 @@ app.get("/rsvp", checkAuthentication, async (request, response) => {
     let rsvps = await queries.getRSVPS(account_uuid);
     let event_difference = _.differenceBy(events, rsvps, 'event_uuid');
 
+    console.log(event_difference);
+
     response.render("rsvp.hbs", {
         title: "RSVP",
         heading: "Event RSVP",
@@ -235,7 +237,8 @@ app.get('/admin/events', checkAdmin, async (request, response) => {
     response.render("administrator/events.hbs", {
         title: "Events",
         heading: "Events",
-        event: events
+        event: events,
+        event_isActive: true
     });
 });
 
@@ -255,7 +258,8 @@ app.get('/admin/events/:event_id', checkAdmin, async (request, response) => {
         heading: event.eventName,
         name: event.eventName,
         date: date,
-        desc: event.eventDescription
+        desc: event.eventDescription,
+        event_isActive: true
     });
 });
 
@@ -269,52 +273,60 @@ app.get('/admin/webcontent/home', checkAdmin, async (request, response) => {
         title: 'Admin - Home',
         heading: 'Manage Home Page Content',
         carouselImgs: carouselImgs,
-        sponsorImgs: sponsorImgs
+        sponsorImgs: sponsorImgs,
+        webcontent_isActive: true
     });
 });
 
 app.get('/admin/webcontent/about', checkAdmin, async (request, response) => {
     response.render("administrator/webcontent/about.hbs", {
         title: 'Admin - About',
-        heading: 'Manage About Page Content'
+        heading: 'Manage About Page Content',
+        webcontent_isActive: true
     });
 });
 app.get('/admin/webcontent/agenda', checkAdmin, async (request, response) => {
     response.render("administrator/webcontent/agenda.hbs", {
         title: 'Admin - Agenda',
-        heading: 'Manage Agenda Page Content'
+        heading: 'Manage Agenda Page Content',
+        webcontent_isActive: true
     });
 });
 app.get('/admin/webcontent/speakers', checkAdmin, async (request, response) => {
     response.render("administrator/webcontent/speaker.hbs", {
         title: 'Admin - Speaker',
-        heading: 'Manage Speaker Page Content'
+        heading: 'Manage Speaker Page Content',
+        webcontent_isActive: true
     });
 });
 app.get('/admin/webcontent/contact', checkAdmin, async (request, response) => {
     response.render("administrator/webcontent/contact.hbs", {
         title: 'Admin - Contact',
-        heading: 'Manage Contact Page Content'
+        heading: 'Manage Contact Page Content',
+        webcontent_isActive: true
     });
 });
 
 app.get('/admin/webcontent', checkAdmin, async (request, response) => {
     response.render("administrator/webcontent.hbs", {
         title: "Website Content",
-        heading: "Manage Website Content"
+        heading: "Manage Website Content",
+        webcontent_isActive: true
     });
 });
 
 app.get('/admin/useraccounts', async (request, response) => {
     response.render("administrator/useraccounts.hbs", {
         title: "User Accounts",
-        heading: "Manage User Accounts"
+        heading: "Manage User Accounts",
+        ua_isActive: true
     });
 });
 
 app.get('/admin/adminaccount', async (request, response) => {
     response.render("administrator/adminaccount.hbs", {
         title: "Admin Account",
-        heading: "Manage Admin Account"
+        heading: "Manage Admin Account",
+        adminacc_isActive: true
     });
 });

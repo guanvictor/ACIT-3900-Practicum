@@ -6,13 +6,7 @@
 </head>
 
 <body>
-    <div class="sidenav">
-        <p class="sidenav_panel">Admin Panel</p>
-        <a href="/admin/events" class="active">Events</a>
-        <a href="/admin/useraccounts">User Accounts</a>
-        <a href="/admin/adminaccount">Administrator Accounts</a>
-        <a href="/admin/webcontent">Website Content</a>
-    </div>
+    {{> admin_menu}}
     
     <div class="maincontent">      {{!-- without this class, content and side nav bar will overlap --}}
     {{> menu}}

@@ -192,15 +192,27 @@ app.get("/rsvp", async (request, response) => {
     });
 });
 
+//Checks Account Administrator Status
+checkAdmin = (request, response, next) => {
+    if (request.isAuthenticated()) {
+        if (request.user.isadmin == 1) {
+            return next();
+        }
+    } else{
+        response.redirect('/');
+    }
+};
+
+
 //Admin Page
-app.get('/admin', (request, response) => {
+app.get('/admin', checkAdmin, (request, response) => {
     response.render("administrator/index.hbs", {
         title: "Administrator Panel",
         heading: "Administrator Panel"
     });
 });
 
-app.get('/admin/events', async (request, response) => {
+app.get('/admin/events', checkAdmin, async (request, response) => {
     let events = await queries.eventPromise();
 
     response.render("administrator/events.hbs", {
@@ -210,7 +222,7 @@ app.get('/admin/events', async (request, response) => {
     });
 });
 
-app.get('/admin/events/:event_id', async (request, response) => {
+app.get('/admin/events/:event_id', checkAdmin, async (request, response) => {
     let event = await queries.getEvent(request.params.event_id);
 
     let eventDate = await event.eventDate;
@@ -230,7 +242,7 @@ app.get('/admin/events/:event_id', async (request, response) => {
     });
 });
 
-app.get('/admin/webcontent', async (request, response) => {
+app.get('/admin/webcontent', checkAdmin, async (request, response) => {
     response.render("administrator/webcontent.hbs", {
         title: "Website Content",
         heading: "Manage Website Content"

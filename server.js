@@ -38,14 +38,22 @@ app.use(profile);
 app.get("/", async (request, response) => {
     let sponsorFolder = './public/images/index/sponsors';
     let sponsorImgs = await queries.getFiles(sponsorFolder);
-
-    console.log(sponsorImgs);
+    let carouselFolder = './public/images/index/carousel';
+    let carouselImgs = await queries.getFiles(carouselFolder);
 
     response.render("home.hbs", {
         title: "Home",
         heading: "Home",
-        sponsorImgs: sponsorImgs
+        sponsorImgs: sponsorImgs,
+        carouselImgs: carouselImgs
     });
+});
+
+hbs.registerHelper("setActive", index => {
+    if (index == 0) {
+        return "active";
+    }
+    return "";
 });
 
 // Login Page

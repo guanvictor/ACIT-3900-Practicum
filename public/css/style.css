@@ -4,6 +4,7 @@ body {
     padding: 0;
     height: 100%;
     font-family: Arial, Helvetica, sans-serif;
+    min-width: 650px;
 }
 
 form {
@@ -45,7 +46,7 @@ form {
 .parent {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(5, 1fr);
+    grid-template-rows: 100px repeat(4, 1fr);
     grid-column-gap: 0px;
     grid-row-gap: 0px;
     
@@ -65,7 +66,7 @@ form {
     border-top: 15pt solid #095E94;
     border-bottom: 15pt solid #095E94;
     line-height: 1.5em;
-    margin: 10px 0 20px;
+    margin: 0;
     background-color: #095E94;
     word-spacing: 5px;
 }
@@ -83,7 +84,7 @@ form {
     .child_2 { 
         grid-area: 2 / 1 / 4 / 6;
         width: 100%;
-        height: 600px;
+        height: 650px;
         overflow: hidden;
         display:flex;
         flex-direction: column;

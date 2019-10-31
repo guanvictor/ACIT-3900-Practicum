@@ -236,3 +236,17 @@ app.get('/admin/webcontent', async (request, response) => {
         heading: "Manage Website Content"
     });
 });
+
+app.get('/admin/useraccounts', async (request, response) => {
+    response.render("administrator/useraccounts.hbs", {
+        title: "User Accounts",
+        heading: "Manage User Accounts"
+    });
+});
+
+app.get('/admin/adminaccount', async (request, response) => {
+    response.render("administrator/adminaccount.hbs", {
+        title: "Admin Account",
+        heading: "Manage Admin Account"
+    });
+});

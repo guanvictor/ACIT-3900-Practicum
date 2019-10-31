@@ -3,15 +3,21 @@
 {{> head}}
 
 <body>
-    {{> menu}}
 
-    <h1>{{heading}}</h1>
+    <div class="sidenav">
+        <p class="sidenav_panel">Admin Panel</p>
+        <a href="/admin/events">Events</a>
+        <a href="/admin/useraccounts">User Accounts</a>
+        <a href="/admin/adminaccount">Administrator Accounts</a>
+        <a href="/admin/webcontent">Website Content</a>
+    </div>
 
-    <h2><a href="/admin/events">Events</a></h2>
-    <h2>User Accounts</h2>
-    <h2>Administrator Accounts</h2>
-    <h2><a href="/admin/webcontent">Website Content</a></h2>
+    <div class="maincontent">
+        {{> menu}}
+
+        <h1>{{heading}}</h1>
+    </div>
 </body>
-{{> footer}}
+
 
 </html>

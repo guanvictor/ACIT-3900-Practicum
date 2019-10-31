@@ -7,19 +7,18 @@
 </head>
 
 <body>
-
     <div class="sidenav">
         <p class="sidenav_panel">Admin Panel</p>
         <a href="/admin/events">Events</a>
-        <a href="/admin/useraccounts">User Accounts</a>
+        <a href="/admin/useraccounts" class="active">User Accounts</a>
         <a href="/admin/adminaccount">Administrator Accounts</a>
-        <a href="/admin/webcontent" class="active">Website Content</a>
+        <a href="/admin/webcontent">Website Content</a>
     </div>
-    
+
     <div class="maincontent">
         {{> menu}}
 
-    <h1>{{heading}}</h1>
+        <h1>{{heading}}</h1>
     </div>
 
 </body>

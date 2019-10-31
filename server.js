@@ -244,14 +244,17 @@ app.get('/admin/events', checkAdmin, async (request, response) => {
 
 app.get('/admin/events/:event_id', checkAdmin, async (request, response) => {
     let event = await queries.getEvent(request.params.event_id);
+    let eventAttendees = await queries.getEventAttendees(request.params.event_id);
+    let event_uuid = request.params.event_id;
 
     let eventDate = await event.eventDate;
-
     let x = new Date(eventDate);
-    var dd = x.getDate();
-    var mm = x.getMonth() + 1;
-    var yy = x.getFullYear();
+    let dd = x.getDate();
+    let mm = x.getMonth() + 1;
+    let yy = x.getFullYear();
     let date = yy + "-" + mm + "-" + dd;
+    
+    let countAttendees = _.size(eventAttendees);
 
     response.render("administrator/event.hbs", {
         title: event.eventName,
@@ -259,7 +262,10 @@ app.get('/admin/events/:event_id', checkAdmin, async (request, response) => {
         name: event.eventName,
         date: date,
         desc: event.eventDescription,
-        event_isActive: true
+        event_isActive: true,
+        eventAttendees: eventAttendees,
+        countAttendees: countAttendees,
+        event_uuid: event_uuid
     });
 });
 

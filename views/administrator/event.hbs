@@ -7,6 +7,16 @@
 </head>
 
 <body>
+    <div class="sidenav">
+        <p class="sidenav_panel">Admin Panel</p>
+        <a href="/admin/events" class="active">Events</a>
+        <a href="/admin/useraccounts">User Accounts</a>
+        <a href="/admin/adminaccount">Administrator Accounts</a>
+        <a href="/admin/webcontent">Website Content</a>
+    </div>
+
+    <div class="maincontent">
+
     {{> menu}}
     
     <h1>{{heading}}</h1>
@@ -48,7 +58,11 @@
     <h3>Event Description</h3>
     <p>{{desc}}</p>
 
+    </div>
 </body>
-{{> footer}}
+<div class="maincontent">
+    {{> footer}}
+</div>
+
 
 </html>

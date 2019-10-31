@@ -13,6 +13,7 @@ const passport = require("./passport.js");
 const queries = require("./queries.js");
 const events = require("./event.js");
 const profile = require("./profile.js");
+const admin = require("./admin.js");
 
 const app = express();
 
@@ -33,6 +34,7 @@ app.use(events);
 app.use(register);
 app.use(passport);
 app.use(profile);
+app.use(admin);
 
 // Home
 app.get("/", async (request, response) => {
@@ -254,6 +256,45 @@ app.get('/admin/events/:event_id', checkAdmin, async (request, response) => {
         name: event.eventName,
         date: date,
         desc: event.eventDescription
+    });
+});
+
+app.get('/admin/webcontent/home', checkAdmin, async (request, response) => {
+    let sponsorFolder = './public/images/index/sponsors';
+    let sponsorImgs = await queries.getFiles(sponsorFolder);
+    let carouselFolder = './public/images/index/carousel';
+    let carouselImgs = await queries.getFiles(carouselFolder);
+    
+    response.render("administrator/webcontent/home.hbs", {
+        title: 'Admin - Home',
+        heading: 'Manage Home Page Content',
+        carouselImgs: carouselImgs,
+        sponsorImgs: sponsorImgs
+    });
+});
+
+app.get('/admin/webcontent/about', checkAdmin, async (request, response) => {
+    response.render("administrator/webcontent/about.hbs", {
+        title: 'Admin - About',
+        heading: 'Manage About Page Content'
+    });
+});
+app.get('/admin/webcontent/agenda', checkAdmin, async (request, response) => {
+    response.render("administrator/webcontent/agenda.hbs", {
+        title: 'Admin - Agenda',
+        heading: 'Manage Agenda Page Content'
+    });
+});
+app.get('/admin/webcontent/speakers', checkAdmin, async (request, response) => {
+    response.render("administrator/webcontent/speaker.hbs", {
+        title: 'Admin - Speaker',
+        heading: 'Manage Speaker Page Content'
+    });
+});
+app.get('/admin/webcontent/contact', checkAdmin, async (request, response) => {
+    response.render("administrator/webcontent/contact.hbs", {
+        title: 'Admin - Contact',
+        heading: 'Manage Contact Page Content'
     });
 });
 

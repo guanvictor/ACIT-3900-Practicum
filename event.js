@@ -25,6 +25,27 @@ const newEvent = async (request, response) => {
     });
 };
 
+const editEvent = async (request, response) => {
+    let name = await request.body.name;
+    let date = await request.body.date;
+    let desc = await request.body.desc;
+    let event_uuid = await request.body.event_uuid;
+
+    let con = db.getDb();
+    let sql = "UPDATE events SET eventName=?, eventDate=?, eventDescription=? WHERE event_uuid=?";
+    let values = [name, date, desc, event_uuid];
+
+    con.query(sql, values, (err, result) => {
+        if (err) {
+            throw err;
+        }
+
+        console.log("Successfully updated event");
+
+        return response.redirect(`/admin/events/${event_uuid}`);
+    });
+};
+
 const eventRSVP = async (request, response) => {
     let rsvps = request.body.event_uuids;
 
@@ -57,8 +78,8 @@ const eventRSVP = async (request, response) => {
     console.log(failure_array);
 };
 
-
 router.post("/newEvent", newEvent);
+router.post('/editEvent', editEvent);
 router.post("/eventRSVP", eventRSVP);
 
 module.exports = router;

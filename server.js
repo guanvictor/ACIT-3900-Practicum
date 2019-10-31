@@ -213,6 +213,7 @@ app.get('/admin/events', async (request, response) => {
 app.get('/admin/events/:event_id', async (request, response) => {
     let event = await queries.getEvent(request.params.event_id);
     let eventAttendees = await queries.getEventAttendees(request.params.event_id);
+    let event_uuid = request.params.event_id;
 
     let eventDate = await event.eventDate;
     let x = new Date(eventDate);
@@ -230,7 +231,8 @@ app.get('/admin/events/:event_id', async (request, response) => {
         date: date,
         desc: event.eventDescription,
         eventAttendees: eventAttendees,
-        countAttendees: countAttendees
+        countAttendees: countAttendees,
+        event_uuid: event_uuid
     });
 });
 

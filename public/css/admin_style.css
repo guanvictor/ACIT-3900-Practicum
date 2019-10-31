@@ -33,3 +33,11 @@ td a:visited {
     margin: 0;
 }
 
+.half_width {
+    width: 50% !important;
+}
+
+.quarter_width {
+    width: 25% !important;
+}
+

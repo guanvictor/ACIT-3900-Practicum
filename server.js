@@ -51,6 +51,12 @@ app.get("/", async (request, response) => {
     });
 });
 
+hbs.registerHelper("setDate", () => {
+    let datetime = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
+    console.log(datetime);
+    return;
+});
+
 hbs.registerHelper("setActive", index => {
     if (index == 0) {
         return "active";
@@ -149,7 +155,7 @@ app.get("/profile/:account_uuid", checkAuthentication, async (request, response)
     });
 });
 
-// About Page
+//  Page
 app.get('/about', (request, response) => {
     response.render("about.hbs", {
         title:"About",

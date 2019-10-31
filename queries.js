@@ -29,12 +29,13 @@ let getEvent = param_id => {
 const getEventAttendees = (event_uuid) => {
     return new Promise((resolve, reject) => {
         let con = db.getDb();
-        let sql = "SELECT accounts.firstName, accounts.lastName, accounts.email, accounts.companyName FROM accounts  LEFT JOIN UserEventStatus ON accounts.account_uuid = UserEventStatus.account_uuid WHERE UserEventStatus.event_uuid = ?";
+        let sql = "SELECT accounts.firstName, accounts.lastName, accounts.email, accounts.companyName, accounts.account_uuid FROM accounts LEFT JOIN UserEventStatus ON accounts.account_uuid = UserEventStatus.account_uuid WHERE UserEventStatus.event_uuid = ?";
 
         con.query(sql, event_uuid, (err, result) => {
             if (err) {
                 reject (err);
             }
+            
             resolve(result);
         });
     });

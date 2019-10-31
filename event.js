@@ -46,6 +46,23 @@ const editEvent = async (request, response) => {
     });
 };
 
+const deleteAttendee = async (request, response) => {
+    let account_uuid = await request.body.accountID;
+    let event_uuid = await request.body.event_uuid;
+
+    let con = db.getDb();
+    let sql = "DELETE FROM UserEventStatus WHERE account_uuid=? AND event_uuid=?";
+    let values = [account_uuid, event_uuid];
+
+    con.query(sql, values, (err, result) => {
+        if (err) {
+            throw err;
+        }
+
+        return response.redirect(`/admin/events/${event_uuid}`);
+    });
+};
+
 const eventRSVP = async (request, response) => {
     let rsvps = request.body.event_uuids;
 
@@ -80,6 +97,7 @@ const eventRSVP = async (request, response) => {
 
 router.post("/newEvent", newEvent);
 router.post('/editEvent', editEvent);
+router.post('/deleteAttendee', deleteAttendee);
 router.post("/eventRSVP", eventRSVP);
 
 module.exports = router;

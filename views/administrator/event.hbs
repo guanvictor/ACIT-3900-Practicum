@@ -57,12 +57,20 @@
             <th>Name</th>
             <th>Email</th>
             <th>Company</th>
+            <th></th>
         </tr>
         {{#each eventAttendees}}
         <tr>
             <td>{{firstName}} {{lastName}}</td>
             <td>{{email}}</td>
             <td>{{companyName}}</td>
+            <td>
+                <form method="post" action="/deleteAttendee">
+                    <input type="hidden" name="accountID" value={{account_uuid}}>
+                    <input type="hidden" name="event_uuid" value={{../event_uuid}}>
+                    <input type="submit" value="Delete">
+                </form>
+            </td>
         </tr>
         {{/each}}
     </table>

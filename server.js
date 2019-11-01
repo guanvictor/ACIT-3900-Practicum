@@ -370,7 +370,7 @@ app.get('/admin/adminaccount', async (request, response) => {
 //Contact Form Emails
 app.post('/email', (req, res) => {
     const {email, subject, text} = req.body;
-    //console.log(req.body)
+    console.log(req.body)
 
     sendMail(email, subject, text, function(err, data) {
         if (err) {

@@ -16,7 +16,6 @@ form {
     position: relative;
 }
 
-
 .topnav {
     overflow: auto;
     background-color: #FDFDFD;
@@ -248,16 +247,47 @@ footer {
 p {
     margin-top: 15px !important;
     margin-bottom: 0rem !important;
+    
+
 }
 
 .contact-container {
     display: grid;
-    grid-template-columns: 30%;
+    grid-template-columns: 1fr;
     grid-template-rows: auto;
+    /* grid-row-gap: 10px; */
     position: relative;
     padding: 20px;
+    text-align: center;
+    /* justify-items: center; */
+    /* border: 5px solid rgba(114, 186, 94, 0.35); */
 }
 
+.page-container {
+    
+    background-color:rgba(72,72,72,0.4);
+    /* border: 5px solid rgba(236, 198, 48, 0.5); */
+    margin: auto;
+    max-width: 50%;
+}
+
+h1 {
+    text-align: center;
+}
+
+
+.child-div{
+    display: grid;
+    align-items: center;
+    grid-row-gap: 10px;
+}
+
+/* input,select,textarea{
+    width: 100%;
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+}
 .images {
     position: relative;
     display: inline-block;
@@ -279,12 +309,12 @@ p {
 .dropdown-content {
     display: none;
     /* position: absolute; */
-    position: fixed;
+    /* position: fixed;
     background-color: #f1f1f1;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 3;
-}
+} */
 
 .dropdown-content a {
     color: black;
@@ -323,7 +353,6 @@ p {
     margin-bottom: 0;
     list-style: none;
 } */
-
 
 /* This is CSS for the admin's side nav bar */
 

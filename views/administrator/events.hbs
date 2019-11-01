@@ -64,40 +64,46 @@
                 <td class="event_text"><a class="event_link" href="/admin/events/{{event_uuid}}">{{eventName}}</a></td>
                 <td class="event_text"><a class="event_link" href="/admin/events/{{event_uuid}}">{{eventDescription}}</a></td>
                 <td class="event_text"><a class="event_link" href="/admin/events/{{event_uuid}}">{{eventDate}}</a></td>
-                <td class="event_text"><button class="edit_event_button" type="button" data-toggle="modal" data-target="#editEventForm">Edit</button>
-                <div class="modal fade" id="editEventForm" tabindex="-1" role="dialog" aria-labelledby="editEventFormLabel"
-                    aria-hidden="true">
-                    <form method="post" action="/editEvent" id="editevent_form">
-                        <div id="editEvent" class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header text-center">
-                                    <h4 class="modal-title w-100 font-weight-bold">Edit Event</h4>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="form-group">
-                                        <label data-error="wrong" data-success="right" for="eventForm-name">Event Name</label>
-                                        <input type="text" class="form-control validate" name="name" value="{{name}}">
+                <td class="event_text">
+                    <button class="edit_event_button" type="button" data-toggle="modal" data-target="#editEventForm">Edit</button>
+                    <div class="modal fade" id="editEventForm" tabindex="-1" role="dialog" aria-labelledby="editEventFormLabel" aria-hidden="true">
+                        <form method="post" action="/editEvent" id="editevent_form">
+                            <div id="editEvent" class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header text-center">
+                                        <h4 class="modal-title w-100 font-weight-bold">Edit Event</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
                                     </div>
-                                    <div class="form-group">
-                                        <label data-error="wrong" data-success="right" for="eventForm-date">Event Date</label>
-                                        <input type="date" class="form-control validate" name="date" value={{date}}>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label data-error="wrong" data-success="right" for="eventForm-name">Event Name</label>
+                                            <input type="text" class="form-control validate" name="name" value="{{name}}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label data-error="wrong" data-success="right" for="eventForm-date">Event Date</label>
+                                            <input type="date" class="form-control validate" name="date" value={{date}}>
+                                        </div>
+                                        <div class="form-group">
+                                            <label data-error="wrong" data-success="right" for="eventForm-description">Event
+                                                Description</label>
+                                            <textarea class="form-control" rows="3" name="desc">{{desc}}</textarea>
+                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label data-error="wrong" data-success="right" for="eventForm-description">Event
-                                            Description</label>
-                                        <textarea class="form-control" rows="3" name="desc">{{desc}}</textarea>
+                                    <div class="modal-footer d-flex justify-content-center">
+                                        <button class="btn btn-deep-orange">Confirm</button>
                                     </div>
-                                </div>
-                                <div class="modal-footer d-flex justify-content-center">
-                                    <button class="btn btn-deep-orange">Confirm</button>
                                 </div>
                             </div>
-                        </div>
+                        </form>
+                    </div>
+                <td class="event_text">
+                    <form method="post" action="/deleteEvent">
+                        <input type="hidden" name="event_uuid" value="{{event_uuid}}">
+                        <input type="submit" class="delete_event_button" value="Delete">
                     </form>
-                </div></td>
+                </td>
             </tr>
             {{/each}}
         </table>

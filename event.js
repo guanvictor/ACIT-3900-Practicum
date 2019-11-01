@@ -46,6 +46,41 @@ const editEvent = async (request, response) => {
     });
 };
 
+const deleteEvent = async (request, response) => {
+    let event_uuid = await request.body.event_uuid;
+
+    let con = db.getDb();
+    let sql = "DELETE FROM events WHERE event_uuid=?";
+
+    con.query(sql, event_uuid, (err, result) => {
+        if (err) {
+            throw err;
+        }
+
+        console.log(`Deleted event ${event_uuid}`);
+
+        return response.redirect('/admin/events');
+    });
+};
+
+const addAttendee = async (request, response) => {
+    let email = await request.body.email;
+    let event_uuid = await request.body.event_uuid;
+    let attendance_uuid = uuiv1();
+
+    let con = db.getDb();
+    let sql = "INSERT INTO UserEventStatus (attendance_uuid, event_uuid, account_uuid) VALUES (?, ?, (SELECT account_uuid FROM accounts WHERE email=?))";
+    let values = [attendance_uuid, event_uuid, email];
+
+    con.query(sql, values, (err, result) => {
+        if (err) {
+            throw err;
+        }
+
+        return response.redirect(`/admin/events/${event_uuid}`);
+    });
+};
+
 const deleteAttendee = async (request, response) => {
     let account_uuid = await request.body.accountID;
     let event_uuid = await request.body.event_uuid;
@@ -92,9 +127,29 @@ const eventRSVP = async (request, response) => {
     return response.redirect('/rsvp');
 };
 
+const cancelRSVP = async (request, response) => {
+    let event_uuid = await request.body.event_uuid;
+    let account_uuid = await request.body.account_uuid;
+
+    let con = db.getDb();
+    let sql = "DELETE FROM UserEventStatus WHERE event_uuid=? AND account_uuid=?";
+    let values = [event_uuid, account_uuid];
+
+    con.query(sql, values, (err, result) => {
+        if (err) {
+            throw err;
+        }
+
+        response.redirect('/rsvp');
+    })
+};
+
 router.post("/newEvent", newEvent);
 router.post('/editEvent', editEvent);
+router.post('/deleteEvent', deleteEvent);
+router.post('/addAttendee', addAttendee);
 router.post('/deleteAttendee', deleteAttendee);
 router.post("/eventRSVP", eventRSVP);
+router.post('/cancelRSVP', cancelRSVP);
 
 module.exports = router;

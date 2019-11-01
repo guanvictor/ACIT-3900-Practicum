@@ -378,3 +378,47 @@ p.sidenav_panel{
     .sidenav {padding-top: 15px;}
     .sidenav a {font-size: 18px;}
 }
+
+.add_event_button {
+    padding: 0;
+    border: none;
+    background: white;
+    float: right;
+    font-size: 18px;
+    margin-top: 1.8%;
+    text-shadow: 0px 1px #888888;
+}
+
+.admin_event_header {
+    display: inline;
+}
+
+.event_text {
+    text-align: center;
+    border: 0cm;
+    border-bottom: 0.1cm solid #ddd;
+
+}
+
+.event_link {
+    color: black;
+}
+
+.jumbotron {
+    height: 100vh;
+}
+
+.edit_event_button {
+    padding: 0;
+    border: none;
+    background: none;
+    float: right;
+    font-size: 16px;
+    margin-top: 1.8%;
+    text-shadow: 0px 1px #888888;
+
+}
+
+.event_table {
+    table-layout: auto;
+}

@@ -15,32 +15,36 @@
 
         <h1>{{heading}}</h1>
         <h2>Change Event Page</h2>
-        {{setDate}}
-        <form>
+        <form method="POST" action="/updateAbout">
             <div class="form-group">
-                <label for="aboutDate">Event Date</label>
-                <input class="form-control quarter_width" type="date" value="2019-08-19" id="aboutDate" name="aboutDate" required>
+                <label for="aboutTitle">Event Title</label>
+                <input class="form-control quarter_width" type="text" value="{{details.title}}" id="aboutTitle" name="aboutTitle"
+                    required>
             </div>
 
-            
+            <div class="form-group">
+                <label for="aboutDate">Event Date</label>
+                <input class="form-control quarter_width" type="date" value="{{details.date}}" id="aboutDate" name="aboutDate" required>
+            </div>
+
             <div class="form-group">
                 <label for="aboutTime">Event Start Time</label>
-                <input type="time" class="form-control quarter_width" name="about_hr1" required>
+                <input type="time" class="form-control quarter_width" name="about_hr1" value="{{details.startTime}}" required>
             </div>
 
             <div class="form-group">
                 <label for="aboutTime">Event End Time</label>
-                <input type="time" class="form-control quarter_width" name="about_hr2" required>
+                <input type="time" class="form-control quarter_width" name="about_hr2" value="{{details.endTime}}" required>
             </div>
 
             <div class="form-group">
                 <label for="aboutDesc">Event Description</label>
-                <textarea class="form-control half_width" id="aboutDesc" rows="5"></textarea required>
+                <textarea class="form-control half_width" id="aboutDesc" rows="5" name="about_desc" required>{{details.description}}</textarea>
             </div>
             
             <div class="form-group">
                 <label for="aboutGmaps">Google Maps HTML</label>
-                <textarea class="form-control half_width" id="aboutGmaps" rows="5"></textarea>
+                <textarea class="form-control half_width" id="aboutGmaps" name="aboutGmaps" rows="5"></textarea>
                 <small id="gmapsHelpBlock" class="form-text text-muted">
                     If you're unsure of what to put in here, follow these <a href="#gmapsInstructions">instructions</a>
                 </small>
@@ -54,7 +58,7 @@
 
         <ol>
             <li>Visit <a href="https://maps.google.com">Google Maps</a></li>
-            <li>Search for the event location using the search bar.<br>
+            <li>Type the address of the event's location into the search bar.<br>
                 <figure class="figure">
                     <img src="/images/about/instructions/instruct_0.jpg" class="figure-img img-fluid rounded img-thumbnail" width="100%" /><br>
                     <figcaption class="figure-caption">Google Maps Search Bar</figcaption>
@@ -98,7 +102,7 @@
                         width="100%" /><br>
                 </figure>
             </li>
-            <li>Navigate back to this page and <strong>Paste (CTRL+v)</strong> into this page</li>
+            <li>Navigate back to this page and <strong>Paste (CTRL+v)</strong> into the <a href="#aboutGmaps">Google Maps HTML</a> field</li>
             <li>Click <Strong>Change</Strong></li>
             <li>Done!</li>
         </ol>

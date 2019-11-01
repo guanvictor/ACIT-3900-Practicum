@@ -51,11 +51,21 @@ app.get("/", async (request, response) => {
     });
 });
 
-hbs.registerHelper("setDate", () => {
-    let datetime = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
-    console.log(datetime);
-    return;
+hbs.registerHelper("convertTime", (timeString) => {
+    let H = +timeString.substr(0, 2);
+    let h = H % 12 || 12;
+    let ampm = (H < 12 || H === 24) ? "AM" : "PM";
+    timeString = h + timeString.substr(2, 3) + ampm;
+
+    return timeString;
 });
+
+hbs.registerHelper("convertDate", (dateString) => {
+    let date = new Date(dateString);
+    let new_date = date.toDateString();
+
+    return new_date;
+})
 
 hbs.registerHelper("setActive", index => {
     if (index == 0) {
@@ -156,10 +166,14 @@ app.get("/profile/:account_uuid", checkAuthentication, async (request, response)
 });
 
 //  Page
-app.get('/about', (request, response) => {
+app.get('/about', async (request, response) => {
+    let details = await queries.getRow();
+
     response.render("about.hbs", {
         title:"About",
-        heading: "About"
+        heading: "About",
+        details: details
+
     });
 });
 
@@ -289,10 +303,13 @@ app.get('/admin/webcontent/home', checkAdmin, async (request, response) => {
 });
 
 app.get('/admin/webcontent/about', checkAdmin, async (request, response) => {
+    let details = await queries.getRow();
+
     response.render("administrator/webcontent/about.hbs", {
         title: 'Admin - About',
         heading: 'Manage About Page Content',
-        webcontent_isActive: true
+        webcontent_isActive: true,
+        details: details
     });
 });
 app.get('/admin/webcontent/agenda', checkAdmin, async (request, response) => {

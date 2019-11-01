@@ -67,10 +67,24 @@ let getFiles = folder => {
     });
 };
 
+let getRow = () => {
+    return new Promise((resolve, reject) => {
+        let con = db.getDb();
+
+        let sql = "SELECT * FROM about_event";
+
+        con.query(sql, (err, result) => {
+            if (err) reject(err);
+            resolve(result[0]);
+        });
+    });
+};
+
 module.exports = {
     eventPromise: eventPromise,
     getEvent: getEvent,
     getEventAttendees: getEventAttendees,
     getRSVPS: getRSVPS,
-    getFiles: getFiles
+    getFiles: getFiles,
+    getRow: getRow
 };

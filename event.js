@@ -128,11 +128,29 @@ const eventRSVP = async (request, response) => {
     }
 };
 
+const cancelRSVP = async (request, response) => {
+    let event_uuid = await request.body.event_uuid;
+    let account_uuid = await request.body.account_uuid;
+
+    let con = db.getDb();
+    let sql = "DELETE FROM UserEventStatus WHERE event_uuid=? AND account_uuid=?";
+    let values = [event_uuid, account_uuid];
+
+    con.query(sql, values, (err, result) => {
+        if (err) {
+            throw err;
+        }
+
+        response.redirect('/rsvp');
+    })
+};
+
 router.post("/newEvent", newEvent);
 router.post('/editEvent', editEvent);
 router.post('/deleteEvent', deleteEvent);
 router.post('/addAttendee', addAttendee);
 router.post('/deleteAttendee', deleteAttendee);
 router.post("/eventRSVP", eventRSVP);
+router.post('/cancelRSVP', cancelRSVP);
 
 module.exports = router;

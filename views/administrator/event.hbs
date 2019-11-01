@@ -20,6 +20,12 @@
     {{> menu}}
     
     <h1>{{heading}}</h1>
+
+    <h3>Event Description</h3>
+    <p>{{desc}}</p>
+
+    <br>
+
     <button type="button" data-toggle="modal" data-target="#editEventForm">Edit Event</button>
     <div class="modal fade" id="editEventForm" tabindex="-1" role="dialog" aria-labelledby="editEventFormLabel" aria-hidden="true">
         <form method="post" action="/editEvent" id="editevent_form">
@@ -55,14 +61,7 @@
 
     <br>
 
-    <h3>Event Description</h3>
-    <p>{{desc}}</p>
-
     </div>
 </body>
-<div class="maincontent">
-    {{> footer}}
-</div>
-
 
 </html>

@@ -121,11 +121,10 @@ const eventRSVP = async (request, response) => {
             if (err){
                 console.log(err);
             }
-
-            return response.redirect('/rsvp');
+            return;
         });
-        
     }
+    return response.redirect('/rsvp');
 };
 
 const cancelRSVP = async (request, response) => {

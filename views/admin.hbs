@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-    {{> header}}
+    {{> head}}
 <body>
     {{> menu}}
     <br />
     <br />
-    <h1>Admin Panel</h1>
-    <div class="container">
+
+<div class="container">
+    <h1>{{heading}}</h1>
     <form method="post" action="/editUser">
     <h3>Attendees</h3>
     <input type="radio" name="adminUserAction" value="Edit" checked> Edit
@@ -51,12 +52,10 @@
     <p><input type="submit" value="Confirm"></p>
 
     </form>
+</div>
 
-    
-    </div>
-
-    <div class="container">
-    <form method="post" action="/editSpeaker" id="speakerForm">
+<div class="container">
+    <form method="post" action="/addSpeaker" id="speakerForm">
     <h3>Speakers</h3>
     <input type="radio" name="adminSpeakerAction" value="Edit" checked> Edit
     <input type="radio" name="adminSpeakerAction" value="Add"> Add
@@ -74,23 +73,28 @@
     <textarea name="biography" form="speakerForm" placeholder="Enter Biography Here"></textarea>
 
     <p><label for="topic"><b>Topic</b></label></p>
-    <input type="text" name="speakerTopic" required>
+    <input type="text" name="topic" required>
 
     <p><label for="time"><b>Time</b></label></p>
-    <input type="time" name="speakerTime" required>
+    <input type="time" name="time" required>
     <br />
     <br />
 
-    <p><label for="speakerLocation"><b>Speaker Location</b></label></p>
-    <input type="text" name="speakerLocation" required>
+    <p><label for="location"><b>Speaker Location</b></label></p>
+    <input type="text" name="location" required>
 
     <br />
     <br />
     <p><input type="submit" value="Confirm"></p>
     </form>
-    </div>
+</div>
 
-    
+<div class="container">
+    <form method="post" action="/getSpeakers" id="speakerForm">
+    <p><input type="submit" value="Test getSpeakers"></p>
+    </form>
+</div>
+
 </body>
 {{> footer}}
 </html>

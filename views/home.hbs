@@ -1,46 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-    {{> header}}
+    {{> head}}
 <body>
     {{> menu}}
     <div class="parent">
-        <div class="child_1">
-            <h1 class="home_slider"><span>British Columbia Institute of Technology</span></h1>
-        </div>
-        <br>
-        <div class="child_2">
-<!--
-        <figure>
-            <div class="slider">
-              <div class= "slide">
-                   <img src="/images/slide_1.jpg">
-               </div>
-               <div class= "slide">
-                   <img src="/images/slide_2.jpg">
-               </div>
-               <div class= "slide">
-                   <img src="/images/slide_3.jpg">
-               </div> 
+
+            <h1 class="home_slider child_1"><span>British Columbia Institute of Technology</span></h1>
+
+
+        <div id="carouselHomeIndicators" class="carousel slide child_2" data-ride="carousel">
+            <ol class="carousel-indicators">
+                {{#each carouselImgs}}
+                <li data-target="#carouselHomeIndicators" data-slide-to="{{@index}}" class="{{setActive @index}}"></li>
+                {{/each}}
+            </ol>
+            <div class="carousel-inner">
+                {{#each carouselImgs}}
+                <div class="carousel-item {{setActive @index}}">
+                    <img class="d-block w-100" src="/images/index/carousel/{{this}}" alt="{{this}}">
+                </div>
+                {{/each}}
             </div>
-        </figure>
--->
-            <img src="/images/slide_1.jpg">
+            <a class="carousel-control-prev" href="#carouselHomeIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselHomeIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
         </div>
+            
         <br>
         <div class="child_3">
           <h1 class="our_sponsors"><span>Our Sponsors</span></h1>
-           <div class ="logo_col">
-              <img src="/images/Fortis_Inc_logo.png" width="100%">
-           </div>
-           <div class ="logo_col">
-               <img src="/images/Spartan_logo.jpg" width="100%">
-           </div>
-           <div class ="logo_col">
-               <img src="/images/cims-squarelogo.png" width="100%">
-           </div>
-           <div class ="logo_col">
-               <img src="/images/technical_safety_BC_logo.svg" width="100%">
-           </div>
+           {{#each sponsorImgs}}
+                <div class="logo_col">
+                    <img src="/images/index/sponsors/{{this}}" width="100%">
+                </div>
+           {{/each}}
         </div>
    
     </div>

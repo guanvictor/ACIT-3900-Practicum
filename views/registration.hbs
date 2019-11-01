@@ -32,20 +32,28 @@
     <input type="text" name="companyName" required>
 
     <p><label for="division"><b>Division</b></label></p>
-    <input type="text" name="department">
+    <input type="text" name="division">
 
     <p><b>Plant Classification</b></p>
     <select name="plantClassification">
         <option disabled selected value="null_value">select your plant classification</option>
-        <option value="first">1st</option>
-        <option value="second">2nd</option>
-        <option value="third">3rd</option>
-        <option value="fourth">4th</option>  
-        <option value="fifth">5th</option>
+        <option value="na">N/A</option>
+        <option value="first">1st Class</option>
+        <option value="second">2nd Class</option>
+        <option value="third">3rd Class</option>
+        <option value="fourth">4th Class</option>  
+        <option value="fifth">5th Class</option>
+        <option value="rpo">RPO</option>
     </select>
 
     <p><label for="fieldPosition"><b>Field Position</b></label></p>
-    <input type="text" name="fieldPosition">
+    <select name="fieldPosition">
+        <option disabled selected value="null_value">select your position</option>
+        <option value="na">N/A</option>
+        <option value="chiefEngineer">Chief Engineer</option>
+        <option value="shiftEngineer">Shift Engineer</option>
+        <option value="operator">Operator</option>
+    </select>
 
     <p><label for="businessPhone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"><b>Business Phone Number</b> (format: 123-456-7890)</label></p>
     <input type="tel" name="businessPhone">

@@ -4,6 +4,7 @@ body {
     padding: 0;
     height: 100%;
     font-family: Arial, Helvetica, sans-serif;
+    min-width: 650px;
 }
 
 form {
@@ -45,7 +46,7 @@ form {
 .parent {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(5, 1fr);
+    grid-template-rows: 100px repeat(4, 1fr);
     grid-column-gap: 0px;
     grid-row-gap: 0px;
     
@@ -65,7 +66,7 @@ form {
     border-top: 15pt solid #095E94;
     border-bottom: 15pt solid #095E94;
     line-height: 1.5em;
-    margin: 10px 0 20px;
+    margin: 0;
     background-color: #095E94;
     word-spacing: 5px;
 }
@@ -83,7 +84,7 @@ form {
     .child_2 { 
         grid-area: 2 / 1 / 4 / 6;
         width: 100%;
-        height: 400px;
+        height: 650px;
         overflow: hidden;
         display:flex;
         flex-direction: column;
@@ -93,6 +94,7 @@ form {
         width: 100%;
         height: auto;
         float: right;
+        position: relative;
     }
 
 /*Sponsors css*/
@@ -123,6 +125,10 @@ form {
 
 /*--------------*/
 
+.bg-light {
+    background-color: white !important;
+}
+
 .navbar-brand {
     max-height: 80px;
     max-width: 30%;
@@ -132,8 +138,8 @@ form {
 }
 
 .nav-img {
-    height: 120px;
-    width: 230px
+    height: 70px;
+    width: 80px
 }
 
 .navbar-light .navbar-nav .nav-link {
@@ -191,8 +197,6 @@ footer {
 
 .map {
     float: right;
-    width: 70%;
-    height: 70%;
     margin: 0px -220px 15px 30px;
 }
 
@@ -252,4 +256,169 @@ p {
     grid-template-rows: auto;
     position: relative;
     padding: 20px;
+}
+
+.images {
+    position: relative;
+    display: inline-block;
+}
+
+.address {
+    position: absolute;
+    width: 100%;
+    text-align: right;
+    bottom: 70px;
+    left: 180px;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    /* position: absolute; */
+    position: fixed;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 3;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+@media only screen and (max-width: 600px) {
+    .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        text-indent: 10px;
+    }
+}
+
+/* .navbar-nav {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: row !important;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+} */
+
+
+/* This is CSS for the admin's side nav bar */
+
+.sidenav {
+    height: 100%;
+    width: 160px;
+    position: fixed;
+    z-index: 1;
+    background-color: black;
+    overflow-x: hidden;
+    padding-top: 20px;
+    text-align: justify;
+}
+
+.sidenav a {
+    height: 20%;
+    padding: 15px 15px 15px 10px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #818181;
+    display: block;
+    text-align: center;
+    position: relative;
+
+}
+
+.sidenav a:hover {
+    background-color:#095E94;
+    color: white;
+    text-decoration: none;
+}
+.sidenav a.active {
+    background-color: #095E94;
+    color: white;
+    text-decoration: none;
+}
+
+.maincontent {
+    margin-left: 160px; /* Same as the width of the sidenav */
+    padding: 0px 10px;
+}
+
+p.sidenav_panel{
+    margin: 5% !important;
+    padding: 10px;
+    color: white;
+    font-size: 20px;
+    border-bottom: 3px solid white;
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+}
+
+.add_event_button {
+    padding: 0;
+    border: none;
+    background: white;
+    float: right;
+    font-size: 18px;
+    margin-top: 1.8%;
+    text-shadow: 0px 1px #888888;
+}
+
+.admin_event_header {
+    display: inline;
+}
+
+.event_text {
+    text-align: center;
+    border: 0cm;
+    border-bottom: 0.1cm solid #ddd;
+
+}
+
+.event_link {
+    color: black;
+}
+
+.jumbotron {
+    height: 100vh;
+}
+
+.edit_event_button {
+    padding: 0;
+    border: none;
+    background: none;
+    float: right;
+    font-size: 16px;
+    margin-top: 1.8%;
+    text-shadow: 0px 1px #888888;
+
+}
+
+.event_table {
+    table-layout: auto;
 }

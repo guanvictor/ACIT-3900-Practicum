@@ -40,7 +40,7 @@ const registerUser = async (request, response) => {
     con = db.getDb();
 
     // checks that an account does NOT already exist
-    var sql = "SELECT * FROM accounts WHERE email=?";
+    let sql = "SELECT * FROM accounts WHERE email=?";
     con.query(sql, email, (err, result) => {
         if (err) throw err;
         if (result.length > 0) {
@@ -50,15 +50,16 @@ const registerUser = async (request, response) => {
         else {
             // creates a new account
             sql = "INSERT INTO accounts (account_uuid, email, password, title, firstName, lastName, companyName, division, plantClassification, fieldPosition, businessPhone, homePhone, cellPhone, addressL1, addressL2, country, city, province_state, pc_zip, consent) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-            var values = [uuid, email, password, title, firstName, lastName, companyName, division, plantClassification, fieldPosition, businessPhone, homePhone, cellPhone, addressL1, addressL2, country, city, province_state, pc_zip, consent];
+            let values = [uuid, email, password, title, firstName, lastName, companyName, division, plantClassification, fieldPosition, businessPhone, homePhone, cellPhone, addressL1, addressL2, country, city, province_state, pc_zip, consent];
 
             con.query(sql, values, (err, result) => {
                 if (err) throw err;
                 console.log("Number of records inserted: " + result.affectedRows);
             });
+
+            return response.redirect("/rsvp");
         }
     });
-
 };
 
 router.post("/registerUser", registerUser);

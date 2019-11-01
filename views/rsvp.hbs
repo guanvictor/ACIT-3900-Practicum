@@ -26,7 +26,14 @@
             <td>{{eventName}}</td>
             <td>{{eventDescription}}</td>
             <td>{{eventDate}}</td>
-            <td><a href="#">Cancel</a></td>
+            <td>
+                <form method="post" action="/cancelRSVP">
+                    <input type="hidden" name="event_uuid" value="{{event_uuid}}">
+                    <input type="hidden" name="account_uuid" value="{{../account_uuid}}">
+
+                    <input type="submit" value="Cancel RSVP">
+                </form>
+            </td>
         </tr>   
         {{/each}}
     </table>

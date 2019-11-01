@@ -408,7 +408,7 @@ p.sidenav_panel{
     height: 100vh;
 }
 
-.edit_event_button {
+.edit_event_button, .delete_event_button {
     padding: 0;
     border: none;
     background: none;
@@ -416,7 +416,6 @@ p.sidenav_panel{
     font-size: 16px;
     margin-top: 1.8%;
     text-shadow: 0px 1px #888888;
-
 }
 
 .event_table {

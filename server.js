@@ -207,7 +207,7 @@ app.get("/rsvp", checkAuthentication, async (request, response) => {
     let rsvps = await queries.getRSVPS(account_uuid);
     let event_difference = _.differenceBy(events, rsvps, 'event_uuid');
 
-    console.log(event_difference);
+    // console.log(event_difference);
 
     response.render("rsvp.hbs", {
         title: "RSVP",

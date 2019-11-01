@@ -7,19 +7,17 @@
     <div class="container">
         <div>
             <iframe
-                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d10417.278977600945!2d-123.0016454!3d49.2513852!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xeeac1574a815ac4e!2sBCIT%20SE02%20-%20BCIT%20Student%20Association!5e0!3m2!1sen!2sca!4v1570821580926!5m2!1sen!2sca"
+                src="{{details.googleMaps}}"
                 width="800px" height="600px" frameborder="0" style="border:0;" allowfullscreen="" class="map"></iframe>
             <h6 class="address">BCIT | 3700 Willingdon Ave, Burnaby, BC</h6>
 
         </div>
 
         <div class="col-md-4 col-lg-5 mr-auto my-md-4 my-0 mt-4 mb-1">
-            <h3>Event Details</h3>
-            <p>Friday September 14, 2018 | 8:30am - 6:30pm</p>
+            <h3>{{details.title}}</h3>
+            <p>{{convertDate details.date}} | {{convertTime details.startTime}} - {{convertTime details.endTime}}</p>
             <br><br>
-            <p>Come spend the day sharing and learning with fellow power engineers and
-                combustion specialists while participating in seminars, lectures and
-                breakout discussions designed to support your plant operations.</p>
+            <p>{{details.description}}</p>
         </div>
     </div>
 </body>

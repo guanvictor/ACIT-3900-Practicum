@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/admin_style.css">
+    {{> head}}
+</head>
+
+<body>
+    {{> admin_menu}}
+
+    <div class="maincontent">
+
+        {{> menu}}
+
+        <h1>{{heading}}</h1>
+        <h2>Change Event Page</h2>
+        <form method="POST" action="/updateAbout">
+            <div class="form-group">
+                <label for="aboutTitle">Event Title</label>
+                <input class="form-control quarter_width" type="text" value="{{details.title}}" id="aboutTitle" name="aboutTitle"
+                    required>
+            </div>
+
+            <div class="form-group">
+                <label for="aboutDate">Event Date</label>
+                <input class="form-control quarter_width" type="date" value="{{details.date}}" id="aboutDate" name="aboutDate" required>
+            </div>
+
+            <div class="form-group">
+                <label for="aboutTime">Event Start Time</label>
+                <input type="time" class="form-control quarter_width" name="about_hr1" value="{{details.startTime}}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="aboutTime">Event End Time</label>
+                <input type="time" class="form-control quarter_width" name="about_hr2" value="{{details.endTime}}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="aboutDesc">Event Description</label>
+                <textarea class="form-control half_width" id="aboutDesc" rows="5" name="about_desc" required>{{details.description}}</textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="aboutGmaps">Google Maps HTML</label>
+                <textarea class="form-control half_width" id="aboutGmaps" name="aboutGmaps" rows="5"></textarea>
+                <small id="gmapsHelpBlock" class="form-text text-muted">
+                    If you're unsure of what to put in here, follow these <a href="#gmapsInstructions">instructions</a>
+                </small>
+            </div>
+            <button type="submit" class="btn btn-primary">Change</button>
+        </form>
+
+
+        <h3 id="gmapsInstructions">Google Maps</h3>
+        To display event locations, we use google maps. You will have to follow these instructions to change the location.
+
+        <ol>
+            <li>Visit <a href="https://maps.google.com">Google Maps</a></li>
+            <li>Type the address of the event's location into the search bar.<br>
+                <figure class="figure">
+                    <img src="/images/about/instructions/instruct_0.jpg" class="figure-img img-fluid rounded img-thumbnail" width="100%" /><br>
+                    <figcaption class="figure-caption">Google Maps Search Bar</figcaption>
+                </figure>
+            </li>
+            <li>Google maps should look similar to Figure 1<br>
+                <figure class="figure">
+                    <img src="/images/about/instructions/instruct_1.jpg" class="figure-img img-fluid rounded" width="50%" /><br>
+                    <figcaption class="figure-caption">Figure 1</figcaption>
+                </figure><br>
+                <a data-toggle="collapse" href="#searchInstruction" role="button" aria-expanded="false"
+                    aria-controls="searchInstruction">My search doesn't look the same!</a>
+                <div class="collapse" id="searchInstruction">
+                    <div class="card card-body">
+                        <h4>My Search Doesn't Look the Same!</h4>
+                        Google Maps may return more than one location which matches your search (Figure 1.1)<br>
+                        <figure class="figure">
+                            <img src="/images/about/instructions/instruct_1-1.jpg" class="figure-img img-fluid rounded" width="50%"/><br>
+                            <figcaption class="figure-caption">Figure 1.1: Multiple search results</figcaption>
+                        </figure>
+                        Click and drag the map until you have found the correct location.<br>
+                        Select the location using the left navigation bar OR using pins on the map<br>
+                        (Note: You can click + and - to reveal more/less locations)
+                    </div>
+                </div>
+                
+            </li><br>
+            <li>Click <strong>Share</strong><br>
+                <figure class="figure">
+                    <img src="/images/about/instructions/instruct_2.jpg" class="figure-img img-fluid img-thumbnail rounded" width="100%" /><br>
+                </figure>
+            </li>
+            <li>Click <strong>Embed a map</strong><br>
+                <figure class="figure">
+                    <img src="/images/about/instructions/instruct_3.jpg" class="figure-img img-fluid img-thumbnail rounded" width="100%" /><br>
+                </figure>
+            </li>
+            <li>Click <strong>COPY HTML</strong> located above the map<br>
+                <figure class="figure">
+                    <img src="/images/about/instructions/instruct_4.jpg" class="figure-img img-fluid img-thumbnail rounded"
+                        width="100%" /><br>
+                </figure>
+            </li>
+            <li>Navigate back to this page and <strong>Paste (CTRL+v)</strong> into the <a href="#aboutGmaps">Google Maps HTML</a> field</li>
+            <li>Click <Strong>Change</Strong></li>
+            <li>Done!</li>
+        </ol>
+    </div>
+    
+</body>
+
+<div class="maincontent">
+{{> footer}}
+</div>
+
+</html>

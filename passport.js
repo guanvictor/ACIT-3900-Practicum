@@ -53,7 +53,12 @@ router.post(
         failureFlash: 'Invalid username and password'
     }),
     (request, response) => {
-        response.redirect("/");
+        if (request.user.isadmin) {
+            response.redirect("/admin");
+        }
+        else {
+            response.redirect("/");
+        }
     }
 );
 
@@ -69,13 +74,10 @@ passport.use(
                 console.log("ERROR: not equal to 1 found");
             }
             else {
-                console.log("Account found");
                 bcrypt.compare(password, result[0].password).then(match => {
                     if (match) {
-                        console.log("Password matches!");
                         return done(null, result[0]);
                     }
-                    console.log("Password does NOT match");
                     return done(null, false);
                 });
             }

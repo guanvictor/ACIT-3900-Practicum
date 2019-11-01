@@ -14,6 +14,7 @@ const queries = require("./queries.js");
 const events = require("./event.js");
 const profile = require("./profile.js");
 const sendMail = require('./mailgun');
+const admin = require("./admin.js");
 
 const app = express();
 
@@ -42,17 +43,64 @@ app.use(events);
 app.use(register);
 app.use(passport);
 app.use(profile);
+app.use(admin);
 
 // Home
-app.get("/", (request, response) => {
+app.get("/", async (request, response) => {
+    let sponsorFolder = './public/images/index/sponsors';
+    let sponsorImgs = await queries.getFiles(sponsorFolder);
+    let carouselFolder = './public/images/index/carousel';
+    let carouselImgs = await queries.getFiles(carouselFolder);
+
     response.render("home.hbs", {
         title: "Home",
-        heading: "Home"
+        heading: "Home",
+        sponsorImgs: sponsorImgs,
+        carouselImgs: carouselImgs
     });
 });
 
+hbs.registerHelper("convertTime", (timeString) => {
+    let H = +timeString.substr(0, 2);
+    let h = H % 12 || 12;
+    let ampm = (H < 12 || H === 24) ? "AM" : "PM";
+    timeString = h + timeString.substr(2, 3) + ampm;
+
+    return timeString;
+});
+
+hbs.registerHelper("convertDate", (dateString) => {
+    let date = new Date(dateString);
+    let new_date = date.toDateString();
+
+    return new_date;
+})
+
+hbs.registerHelper("setActive", index => {
+    if (index == 0) {
+        return "active";
+    }
+    return "";
+});
+
+//Checks Authentication (is user logged in?)
+checkAuthentication = (request, response, next) => {
+    if (request.isAuthenticated()) {
+        return next();
+    } else {
+        response.redirect('/registration');
+    }
+};
+
+checkAuthentication_false = (request, response, next) => {
+    if (!request.isAuthenticated()) {
+        return next();
+    }
+    response.redirect('/');
+};
+
 // Login Page
-app.get("/login", (request, response) => {
+app.get("/login", checkAuthentication_false, (request, response) => {
     let sessionID = request.sessionID;
     let sessionData_string = request.sessionStore.sessions[sessionID];
     let sessionData = JSON.parse(sessionData_string);
@@ -77,7 +125,7 @@ app.get("/login", (request, response) => {
 });
 
 // Logout
-app.get("/logout", (request, response) => {
+app.get("/logout", checkAuthentication, (request, response) => {
     request.logout();
     request.session.destroy(() => {
         response.clearCookie("connect.sid");
@@ -86,7 +134,7 @@ app.get("/logout", (request, response) => {
 });
 
 // Profile
-app.get("/profile/:account_uuid", async (request, response) => {
+app.get("/profile/:account_uuid", checkAuthentication, async (request, response) => {
     if (request.user == undefined) {
         response.render("profile.hbs");
     }
@@ -126,16 +174,20 @@ app.get("/profile/:account_uuid", async (request, response) => {
     });
 });
 
-// About Page
-app.get('/about', (request, response) => {
+//  Page
+app.get('/about', async (request, response) => {
+    let details = await queries.getRow();
+
     response.render("about.hbs", {
         title:"About",
-        heading: "About"
+        heading: "About",
+        details: details
+
     });
 });
 
 // Registration Page
-app.get('/registration', (request, response) => {
+app.get('/registration', checkAuthentication_false, (request, response) => {
     response.render("registration.hbs", {
         title:"Registration",
         heading: "Registration"
@@ -166,21 +218,152 @@ app.get('/contact', (request, response) => {
     });
 });
 
+// RSVP
+app.get("/rsvp", checkAuthentication, async (request, response) => {
+    let events = await queries.eventPromise();
+
+    let account_uuid = "";
+    if (request.user != undefined) {
+        account_uuid = request.user.account_uuid;
+    }
+
+    let rsvps = await queries.getRSVPS(account_uuid);
+    let event_difference = _.differenceBy(events, rsvps, 'event_uuid');
+
+    response.render("rsvp.hbs", {
+        title: "RSVP",
+        heading: "Event RSVP",
+        event: event_difference,
+        account_uuid: account_uuid,
+        rsvps: rsvps,
+    });
+});
+
+//Checks Account Administrator Status
+checkAdmin = (request, response, next) => {
+    if (request.isAuthenticated()) {
+        if (request.user.isadmin == 1) {
+            return next();
+        }
+    } else{
+        response.redirect('/');
+    }
+};
+
 //Admin Page
-app.get('/admin', (request, response) => {
+app.get('/admin', checkAdmin, (request, response) => {
     response.render("administrator/index.hbs", {
         title: "Administrator Panel",
         heading: "Administrator Panel"
     });
 });
 
-app.get('/admin/events', async (request, response) => {
+app.get('/admin/events', checkAdmin, async (request, response) => {
     let events = await queries.eventPromise();
 
     response.render("administrator/events.hbs", {
         title: "Events",
         heading: "Events",
-        event: events
+        event: events,
+        event_isActive: true
+    });
+});
+
+app.get('/admin/events/:event_id', checkAdmin, async (request, response) => {
+    let event = await queries.getEvent(request.params.event_id);
+    let eventAttendees = await queries.getEventAttendees(request.params.event_id);
+    let event_uuid = request.params.event_id;
+
+    let eventDate = await event.eventDate;
+    let x = new Date(eventDate);
+    let dd = x.getDate();
+    let mm = x.getMonth() + 1;
+    let yy = x.getFullYear();
+    let date = yy + "-" + mm + "-" + dd;
+    
+    let countAttendees = _.size(eventAttendees);
+
+    response.render("administrator/event.hbs", {
+        title: event.eventName,
+        heading: event.eventName,
+        name: event.eventName,
+        date: date,
+        desc: event.eventDescription,
+        event_isActive: true,
+        eventAttendees: eventAttendees,
+        countAttendees: countAttendees,
+        event_uuid: event_uuid
+    });
+});
+
+app.get('/admin/webcontent/home', checkAdmin, async (request, response) => {
+    let sponsorFolder = './public/images/index/sponsors';
+    let sponsorImgs = await queries.getFiles(sponsorFolder);
+    let carouselFolder = './public/images/index/carousel';
+    let carouselImgs = await queries.getFiles(carouselFolder);
+    
+    response.render("administrator/webcontent/home.hbs", {
+        title: 'Admin - Home',
+        heading: 'Manage Home Page Content',
+        carouselImgs: carouselImgs,
+        sponsorImgs: sponsorImgs,
+        webcontent_isActive: true
+    });
+});
+
+app.get('/admin/webcontent/about', checkAdmin, async (request, response) => {
+    let details = await queries.getRow();
+
+    response.render("administrator/webcontent/about.hbs", {
+        title: 'Admin - About',
+        heading: 'Manage About Page Content',
+        webcontent_isActive: true,
+        details: details
+    });
+});
+app.get('/admin/webcontent/agenda', checkAdmin, async (request, response) => {
+    response.render("administrator/webcontent/agenda.hbs", {
+        title: 'Admin - Agenda',
+        heading: 'Manage Agenda Page Content',
+        webcontent_isActive: true
+    });
+});
+app.get('/admin/webcontent/speakers', checkAdmin, async (request, response) => {
+    response.render("administrator/webcontent/speaker.hbs", {
+        title: 'Admin - Speaker',
+        heading: 'Manage Speaker Page Content',
+        webcontent_isActive: true
+    });
+});
+app.get('/admin/webcontent/contact', checkAdmin, async (request, response) => {
+    response.render("administrator/webcontent/contact.hbs", {
+        title: 'Admin - Contact',
+        heading: 'Manage Contact Page Content',
+        webcontent_isActive: true
+    });
+});
+
+app.get('/admin/webcontent', checkAdmin, async (request, response) => {
+    response.render("administrator/webcontent.hbs", {
+        title: "Website Content",
+        heading: "Manage Website Content",
+        webcontent_isActive: true
+    });
+});
+
+app.get('/admin/useraccounts', async (request, response) => {
+    response.render("administrator/useraccounts.hbs", {
+        title: "User Accounts",
+        heading: "Manage User Accounts",
+        ua_isActive: true
+    });
+});
+
+app.get('/admin/adminaccount', async (request, response) => {
+    response.render("administrator/adminaccount.hbs", {
+        title: "Admin Account",
+        heading: "Manage Admin Account",
+        adminacc_isActive: true
     });
 });
 
@@ -198,4 +381,3 @@ app.post('/email', (req, res) => {
     });
 
 });
-

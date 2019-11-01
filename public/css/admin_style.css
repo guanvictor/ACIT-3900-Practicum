@@ -8,3 +8,36 @@ th {
     text-align: left;
     padding: 8px;
 }
+
+tr:hover {
+    background-color: rgba(0,60,121,0.1);
+}
+
+td a {
+    display: block;
+}
+
+td a:hover {
+    text-decoration: none;
+}
+
+td a:visited {
+    text-decoration: none;
+}
+
+.filetable {
+    width: 50%;
+}
+
+.filetable form {
+    margin: 0;
+}
+
+.half_width {
+    width: 50% !important;
+}
+
+.quarter_width {
+    width: 25% !important;
+}
+

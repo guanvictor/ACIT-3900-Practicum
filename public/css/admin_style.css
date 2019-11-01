@@ -10,7 +10,7 @@ th {
 }
 
 tr:hover {
-    background-color: rgba(0,60,121,0.4);
+    background-color: rgba(0,60,121,0.1);
 }
 
 td a {
@@ -31,5 +31,13 @@ td a:visited {
 
 .filetable form {
     margin: 0;
+}
+
+.half_width {
+    width: 50% !important;
+}
+
+.quarter_width {
+    width: 25% !important;
 }
 

@@ -34,7 +34,7 @@
     <h3>You haven't signed up for any events!</h3>
 {{/if}}
 
-{{#if event.lengths}}
+{{#unless event.lengths}}
     <h2>RSVP to New Events!</h2>
     <form method="post" action="/eventRSVP">
         {{#each event}}
@@ -49,8 +49,7 @@
     </form>
 {{else}}
     <h3>Keep an eye out in your email for more updates</h3>
-{{/if}}
-</div>
+{{/unless}}
 </body>
 {{> footer}}
 </html>

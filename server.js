@@ -357,3 +357,18 @@ app.get('/admin/adminaccount', async (request, response) => {
         adminacc_isActive: true
     });
 });
+
+//Contact Form Emails
+app.post('/email', (req, res) => {
+    const {email, subject, text} = req.body;
+    console.log(req.body)
+
+    sendMail(email, subject, text, function(err, data) {
+        if (err) {
+            res.status(500).json({ message: 'An error has occurred' });
+        } else {
+            res.json({ message: 'Message sent successfully.'});
+        }
+    });
+
+});

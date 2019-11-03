@@ -21,7 +21,4 @@ $('form').on('submit', (e) => {
     $.post('/email', data, function () {
         console.log('Server received the data');
     });
-
-
-
 });;

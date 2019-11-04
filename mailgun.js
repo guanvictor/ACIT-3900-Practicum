@@ -10,7 +10,7 @@ const sendMail = (email, subject, text) => {
 
     const mailOptions = {
         from: email,
-        to: 'collaborators.2020@gmail.com',
+        to: 'collabevent2020@gmail.com',
         subject,
         text
     };

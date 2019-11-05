@@ -36,6 +36,27 @@ app.use(passport);
 app.use(profile);
 app.use(admin);
 
+//Checks Account Administrator Status
+checkAdmin = (request, response, next) => {
+    if (request.isAuthenticated()) {
+        if (request.user.isadmin == 1) {
+            return next();
+        }
+    } else {
+        response.redirect('/');
+    }
+};
+
+checkAdmin_false = (request, response, next) => {
+    if (request.isAuthenticated()) {
+        if (request.user.isadmin != 1) {
+            return next();
+        }
+    } else {
+        response.redirect('/');
+    }
+};
+
 // Home
 app.get("/", async (request, response) => {
     let sponsorFolder = './public/images/index/sponsors';
@@ -210,36 +231,22 @@ app.get('/contact', (request, response) => {
 });
 
 // RSVP
-app.get("/rsvp", checkAuthentication, async (request, response) => {
+app.get("/rsvp", checkAuthentication, checkAdmin_false, async (request, response) => {
     let events = await queries.eventPromise();
 
-    let account_uuid = "";
-    if (request.user != undefined) {
-        account_uuid = request.user.account_uuid;
-    }
+    let user = request.user;
 
-    let rsvps = await queries.getRSVPS(account_uuid);
+    let rsvps = await queries.getRSVPS(user.account_uuid);
     let event_difference = _.differenceBy(events, rsvps, 'event_uuid');
 
     response.render("rsvp.hbs", {
         title: "RSVP",
         heading: "Event RSVP",
         event: event_difference,
-        account_uuid: account_uuid,
-        rsvps: rsvps,
+        account_uuid: user.account_uuid,
+        rsvps: rsvps
     });
 });
-
-//Checks Account Administrator Status
-checkAdmin = (request, response, next) => {
-    if (request.isAuthenticated()) {
-        if (request.user.isadmin == 1) {
-            return next();
-        }
-    } else{
-        response.redirect('/');
-    }
-};
 
 //Admin Page
 app.get('/admin', checkAdmin, (request, response) => {

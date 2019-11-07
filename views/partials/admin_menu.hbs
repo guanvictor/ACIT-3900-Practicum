@@ -3,7 +3,35 @@
     <a href="/admin/events" {{#if event_isActive}}class="active"{{/if}}>Events</a>
     <a href="/admin/useraccounts" {{#if ua_isActive}}class="active"{{/if}}>User Accounts</a>
     <a href="/admin/adminaccount" {{#if adminacc_isActive}}class="active"{{/if}}>Administrator Accounts</a>
-    <a href="/admin/webcontent" {{#if webcontent_isActive}}class="active"{{/if}}>Website Content</a>
+    
+    <button class="dropdown_menu"> Website Contents
+        <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown_container">
+        <a href="/admin/webcontent/home" {{#if webcontent_homeisActive}}class="active"{{/if}}>Home</a>
+        <a href="/admin/webcontent/about" {{#if webcontent_aboutisActive}}class="active"{{/if}}>About</a>
+        <a href="/admin/webcontent/agenda" {{#if webcontent_agendaisActive}}class="active"{{/if}}>Agenda</a>
+        <a href="/admin/webcontent/speakers" {{#if webcontent_speakersisActive}}class="active"{{/if}}>Speakers</a>
+        <a href="/admin/webcontent/contact" {{#if webcontent_contactisActive}}class="active"{{/if}}>Contact</a>
+    </div>
 </div>
 
 {{event_isActive}}
+
+
+<script>
+    var dropdown = document.getElementsByClassName("dropdown_menu");
+var i;
+
+for (i = 0; i < dropdown.length; i++) {
+    dropdown[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var dropdownContent = this.nextElementSibling;
+    if (dropdownContent.style.display === "block") {
+    dropdownContent.style.display = "none";
+    } else {
+    dropdownContent.style.display = "block";
+    }
+    });
+}
+</script>

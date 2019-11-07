@@ -305,7 +305,7 @@ app.get('/admin/webcontent/home', checkAdmin, async (request, response) => {
         heading: 'Manage Home Page Content',
         carouselImgs: carouselImgs,
         sponsorImgs: sponsorImgs,
-        webcontent_isActive: true
+        webcontent_homeisActive: true
     });
 });
 
@@ -315,7 +315,7 @@ app.get('/admin/webcontent/about', checkAdmin, async (request, response) => {
     response.render("administrator/webcontent/about.hbs", {
         title: 'Admin - About',
         heading: 'Manage About Page Content',
-        webcontent_isActive: true,
+        webcontent_aboutisActive: true,
         details: details
     });
 });
@@ -323,21 +323,21 @@ app.get('/admin/webcontent/agenda', checkAdmin, async (request, response) => {
     response.render("administrator/webcontent/agenda.hbs", {
         title: 'Admin - Agenda',
         heading: 'Manage Agenda Page Content',
-        webcontent_isActive: true
+        webcontent_agendaisActive: true
     });
 });
 app.get('/admin/webcontent/speakers', checkAdmin, async (request, response) => {
     response.render("administrator/webcontent/speaker.hbs", {
         title: 'Admin - Speaker',
         heading: 'Manage Speaker Page Content',
-        webcontent_isActive: true
+        webcontent_speakersisActive: true
     });
 });
 app.get('/admin/webcontent/contact', checkAdmin, async (request, response) => {
     response.render("administrator/webcontent/contact.hbs", {
         title: 'Admin - Contact',
         heading: 'Manage Contact Page Content',
-        webcontent_isActive: true
+        webcontent_contactisActive: true
     });
 });
 

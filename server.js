@@ -48,6 +48,27 @@ app.use(passport);
 app.use(profile);
 app.use(admin);
 
+//Checks Account Administrator Status
+checkAdmin = (request, response, next) => {
+    if (request.isAuthenticated()) {
+        if (request.user.isadmin == 1) {
+            return next();
+        }
+    } else {
+        response.redirect('/');
+    }
+};
+
+checkAdmin_false = (request, response, next) => {
+    if (request.isAuthenticated()) {
+        if (request.user.isadmin != 1) {
+            return next();
+        }
+    } else {
+        response.redirect('/');
+    }
+};
+
 // Home
 app.get("/", async (request, response) => {
     let sponsorFolder = './public/images/index/sponsors';
@@ -222,36 +243,22 @@ app.get('/contact', (request, response) => {
 });
 
 // RSVP
-app.get("/rsvp", checkAuthentication, async (request, response) => {
+app.get("/rsvp", checkAuthentication, checkAdmin_false, async (request, response) => {
     let events = await queries.eventPromise();
 
-    let account_uuid = "";
-    if (request.user != undefined) {
-        account_uuid = request.user.account_uuid;
-    }
+    let user = request.user;
 
-    let rsvps = await queries.getRSVPS(account_uuid);
+    let rsvps = await queries.getRSVPS(user.account_uuid);
     let event_difference = _.differenceBy(events, rsvps, 'event_uuid');
 
     response.render("rsvp.hbs", {
         title: "RSVP",
         heading: "Event RSVP",
         event: event_difference,
-        account_uuid: account_uuid,
-        rsvps: rsvps,
+        account_uuid: user.account_uuid,
+        rsvps: rsvps
     });
 });
-
-//Checks Account Administrator Status
-checkAdmin = (request, response, next) => {
-    if (request.isAuthenticated()) {
-        if (request.user.isadmin == 1) {
-            return next();
-        }
-    } else{
-        response.redirect('/');
-    }
-};
 
 //Admin Page
 app.get('/admin', checkAdmin, (request, response) => {
@@ -310,6 +317,7 @@ app.get('/admin/webcontent/home', checkAdmin, async (request, response) => {
         heading: 'Manage Home Page Content',
         carouselImgs: carouselImgs,
         sponsorImgs: sponsorImgs,
+        webcontent_homeisActive: true,
         webcontent_isActive: true
     });
 });
@@ -320,14 +328,16 @@ app.get('/admin/webcontent/about', checkAdmin, async (request, response) => {
     response.render("administrator/webcontent/about.hbs", {
         title: 'Admin - About',
         heading: 'Manage About Page Content',
-        webcontent_isActive: true,
-        details: details
+        webcontent_aboutisActive: true,
+        details: details,
+        webcontent_isActive: true
     });
 });
 app.get('/admin/webcontent/agenda', checkAdmin, async (request, response) => {
     response.render("administrator/webcontent/agenda.hbs", {
         title: 'Admin - Agenda',
         heading: 'Manage Agenda Page Content',
+        webcontent_agendaisActive: true,
         webcontent_isActive: true
     });
 });
@@ -335,6 +345,7 @@ app.get('/admin/webcontent/speakers', checkAdmin, async (request, response) => {
     response.render("administrator/webcontent/speaker.hbs", {
         title: 'Admin - Speaker',
         heading: 'Manage Speaker Page Content',
+        webcontent_speakersisActive: true,
         webcontent_isActive: true
     });
 });
@@ -342,6 +353,7 @@ app.get('/admin/webcontent/contact', checkAdmin, async (request, response) => {
     response.render("administrator/webcontent/contact.hbs", {
         title: 'Admin - Contact',
         heading: 'Manage Contact Page Content',
+        webcontent_contactisActive: true,
         webcontent_isActive: true
     });
 });

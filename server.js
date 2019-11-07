@@ -35,6 +35,7 @@ app.use(register);
 app.use(passport);
 app.use(profile);
 app.use(admin);
+app.use(queries.router);
 
 //Checks Account Administrator Status
 checkAdmin = (request, response, next) => {

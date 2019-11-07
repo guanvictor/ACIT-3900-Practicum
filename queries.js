@@ -16,6 +16,10 @@ let eventPromise = () => {
     });
 };
 
+/*
+ADMIN PANEL - individual event page.
+Retrieves all details, and populates edit form with current details.
+*/
 let getEvent = param_id => {
     return new Promise((resolve, reject) => {
         let con = db.getDb();
@@ -28,6 +32,11 @@ let getEvent = param_id => {
     });
 };
 
+/*
+ADMIN PANEL - individual event page.
+Retrieves all attendees of event and populates the table with their
+details (name, email, companyName).
+*/
 const getEventAttendees = (event_uuid) => {
     return new Promise((resolve, reject) => {
         let con = db.getDb();
@@ -82,6 +91,10 @@ let getRow = () => {
     });
 };
 
+/*
+ADMIN PANEL - user accounts page.
+Retrives all currently-registered users (account_uuid, email, firstName, lastName).
+*/
 const getAllUsers = () => {
     return new Promise((resolve, reject) => {
         let con = db.getDb();
@@ -97,6 +110,11 @@ const getAllUsers = () => {
     });
 };
 
+/* 
+ADMIN PANEL - edit user page.
+Retrieves all details of a user, which is used to populate the form
+used for editing user details.
+*/
 const getUser = (account_uuid) => {
     return new Promise((resolve, reject) => {
         let con = db.getDb();
@@ -112,6 +130,46 @@ const getUser = (account_uuid) => {
     });
 };
 
+/*
+ADMIN PANEL - individual user page.
+Updates user details based on values in the form.
+*/
+const editUser = async (request, response) => {
+    let account_uuid = request.body.account_uuid;
+    let title = await request.body.title;
+    let firstName = await request.body.firstName;
+    let lastName = await request.body.lastName;
+    let companyName = await request.body.companyName;
+    let division = await request.body.division;
+    let plantClassification = await request.body.plantClassification;
+    let fieldPosition = await request.body.fieldPosition;
+    let businessPhone = await request.body.businessPhone;
+    let homePhone = await request.body.homePhone;
+    let cellPhone = await request.body.cellPhone;
+    let addressL1 = await request.body.addressL1;
+    let addressL2 = await request.body.addressL2;
+    let country = await request.body.country;
+    let city = await request.body.city;
+    let province_state = await request.body.province_state;
+    let pc_zip = await request.body.pc_zip;
+
+    let con = db.getDb();
+    let sql = "UPDATE accounts SET title=?, firstName=?, lastName=?, companyName=?, division=?, plantClassification=?, fieldPosition=?, businessPhone=?, homePhone=?, cellPhone=?, addressL1=?, addressL2=?, country=?, city=?, province_state=?, pc_zip=? WHERE account_uuid=?";
+    let values = [title, firstName, lastName, companyName, division, plantClassification, fieldPosition, businessPhone, homePhone, cellPhone, addressL1, addressL2, country, city, province_state, pc_zip, account_uuid];
+    
+    con.query(sql, values, (err, result) => {
+        if (err) {
+            throw err;
+        }
+
+        console.log("User successfully updated");
+
+        return response.redirect("/admin/useraccounts");
+    })
+};
+
+router.post('/editUser', editUser);
+
 module.exports = {
     eventPromise: eventPromise,
     getEvent: getEvent,
@@ -119,8 +177,8 @@ module.exports = {
     getRSVPS: getRSVPS,
     getFiles: getFiles,
     getRow: getRow,
-
-    // User account queries
     getAllUsers: getAllUsers,
-    getUser: getUser
+    getUser: getUser,
+
+    router: router
 };

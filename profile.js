@@ -43,13 +43,6 @@ const editProfile = async (request, response) => {
     });
 };
 
-const editUser = async (request, response) => {
-    let test = await request.body;
-
-    console.log(test);
-};
-
-router.post("/editUser", editUser);
 router.post("/editProfile", editProfile);
 
 module.exports = router;

@@ -7,7 +7,7 @@
     <div class="container">
     {{#if isAuthenticated}}
         {{#compareUser profile_uuid current_uuid}}
-            <form method="post" action="/editUser">
+            <form method="post" action="/editProfile">
                 <label for="email"><b>Email Address *</b></label></p>
                 <input type="email" name="email" value={{../email}} required>
 

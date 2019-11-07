@@ -2,7 +2,7 @@ const db = require("./database.js");
 const express = require("express");
 const router = express.Router();
 
-const editUser = async (request, response) => {
+const editProfile = async (request, response) => {
     let email = await request.body.email;
 
     let title = await request.body.title;
@@ -43,6 +43,13 @@ const editUser = async (request, response) => {
     });
 };
 
+const editUser = async (request, response) => {
+    let test = await request.body;
+
+    console.log(test);
+};
+
 router.post("/editUser", editUser);
+router.post("/editProfile", editProfile);
 
 module.exports = router;

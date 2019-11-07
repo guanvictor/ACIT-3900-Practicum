@@ -202,7 +202,8 @@ app.get('/about', async (request, response) => {
 app.get('/registration', checkAuthentication_false, (request, response) => {
     response.render("registration.hbs", {
         title:"Registration",
-        heading: "Registration"
+        heading: "Registration",
+        action: "/registerUser"
     });
 });
 
@@ -349,18 +350,35 @@ app.get('/admin/webcontent', checkAdmin, async (request, response) => {
     });
 });
 
-app.get('/admin/useraccounts', async (request, response) => {
+app.get('/admin/useraccounts', checkAdmin, async (request, response) => {
+    let users = await queries.getAllUsers();
+
     response.render("administrator/useraccounts.hbs", {
         title: "User Accounts",
         heading: "Manage User Accounts",
-        ua_isActive: true
+        ua_isActive: true,
+
+        users: users
+    });
+});
+
+app.get('/admin/useraccounts/:account_uuid', checkAdmin, async (request, response) => {
+    let user = await queries.getUser(request.params.account_uuid);
+
+    response.render('administrator/user.hbs', {
+        title: `${user.firstName} ${user.lastName}'s Profile`,
+        heading: `${user.firstName} ${user.lastName}`,
+        action: "/editUser",
+
+        user: user,
+        account_uuid: user.account_uuid
     });
 });
 
 app.get('/admin/adminaccount', async (request, response) => {
     response.render("administrator/adminaccount.hbs", {
         title: "Admin Account",
-        heading: "Manage Admin Account",
+        heading: "Manage Administrator Accounts",
         adminacc_isActive: true
     });
 });

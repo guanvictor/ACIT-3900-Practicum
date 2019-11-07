@@ -1,3 +1,5 @@
+const express = require("express");
+const router = express.Router();
 const db = require("./database");
 const fs = require("fs");
 
@@ -80,11 +82,45 @@ let getRow = () => {
     });
 };
 
+const getAllUsers = () => {
+    return new Promise((resolve, reject) => {
+        let con = db.getDb();
+        let sql = "SELECT account_uuid, email, firstName, lastName FROM accounts ORDER BY lastName";
+
+        con.query(sql, (err, result) => {
+            if (err) {
+                reject (err);
+            }
+
+            resolve(result);
+        });
+    });
+};
+
+const getUser = (account_uuid) => {
+    return new Promise((resolve, reject) => {
+        let con = db.getDb();
+        let sql = "SELECT * FROM accounts WHERE account_uuid=?";
+
+        con.query(sql, account_uuid, (err, result) => {
+            if (err) {
+                reject (err);
+            }
+
+            resolve(result[0]);
+        });
+    });
+};
+
 module.exports = {
     eventPromise: eventPromise,
     getEvent: getEvent,
     getEventAttendees: getEventAttendees,
     getRSVPS: getRSVPS,
     getFiles: getFiles,
-    getRow: getRow
+    getRow: getRow,
+
+    // User account queries
+    getAllUsers: getAllUsers,
+    getUser: getUser
 };

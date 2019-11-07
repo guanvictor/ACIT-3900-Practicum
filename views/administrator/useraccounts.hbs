@@ -13,6 +13,22 @@
         {{> menu}}
 
         <h1>{{heading}}</h1>
+
+        <div class="jumbotron">
+            <table class="usersTable">
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                </tr>
+
+                {{#each users}}
+                <tr>
+                    <td><a href="/admin/useraccounts/{{account_uuid}}">{{lastName}}, {{firstName}}</td></a>
+                    <td><a href="/admin/useraccounts/{{account_uuid}}">{{email}}</td></a>
+                </tr>
+                {{/each}}
+            </table>
+        </div>
     </div>
 
 </body>

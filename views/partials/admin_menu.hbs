@@ -4,10 +4,9 @@
     <a href="/admin/useraccounts" {{#if ua_isActive}}class="active"{{/if}}>User Accounts</a>
     <a href="/admin/adminaccount" {{#if adminacc_isActive}}class="active"{{/if}}>Administrator Accounts</a>
     
-    <button class="dropdown_menu"> Website Contents
-        <i class="fa fa-caret-down"></i>
-    </button>
-    <div class="dropdown_container">
+    <button class="dropdown_menu"><i class="fa fa-caret-down" id="admin_webcontent_caret"></i>Website Contents</button>
+
+    <div class="dropdown_container" {{#if webcontent_isActive}}style="display: block"{{/if}}>
         <a href="/admin/webcontent/home" {{#if webcontent_homeisActive}}class="active"{{/if}}>Home</a>
         <a href="/admin/webcontent/about" {{#if webcontent_aboutisActive}}class="active"{{/if}}>About</a>
         <a href="/admin/webcontent/agenda" {{#if webcontent_agendaisActive}}class="active"{{/if}}>Agenda</a>
@@ -18,20 +17,4 @@
 
 {{event_isActive}}
 
-
-<script>
-    var dropdown = document.getElementsByClassName("dropdown_menu");
-var i;
-
-for (i = 0; i < dropdown.length; i++) {
-    dropdown[i].addEventListener("click", function() {
-    this.classList.toggle("active");
-    var dropdownContent = this.nextElementSibling;
-    if (dropdownContent.style.display === "block") {
-    dropdownContent.style.display = "none";
-    } else {
-    dropdownContent.style.display = "block";
-    }
-    });
-}
-</script>
+<script type="text/javascript" src="/js/admin/navbar.js"></script>

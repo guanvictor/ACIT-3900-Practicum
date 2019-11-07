@@ -14,6 +14,7 @@ const queries = require("./queries.js");
 const events = require("./event.js");
 const profile = require("./profile.js");
 const admin = require("./admin.js");
+const sendMail = require('./mailgun');
 
 const app = express();
 
@@ -25,10 +26,21 @@ let server = app.listen(port, () => {
 hbs.registerPartials(__dirname + "/views/partials");
 
 app.use(express.static(__dirname + "/public"));
+// app.use(express.static(path.join(__dirname + "public")));
+app.use('/static', express.static('public'));
+
 
 app.use(bodyParser.urlencoded({
     extended:true
 }));
+
+
+app.use(express.urlencoded({
+    extended: false
+}));
+
+app.use(express.json());
+
 
 app.use(events);
 app.use(register);
@@ -368,4 +380,19 @@ app.get('/admin/adminaccount', async (request, response) => {
         heading: "Manage Admin Account",
         adminacc_isActive: true
     });
+});
+
+//Contact Form Emails
+app.post('/email', (req, res) => {
+    const {email, subject, text} = req.body;
+    console.log(req.body)
+
+    sendMail(email, subject, text, function(err, data) {
+        if (err) {
+            res.status(500).json({ message: 'An error has occurred' });
+        } else {
+            res.json({ message: 'Message sent successfully.'});
+        }
+    });
+
 });

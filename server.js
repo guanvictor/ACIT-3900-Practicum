@@ -14,6 +14,7 @@ const queries = require("./queries.js");
 const events = require("./event.js");
 const profile = require("./profile.js");
 const admin = require("./admin.js");
+const sendMail = require('./mailgun');
 
 const app = express();
 
@@ -25,10 +26,21 @@ let server = app.listen(port, () => {
 hbs.registerPartials(__dirname + "/views/partials");
 
 app.use(express.static(__dirname + "/public"));
+// app.use(express.static(path.join(__dirname + "public")));
+app.use('/static', express.static('public'));
+
 
 app.use(bodyParser.urlencoded({
     extended:true
 }));
+
+
+app.use(express.urlencoded({
+    extended: false
+}));
+
+app.use(express.json());
+
 
 app.use(events);
 app.use(register);

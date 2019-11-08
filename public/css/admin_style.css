@@ -48,7 +48,8 @@ td a:visited {
     width: 160px;
     position: fixed;
     /* position: absolute; */
-    background-color: blue;
+
+    background-color: black;
     overflow: hidden;
     padding-top: 20px;
     text-align: justify;
@@ -56,7 +57,7 @@ td a:visited {
 
 
 .sidenav a {
-    height: 20%;
+    height: 10%;
     padding: 15px 15px 15px 10px;
     text-decoration: none;
     font-size: 20px;
@@ -65,6 +66,27 @@ td a:visited {
     text-align: center;
     position: relative;
 
+}
+
+.dropdown_menu {
+    height: 15%;
+    padding: 15px 15px 15px 10px;
+    text-decoration: none;
+    font-size: 18px;
+    color: #818181;
+    display: block;
+    border: none;
+    background: none;
+    text-align: center;
+    position: relative;
+    cursor: pointer;
+    outline: none;
+}
+
+.dropdown_menu:hover {
+    background-color: #095E94;
+    color: white;
+    text-decoration: none;
 }
 
 .sidenav a:hover {
@@ -77,6 +99,21 @@ td a:visited {
     background-color: #095E94;
     color: white;
     text-decoration: none;
+}
+
+.dropdown_container {
+    display: none;
+    background-color: #262626;
+}
+
+.fa-caret-down {
+    float: right;
+    padding-right: 8px;
+}
+
+.fa-caret-up {
+    float: right;
+    padding-right: 8px;
 }
 
 .maincontent {
@@ -204,4 +241,8 @@ p.sidenav_panel {
 
 .no_margin {
     margin: 0 !important;
+}
+
+.no_background_colour {
+    background-color:transparent !important;
 }

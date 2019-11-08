@@ -41,9 +41,7 @@ td a:visited {
     width: 25% !important;
 }
 
-/* footer {
-    position: fixed !important;
-} */
+/* SIDEBAR NAVIGATION */
 
 .sidenav {
     height: 100%;
@@ -202,4 +200,8 @@ p.sidenav_panel {
     grid-gap: 10px;
     background-color: #2196F3;
     padding: 10px;
+}
+
+.no_margin {
+    margin: 0 !important;
 }

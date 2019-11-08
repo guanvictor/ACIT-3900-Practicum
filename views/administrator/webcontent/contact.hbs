@@ -7,11 +7,15 @@
 </head>
 
 <body>
-    {{> menu}}
-
-    <h1>{{heading}}</h1>
+    {{> admin_menu}}
     
+    <div class="maincontent">
+        {{> menu}}
+    
+        <h1>{{heading}}</h1>
+
+        {{> footer}}
+    </div>
 </body>
-{{> footer}}
 
 </html>

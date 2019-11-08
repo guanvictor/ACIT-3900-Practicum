@@ -57,7 +57,7 @@ const registerUser = async (request, response) => {
                 console.log("Number of records inserted: " + result.affectedRows);
             });
 
-            return response.redirect("/rsvp");
+            return response.redirect("/login");
         }
     });
 };

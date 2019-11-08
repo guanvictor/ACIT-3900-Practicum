@@ -42,7 +42,7 @@ const editEvent = async (request, response) => {
 
         console.log("Successfully updated event");
 
-        return response.redirect(`/admin/events/${event_uuid}`);
+        return response.redirect(`/admin/events`);
     });
 };
 

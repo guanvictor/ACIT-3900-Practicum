@@ -3,7 +3,18 @@
     <a href="/admin/events" {{#if event_isActive}}class="active"{{/if}}>Events</a>
     <a href="/admin/useraccounts" {{#if ua_isActive}}class="active"{{/if}}>User Accounts</a>
     <a href="/admin/adminaccount" {{#if adminacc_isActive}}class="active"{{/if}}>Administrator Accounts</a>
-    <a href="/admin/webcontent" {{#if webcontent_isActive}}class="active"{{/if}}>Website Content</a>
+    
+    <button class="dropdown_menu"><i class="fa fa-caret-down" id="admin_webcontent_caret"></i>Website Contents</button>
+
+    <div class="dropdown_container" {{#if webcontent_isActive}}style="display: block"{{/if}}>
+        <a href="/admin/webcontent/home" {{#if webcontent_homeisActive}}class="active"{{/if}}>Home</a>
+        <a href="/admin/webcontent/about" {{#if webcontent_aboutisActive}}class="active"{{/if}}>About</a>
+        <a href="/admin/webcontent/agenda" {{#if webcontent_agendaisActive}}class="active"{{/if}}>Agenda</a>
+        <a href="/admin/webcontent/speakers" {{#if webcontent_speakersisActive}}class="active"{{/if}}>Speakers</a>
+        <a href="/admin/webcontent/contact" {{#if webcontent_contactisActive}}class="active"{{/if}}>Contact</a>
+    </div>
 </div>
 
 {{event_isActive}}
+
+<script type="text/javascript" src="/js/admin/navbar.js"></script>

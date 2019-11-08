@@ -44,12 +44,12 @@ td a:visited {
 
 .adminTable, .nonAdminTable {
     white-space: nowrap;
-    width: 50%
+    width: 50%;
 }
 
 .adminTableCell {
-    width: 35%
-
+    width: 35%;
+}
 /* SIDEBAR NAVIGATION */
 
 .sidenav {

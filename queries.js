@@ -162,13 +162,36 @@ const editUser = async (request, response) => {
             throw err;
         }
 
-        console.log("User successfully updated");
+        console.log(`User ${account_uuid} successfully updated by admin`);
+
+        return response.redirect("/admin/useraccounts");
+    });
+};
+
+/*
+ADMIN PANEL - user accounts page.
+Deletes user based on account_uuid.
+*/
+const deleteUser = async (request, response) => {
+    let account_uuid = await request.body.account_uuid;
+
+    let con = db.getDb();
+    let sql = "DELETE FROM accounts WHERE account_uuid=?";
+
+    con.query(sql, account_uuid, (err, result) => {
+        if (err) {
+            throw err;
+        }
+
+        console.log(`User ${account_uuid} successfully deleted by admin`);
 
         return response.redirect("/admin/useraccounts");
     })
 };
 
+
 router.post('/editUser', editUser);
+router.post('/deleteUser', deleteUser);
 
 module.exports = {
     eventPromise: eventPromise,

@@ -351,7 +351,7 @@ app.get('/admin/webcontent', checkAdmin, async (request, response) => {
     });
 });
 
-app.get('/admin/useraccounts', checkAdmin, async (request, response) => {
+app.get('/admin/useraccounts', async (request, response) => {
     let users = await queries.getAllUsers();
 
     response.render("administrator/useraccounts.hbs", {
@@ -363,13 +363,12 @@ app.get('/admin/useraccounts', checkAdmin, async (request, response) => {
     });
 });
 
-app.get('/admin/useraccounts/:account_uuid', checkAdmin, async (request, response) => {
+app.get('/admin/useraccounts/:account_uuid', async (request, response) => {
     let user = await queries.getUser(request.params.account_uuid);
 
     response.render('administrator/user.hbs', {
         title: `${user.firstName} ${user.lastName}'s Profile`,
         heading: `${user.firstName} ${user.lastName}`,
-        action: "/editUser",
 
         user: user,
         account_uuid: user.account_uuid

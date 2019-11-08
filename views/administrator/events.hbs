@@ -66,7 +66,7 @@
                 <td class="event_text"><a class="event_link" href="/admin/events/{{event_uuid}}">{{eventDescription}}</a></td>
                 <td class="event_text"><a class="event_link" href="/admin/events/{{event_uuid}}">{{eventDate}}</a></td>
                 <td class="event_text">
-                    <button class="edit_event_button" type="button" data-toggle="modal" data-target="#editEventForm">Edit</button>
+                    <button class="edit_event_button btn btn-outline-primary" type="button" data-toggle="modal" data-target="#editEventForm">Edit</button>
                     <div class="modal fade" id="editEventForm" tabindex="-1" role="dialog" aria-labelledby="editEventFormLabel" aria-hidden="true">
                         <form method="post" action="/editEvent" id="editevent_form">
                             <div id="editEvent" class="modal-dialog" role="document">
@@ -87,8 +87,7 @@
                                             <input type="date" class="form-control validate" name="date" value={{date}}>
                                         </div>
                                         <div class="form-group">
-                                            <label data-error="wrong" data-success="right" for="eventForm-description">Event
-                                                Description</label>
+                                            <label data-error="wrong" data-success="right" for="eventForm-description">Event Description</label>
                                             <textarea class="form-control" rows="3" name="desc">{{desc}}</textarea>
                                         </div>
                                     </div>
@@ -102,7 +101,7 @@
                 <td class="event_text">
                     <form method="post" action="/deleteEvent">
                         <input type="hidden" name="event_uuid" value="{{event_uuid}}">
-                        <input type="submit" class="delete_event_button" value="Delete">
+                        <button type="submit" class="btn btn-outline-danger">Delete</button>
                     </form>
                 </td>
             </tr>

@@ -66,8 +66,8 @@
                 <td class="event_text"><a class="event_link" href="/admin/events/{{event_uuid}}">{{eventDescription}}</a></td>
                 <td class="event_text"><a class="event_link" href="/admin/events/{{event_uuid}}">{{eventDate}}</a></td>
                 <td class="event_text">
-                    <button class="edit_event_button btn btn-outline-primary" type="button" data-toggle="modal" data-target="#editEventForm">Edit</button>
-                    <div class="modal fade" id="editEventForm" tabindex="-1" role="dialog" aria-labelledby="editEventFormLabel" aria-hidden="true">
+                    <button class="edit_event_button btn btn-outline-primary" type="button" data-toggle="modal" data-target="#editEventForm{{event_uuid}}">Edit</button>
+                    <div class="modal fade" id="editEventForm{{event_uuid}}" tabindex="-1" role="dialog" aria-labelledby="editEventFormLabel" aria-hidden="true">
                         <form method="post" action="/editEvent" id="editevent_form">
                             <div id="editEvent" class="modal-dialog" role="document">
                                 <div class="modal-content">

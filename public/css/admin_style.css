@@ -41,3 +41,6 @@ td a:visited {
     width: 25% !important;
 }
 
+.no_margin {
+    margin: 0 !important;
+}

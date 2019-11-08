@@ -69,6 +69,8 @@
                     <button class="edit_event_button btn btn-outline-primary" type="button" data-toggle="modal" data-target="#editEventForm">Edit</button>
                     <div class="modal fade" id="editEventForm" tabindex="-1" role="dialog" aria-labelledby="editEventFormLabel" aria-hidden="true">
                         <form method="post" action="/editEvent" id="editevent_form">
+                            <input type="hidden" name="event_uuid" value="{{event_uuid}}">
+
                             <div id="editEvent" class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header text-center">

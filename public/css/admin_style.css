@@ -41,3 +41,11 @@ td a:visited {
     width: 25% !important;
 }
 
+.adminTable, .nonAdminTable {
+    white-space: nowrap;
+    width: 50%
+}
+
+.adminTableCell {
+    width: 35%
+}

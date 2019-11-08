@@ -99,13 +99,26 @@ hbs.registerHelper("convertDate", (dateString) => {
     let new_date = date.toDateString();
 
     return new_date;
-})
+});
 
 hbs.registerHelper("setActive", index => {
     if (index == 0) {
         return "active";
     }
     return "";
+});
+
+
+/*
+Compares account's isadmin with 1 or 0.
+May be used for toggling fields HTML elements later?
+*/
+hbs.registerHelper("isAdminStatus", (statusNum, isAdmin, options) => {
+    if (statusNum === isAdmin) {
+        return options.fn(this);
+    }
+
+    return options.inverse(this);
 });
 
 // Functions
@@ -294,8 +307,6 @@ app.get('/admin/events', checkAdmin, async (request, response) => {
         events[i].eventDate = formatDate(events[i].eventDate);
     }
 
-    console.log(events);
-
     response.render("administrator/events.hbs", {
         title: "Events",
         heading: "Events",
@@ -417,10 +428,16 @@ app.get('/admin/useraccounts/:account_uuid', async (request, response) => {
 });
 
 app.get('/admin/adminaccount', async (request, response) => {
+    let admins = await queries.getAdmins();
+    let nonAdmins = await queries.getNonAdmins();
+
     response.render("administrator/adminaccount.hbs", {
         title: "Admin Account",
         heading: "Manage Administrator Accounts",
-        adminacc_isActive: true
+        adminacc_isActive: true,
+
+        admins: admins,
+        nonAdmins: nonAdmins
     });
 });
 

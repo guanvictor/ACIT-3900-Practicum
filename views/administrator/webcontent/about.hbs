@@ -14,12 +14,14 @@
         {{> menu}}
 
         <h1>{{heading}}</h1>
+        <br><br>
         <h2>Change Event Page</h2>
+        <table>
+        <td class="admin_about_table">
         <form method="POST" action="/updateAbout">
             <div class="form-group">
                 <label for="aboutTitle">Event Title</label>
-                <input class="form-control quarter_width" type="text" value="{{details.title}}" id="aboutTitle" name="aboutTitle"
-                    required>
+                <input class="form-control quarter_width" type="text" value="{{details.title}}" id="aboutTitle" name="aboutTitle" required>
             </div>
 
             <div class="form-group">
@@ -51,7 +53,10 @@
             </div>
             <button type="submit" class="btn btn-primary">Change</button>
         </form>
+        </td>
+        </table>
 
+        <br><br>
 
         <h3 id="gmapsInstructions">Google Maps</h3>
         To display event locations, we use google maps. You will have to follow these instructions to change the location.
@@ -110,8 +115,6 @@
     
 </body>
 
-<div class="maincontent">
 {{> footer}}
-</div>
 
 </html>

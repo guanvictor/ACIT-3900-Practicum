@@ -14,6 +14,7 @@ const queries = require("./queries.js");
 const events = require("./event.js");
 const profile = require("./profile.js");
 const admin = require("./admin.js");
+const sendMail = require('./mailgun');
 
 const app = express();
 
@@ -25,16 +26,49 @@ let server = app.listen(port, () => {
 hbs.registerPartials(__dirname + "/views/partials");
 
 app.use(express.static(__dirname + "/public"));
+// app.use(express.static(path.join(__dirname + "public")));
+app.use('/static', express.static('public'));
+
 
 app.use(bodyParser.urlencoded({
     extended:true
 }));
+
+
+app.use(express.urlencoded({
+    extended: false
+}));
+
+app.use(express.json());
+
 
 app.use(events);
 app.use(register);
 app.use(passport);
 app.use(profile);
 app.use(admin);
+app.use(queries.router);
+
+//Checks Account Administrator Status
+checkAdmin = (request, response, next) => {
+    if (request.isAuthenticated()) {
+        if (request.user.isadmin == 1) {
+            return next();
+        }
+    } else {
+        response.redirect('/');
+    }
+};
+
+checkAdmin_false = (request, response, next) => {
+    if (request.isAuthenticated()) {
+        if (request.user.isadmin != 1) {
+            return next();
+        }
+    } else {
+        response.redirect('/');
+    }
+};
 
 // Home
 app.get("/", async (request, response) => {
@@ -65,7 +99,7 @@ hbs.registerHelper("convertDate", (dateString) => {
     let new_date = date.toDateString();
 
     return new_date;
-})
+});
 
 hbs.registerHelper("setActive", index => {
     if (index == 0) {
@@ -73,6 +107,35 @@ hbs.registerHelper("setActive", index => {
     }
     return "";
 });
+
+
+/*
+Compares account's isadmin with 1 or 0.
+May be used for toggling fields HTML elements later?
+*/
+hbs.registerHelper("isAdminStatus", (statusNum, isAdmin, options) => {
+    if (statusNum === isAdmin) {
+        return options.fn(this);
+    }
+
+    return options.inverse(this);
+});
+
+// Functions
+function formatDate(inputDate = '') {
+    let date = '';
+
+    if (inputDate == '') date = new Date();
+    else date = new Date(inputDate);
+
+    let dd = String(date.getDate()).padStart(2, '0');
+    let mm = String(date.getMonth() + 1).padStart(2, '0');
+    let yy = date.getFullYear();
+
+    let returnDate = yy + "-" + mm + "-" + dd;
+
+    return returnDate;
+}
 
 //Checks Authentication (is user logged in?)
 checkAuthentication = (request, response, next) => {
@@ -181,7 +244,8 @@ app.get('/about', async (request, response) => {
 app.get('/registration', checkAuthentication_false, (request, response) => {
     response.render("registration.hbs", {
         title:"Registration",
-        heading: "Registration"
+        heading: "Registration",
+        action: "/registerUser"
     });
 });
 
@@ -210,36 +274,22 @@ app.get('/contact', (request, response) => {
 });
 
 // RSVP
-app.get("/rsvp", checkAuthentication, async (request, response) => {
+app.get("/rsvp", checkAuthentication, checkAdmin_false, async (request, response) => {
     let events = await queries.eventPromise();
 
-    let account_uuid = "";
-    if (request.user != undefined) {
-        account_uuid = request.user.account_uuid;
-    }
+    let user = request.user;
 
-    let rsvps = await queries.getRSVPS(account_uuid);
+    let rsvps = await queries.getRSVPS(user.account_uuid);
     let event_difference = _.differenceBy(events, rsvps, 'event_uuid');
 
     response.render("rsvp.hbs", {
         title: "RSVP",
         heading: "Event RSVP",
         event: event_difference,
-        account_uuid: account_uuid,
-        rsvps: rsvps,
+        account_uuid: user.account_uuid,
+        rsvps: rsvps
     });
 });
-
-//Checks Account Administrator Status
-checkAdmin = (request, response, next) => {
-    if (request.isAuthenticated()) {
-        if (request.user.isadmin == 1) {
-            return next();
-        }
-    } else{
-        response.redirect('/');
-    }
-};
 
 //Admin Page
 app.get('/admin', checkAdmin, (request, response) => {
@@ -251,11 +301,17 @@ app.get('/admin', checkAdmin, (request, response) => {
 
 app.get('/admin/events', checkAdmin, async (request, response) => {
     let events = await queries.eventPromise();
+    let today = formatDate();
+
+    for (let i=0; i<events.length; i++){
+        events[i].eventDate = formatDate(events[i].eventDate);
+    }
 
     response.render("administrator/events.hbs", {
         title: "Events",
         heading: "Events",
         event: events,
+        today: today,
         event_isActive: true
     });
 });
@@ -265,12 +321,11 @@ app.get('/admin/events/:event_id', checkAdmin, async (request, response) => {
     let eventAttendees = await queries.getEventAttendees(request.params.event_id);
     let event_uuid = request.params.event_id;
 
+    // // formats the input event date
     let eventDate = await event.eventDate;
-    let x = new Date(eventDate);
-    let dd = x.getDate();
-    let mm = x.getMonth() + 1;
-    let yy = x.getFullYear();
-    let date = yy + "-" + mm + "-" + dd;
+
+    let date = formatDate(eventDate);
+    let today = formatDate();
     
     let countAttendees = _.size(eventAttendees);
 
@@ -283,7 +338,8 @@ app.get('/admin/events/:event_id', checkAdmin, async (request, response) => {
         event_isActive: true,
         eventAttendees: eventAttendees,
         countAttendees: countAttendees,
-        event_uuid: event_uuid
+        event_uuid: event_uuid,
+        today: today
     });
 });
 
@@ -298,6 +354,7 @@ app.get('/admin/webcontent/home', checkAdmin, async (request, response) => {
         heading: 'Manage Home Page Content',
         carouselImgs: carouselImgs,
         sponsorImgs: sponsorImgs,
+        webcontent_homeisActive: true,
         webcontent_isActive: true
     });
 });
@@ -308,14 +365,16 @@ app.get('/admin/webcontent/about', checkAdmin, async (request, response) => {
     response.render("administrator/webcontent/about.hbs", {
         title: 'Admin - About',
         heading: 'Manage About Page Content',
-        webcontent_isActive: true,
-        details: details
+        webcontent_aboutisActive: true,
+        details: details,
+        webcontent_isActive: true
     });
 });
 app.get('/admin/webcontent/agenda', checkAdmin, async (request, response) => {
     response.render("administrator/webcontent/agenda.hbs", {
         title: 'Admin - Agenda',
         heading: 'Manage Agenda Page Content',
+        webcontent_agendaisActive: true,
         webcontent_isActive: true
     });
 });
@@ -323,6 +382,7 @@ app.get('/admin/webcontent/speakers', checkAdmin, async (request, response) => {
     response.render("administrator/webcontent/speaker.hbs", {
         title: 'Admin - Speaker',
         heading: 'Manage Speaker Page Content',
+        webcontent_speakersisActive: true,
         webcontent_isActive: true
     });
 });
@@ -330,6 +390,7 @@ app.get('/admin/webcontent/contact', checkAdmin, async (request, response) => {
     response.render("administrator/webcontent/contact.hbs", {
         title: 'Admin - Contact',
         heading: 'Manage Contact Page Content',
+        webcontent_contactisActive: true,
         webcontent_isActive: true
     });
 });
@@ -343,17 +404,54 @@ app.get('/admin/webcontent', checkAdmin, async (request, response) => {
 });
 
 app.get('/admin/useraccounts', async (request, response) => {
+    let users = await queries.getAllUsers();
+
     response.render("administrator/useraccounts.hbs", {
         title: "User Accounts",
         heading: "Manage User Accounts",
-        ua_isActive: true
+        ua_isActive: true,
+
+        users: users
+    });
+});
+
+app.get('/admin/useraccounts/:account_uuid', async (request, response) => {
+    let user = await queries.getUser(request.params.account_uuid);
+
+    response.render('administrator/user.hbs', {
+        title: `${user.firstName} ${user.lastName}'s Profile`,
+        heading: `${user.firstName} ${user.lastName}`,
+
+        user: user,
+        account_uuid: user.account_uuid
     });
 });
 
 app.get('/admin/adminaccount', async (request, response) => {
+    let admins = await queries.getAdmins();
+    let nonAdmins = await queries.getNonAdmins();
+
     response.render("administrator/adminaccount.hbs", {
         title: "Admin Account",
-        heading: "Manage Admin Account",
-        adminacc_isActive: true
+        heading: "Manage Administrator Accounts",
+        adminacc_isActive: true,
+
+        admins: admins,
+        nonAdmins: nonAdmins
     });
+});
+
+//Contact Form Emails
+app.post('/email', (req, res) => {
+    const {email, subject, text} = req.body;
+    console.log(req.body)
+
+    sendMail(email, subject, text, function(err, data) {
+        if (err) {
+            res.status(500).json({ message: 'An error has occurred' });
+        } else {
+            res.json({ message: 'Message sent successfully.'});
+        }
+    });
+
 });

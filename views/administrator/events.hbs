@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+    
 <head>
     <link rel="stylesheet" type="text/css" href="/css/admin_style.css">
     {{> head}}
@@ -9,7 +10,7 @@
     {{> admin_menu}}
     
     <div class="maincontent">      {{!-- without this class, content and side nav bar will overlap --}}
-    {{> menu}}
+        {{> menu}}
 
     {{!-- Create New Event Form Popup --}}
     <div>
@@ -35,7 +36,7 @@
                         </div>
                         <div class="form-group">
                             <label data-error="wrong" data-success="right" for="eventForm-date">Event Date</label>
-                            <input type="date" class="form-control validate" name="date">
+                            <input type="date" class="form-control validate" name="date" min={{today}}>
                         </div>
                         <div class="form-group">
                             <label data-error="wrong" data-success="right" for="eventForm-description">Event Description</label>
@@ -50,12 +51,13 @@
         </form>
     </div>
 
-    <div class="jumbotron">
+    <div class="jumbotron no_background_colour">
         <table class="event_table">
             <tr>
                 <th class="event_text">Event Name</th>
                 <th class="event_text">Event Description</th>
                 <th class="event_text">Date</th>
+                <th class="event_text"></th>
                 <th class="event_text"></th>
             </tr>
 
@@ -65,9 +67,11 @@
                 <td class="event_text"><a class="event_link" href="/admin/events/{{event_uuid}}">{{eventDescription}}</a></td>
                 <td class="event_text"><a class="event_link" href="/admin/events/{{event_uuid}}">{{eventDate}}</a></td>
                 <td class="event_text">
-                    <button class="edit_event_button" type="button" data-toggle="modal" data-target="#editEventForm">Edit</button>
-                    <div class="modal fade" id="editEventForm" tabindex="-1" role="dialog" aria-labelledby="editEventFormLabel" aria-hidden="true">
+                    <button class="edit_event_button btn btn-outline-primary" type="button" data-toggle="modal" data-target="#editEventForm{{event_uuid}}">Edit</button>
+                    <div class="modal fade" id="editEventForm{{event_uuid}}" tabindex="-1" role="dialog" aria-labelledby="editEventFormLabel" aria-hidden="true">
                         <form method="post" action="/editEvent" id="editevent_form">
+                            <input type="hidden" name="event_uuid" value="{{event_uuid}}">
+
                             <div id="editEvent" class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header text-center">
@@ -76,19 +80,19 @@
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
+                                    <input type="hidden" name="event_uuid" value={{event_uuid}}>
                                     <div class="modal-body">
                                         <div class="form-group">
                                             <label data-error="wrong" data-success="right" for="eventForm-name">Event Name</label>
-                                            <input type="text" class="form-control validate" name="name" value="{{name}}">
+                                            <input type="text" class="form-control validate" name="name" value="{{eventName}}">
                                         </div>
                                         <div class="form-group">
                                             <label data-error="wrong" data-success="right" for="eventForm-date">Event Date</label>
-                                            <input type="date" class="form-control validate" name="date" value={{date}}>
+                                            <input type="date" class="form-control validate" name="date" value={{eventDate}} min="{{../today}}">
                                         </div>
                                         <div class="form-group">
-                                            <label data-error="wrong" data-success="right" for="eventForm-description">Event
-                                                Description</label>
-                                            <textarea class="form-control" rows="3" name="desc">{{desc}}</textarea>
+                                            <label data-error="wrong" data-success="right" for="eventForm-description">Event Description</label>
+                                            <textarea class="form-control" rows="3" name="desc">{{eventDescription}}</textarea>
                                         </div>
                                     </div>
                                     <div class="modal-footer d-flex justify-content-center">
@@ -98,11 +102,43 @@
                             </div>
                         </form>
                     </div>
+                </td>
+
                 <td class="event_text">
-                    <form method="post" action="/deleteEvent">
-                        <input type="hidden" name="event_uuid" value="{{event_uuid}}">
-                        <input type="submit" class="delete_event_button" value="Delete">
-                    </form>
+                    <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#delete{{event_uuid}}">
+                        Delete
+                    </button>
+                    
+                    <!-- Modal -->
+                    <div class="modal fade" id="delete{{event_uuid}}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Delete This Event?</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="alert alert-danger">
+                                        <strong>Danger!</strong> This action cannot be undone
+                                    </div>
+                                    {{eventName}}<br>
+                                    {{eventDate}}<br>
+                                    {{eventDescription}}
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                    <form method="post" action="/deleteEvent" class="no_margin">
+                                        <input type="hidden" name="event_uuid" value="{{event_uuid}}">
+                                        <button type="submit" class="btn btn-outline-danger">Delete</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
                 </td>
             </tr>
             {{/each}}
@@ -111,5 +147,5 @@
     </div>
 
 </body>
-
+{{> footer}}
 </html>

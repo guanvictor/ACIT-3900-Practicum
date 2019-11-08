@@ -29,9 +29,11 @@
 
         <ul class="navbar-nav ml-auto">
             {{#if isAuthenticated}}
+            {{#unless user.isadmin}}
             <li class="nav-item">
-                <a class="nav-link" href="/rsvp">RSVP</a>
+                <a class="nav-link" href="/rsvp">My Events</a>
             </li>
+            {{/unless}}
             <li class="nav-item">
                 <a class="nav-link" href="/profile/{{user.account_uuid}}">Edit Profile</a>
             </li>

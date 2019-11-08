@@ -57,7 +57,7 @@ td a:visited {
     width: 160px;
     position: fixed;
     /* position: absolute; */
-
+    z-index: 1;
     background-color: black;
     overflow: hidden;
     padding-top: 20px;
@@ -113,6 +113,7 @@ td a:visited {
 .dropdown_container {
     display: none;
     background-color: #262626;
+    height: 90%;
 }
 
 .fa-caret-down {

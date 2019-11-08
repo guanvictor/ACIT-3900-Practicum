@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+    
 <head>
     <link rel="stylesheet" type="text/css" href="/css/admin_style.css">
     {{> head}}
@@ -9,7 +10,7 @@
     {{> admin_menu}}
     
     <div class="maincontent">      {{!-- without this class, content and side nav bar will overlap --}}
-    {{> menu}}
+        {{> menu}}
 
     {{!-- Create New Event Form Popup --}}
     <div>
@@ -57,6 +58,7 @@
                 <th class="event_text">Event Description</th>
                 <th class="event_text">Date</th>
                 <th class="event_text"></th>
+                <th class="event_text"></th>
             </tr>
 
             {{#each event}}
@@ -98,6 +100,7 @@
                             </div>
                         </form>
                     </div>
+                </td>
                 <td class="event_text">
                     <form method="post" action="/deleteEvent">
                         <input type="hidden" name="event_uuid" value="{{event_uuid}}">
@@ -111,5 +114,5 @@
     </div>
 
 </body>
-
+{{> footer}}
 </html>

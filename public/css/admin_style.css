@@ -41,3 +41,165 @@ td a:visited {
     width: 25% !important;
 }
 
+/* footer {
+    position: fixed !important;
+} */
+
+.sidenav {
+    height: 100%;
+    width: 160px;
+    position: fixed;
+    /* position: absolute; */
+    background-color: blue;
+    overflow: hidden;
+    padding-top: 20px;
+    text-align: justify;
+}
+
+
+.sidenav a {
+    height: 20%;
+    padding: 15px 15px 15px 10px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #818181;
+    display: block;
+    text-align: center;
+    position: relative;
+
+}
+
+.sidenav a:hover {
+    background-color: #095E94;
+    color: white;
+    text-decoration: none;
+}
+
+.sidenav a.active {
+    background-color: #095E94;
+    color: white;
+    text-decoration: none;
+}
+
+.maincontent {
+    margin-left: 160px;
+    /* Same as the width of the sidenav */
+    padding: 0px 10px;
+    height: 100%;
+}
+
+p.sidenav_panel {
+    margin: 5% !important;
+    padding: 10px;
+    color: white;
+    font-size: 20px;
+    border-bottom: 3px solid white;
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {
+        padding-top: 15px;
+    }
+
+    .sidenav a {
+        font-size: 18px;
+    }
+}
+
+.add_event_button {
+    padding: 0;
+    border: none;
+    background: white;
+    float: right;
+    font-size: 18px;
+    margin-top: 1.8%;
+    text-shadow: 0px 1px #888888;
+}
+
+.add_image_button {
+    padding: 0;
+    border: none;
+    background: white;
+    float: right;
+    font-size: 18px;
+    margin-right: 0.7%;
+    text-shadow: 0px 1px #888888;
+    width: 140px;
+}
+
+.admin_event_header {
+    display: inline;
+}
+
+.event_text {
+    text-align: center;
+    border: 0cm;
+    border-bottom: 0.1cm solid #ddd;
+
+}
+
+.admin_image_text {
+    color: black;
+    margin-left: 2%;
+    text-shadow: 0px 1px #888888;
+}
+
+.event_link {
+    color: black;
+}
+
+.jumbotron {
+    height: 100vh;
+    overflow: scroll;
+    margin-bottom: 0 !important;
+
+}
+
+.edit_event_button,
+.delete_event_button {
+    padding: 0;
+    border: none;
+    background: none;
+    font-size: 16px;
+    margin-top: 1.8%;
+    text-shadow: 0px 1px #888888;
+}
+
+.event_table {
+    table-layout: auto;
+}
+
+.admin-home-jumbotron {
+    background-color: #e9ecef;
+    border: 15px solid #e9ecef;
+    height: 50%;
+}
+
+
+.table-responsive {
+    display: inline-table !important;
+}
+
+.delete_image_button {
+    width: 140px;
+    align-items: center;
+}
+
+.admin_about_div {
+    float: right;
+}
+
+.admin_about_table {
+    border: 0cm;
+    border-bottom: 0.1cm solid #ddd;
+    border-top: 0.1cm solid #ddd;
+    background-color: white;
+}
+
+.admin_about_grid_container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-gap: 10px;
+    background-color: #2196F3;
+    padding: 10px;
+}

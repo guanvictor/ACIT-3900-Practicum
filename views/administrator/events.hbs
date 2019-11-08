@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+    
 <head>
     <link rel="stylesheet" type="text/css" href="/css/admin_style.css">
     {{> head}}
@@ -9,7 +10,7 @@
     {{> admin_menu}}
     
     <div class="maincontent">      {{!-- without this class, content and side nav bar will overlap --}}
-    {{> menu}}
+        {{> menu}}
 
     {{!-- Create New Event Form Popup --}}
     <div>
@@ -99,7 +100,8 @@
                             </div>
                         </form>
                     </div>
-                    
+                </td>
+
                 <td class="event_text">
                     <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#delete{{event_uuid}}">
                         Delete
@@ -143,5 +145,5 @@
     </div>
 
 </body>
-
+{{> footer}}
 </html>

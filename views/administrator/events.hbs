@@ -80,15 +80,15 @@
                                     <div class="modal-body">
                                         <div class="form-group">
                                             <label data-error="wrong" data-success="right" for="eventForm-name">Event Name</label>
-                                            <input type="text" class="form-control validate" name="name" value="{{name}}">
+                                            <input type="text" class="form-control validate" name="name" value="{{eventName}}">
                                         </div>
                                         <div class="form-group">
                                             <label data-error="wrong" data-success="right" for="eventForm-date">Event Date</label>
-                                            <input type="date" class="form-control validate" name="date" value={{date}}>
+                                            <input type="date" class="form-control validate" name="date" value={{eventDate}} min={{today}}>
                                         </div>
                                         <div class="form-group">
                                             <label data-error="wrong" data-success="right" for="eventForm-description">Event Description</label>
-                                            <textarea class="form-control" rows="3" name="desc">{{desc}}</textarea>
+                                            <textarea class="form-control" rows="3" name="desc">{{eventDescription}}</textarea>
                                         </div>
                                     </div>
                                     <div class="modal-footer d-flex justify-content-center">

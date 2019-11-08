@@ -108,6 +108,22 @@ hbs.registerHelper("setActive", index => {
     return "";
 });
 
+// Functions
+function formatDate(inputDate = '') {
+    let date = '';
+
+    if (inputDate == '') date = new Date();
+    else date = new Date(inputDate);
+
+    let dd = String(date.getDate()).padStart(2, '0');
+    let mm = String(date.getMonth() + 1).padStart(2, '0');
+    let yy = date.getFullYear();
+
+    let returnDate = yy + "-" + mm + "-" + dd;
+
+    return returnDate;
+}
+
 //Checks Authentication (is user logged in?)
 checkAuthentication = (request, response, next) => {
     if (request.isAuthenticated()) {
@@ -272,12 +288,20 @@ app.get('/admin', checkAdmin, (request, response) => {
 
 app.get('/admin/events', checkAdmin, async (request, response) => {
     let events = await queries.eventPromise();
+    let today = formatDate();
+
+    for (let i=0; i<events.length; i++){
+        events[i].eventDate = formatDate(events[i].eventDate);
+    }
+
+    console.log(events);
 
     response.render("administrator/events.hbs", {
         title: "Events",
         heading: "Events",
         event: events,
-        event_isActive: true
+        event_isActive: true,
+        today: today
     });
 });
 
@@ -286,12 +310,11 @@ app.get('/admin/events/:event_id', checkAdmin, async (request, response) => {
     let eventAttendees = await queries.getEventAttendees(request.params.event_id);
     let event_uuid = request.params.event_id;
 
+    // // formats the input event date
     let eventDate = await event.eventDate;
-    let x = new Date(eventDate);
-    let dd = x.getDate();
-    let mm = x.getMonth() + 1;
-    let yy = x.getFullYear();
-    let date = yy + "-" + mm + "-" + dd;
+
+    let date = formatDate(eventDate);
+    let today = formatDate();
     
     let countAttendees = _.size(eventAttendees);
 
@@ -304,7 +327,8 @@ app.get('/admin/events/:event_id', checkAdmin, async (request, response) => {
         event_isActive: true,
         eventAttendees: eventAttendees,
         countAttendees: countAttendees,
-        event_uuid: event_uuid
+        event_uuid: event_uuid,
+        today: today
     });
 });
 

@@ -15,8 +15,9 @@
 
     <h1>{{heading}}</h1>
 
-    <h2>Change Carousel Images</h2>
-    <button type="button" data-toggle="modal" data-target="#uploadCarouselImage" class="btn btn-outline-success">Add New</button>
+    <br><br>
+
+    {{!-- <button type="button" data-toggle="modal" data-target="#uploadCarouselImage" class="btn btn-outline-success">Add New</button> --}}
     <div class="modal fade" id="uploadCarouselImage" tabindex="-1" role="dialog" aria-labelledby="uploadCarouselImage"
         aria-hidden="true">
         <form method="post" action="/upload" enctype="multipart/form-data">
@@ -46,29 +47,34 @@
         </form>
     </div>
 
-    <h3>Current Carousel Image Files ({{carouselImgs.length}})</h3>
+    <div class="admin-home-jumbotron">
+    <h3>
+        <span>Change Carousel Image ({{carouselImgs.length}})</span>
+        <button type="button" data-toggle="modal" data-target="#uploadCarouselImage" class="btn btn-outline-success add_image_button">Add New</button>
+    </h3>
     <table class="filetable table-responsive">
-        <tr>
-            <th>File Name</th>
-            <th></th>
-        </tr>
+    {{!-- <table class="image-table"> --}}
+        
     
         {{#each carouselImgs}}
-        <tr>
-            <td><a href="#" data-toggle="popover" title="{{this}}" data-content='<img src="/images/index/carousel/{{this}}" width="100%"/>'>{{this}}</a></td>
+        <tr style="background-color: white;">
+            <td style="width: 90%;"><a class="admin_image_text" href="#" data-toggle="popover" title="{{this}}" data-content='<img src="/images/index/carousel/{{this}}" width="100%"/>'>{{this}}</a></td>
             <td>
                 <form method="POST" action="/deleteFile">
                     <input type="hidden" name="path" value="./public/images/index/carousel/{{this}}">
-                    <button type="submit" class="btn btn-outline-danger">Delete</button>
+                    <button type="submit" class="btn btn-outline-danger delete_image_button">Delete</button>
                 </form>
             </td>
         </tr>
         {{/each}}
     </table>
+    </div>
 
-    <h2>Change Sponsor Images ({{sponsorImgs.length}})</h2>
+    <br><br>
+    
+    {{!-- <h2>Change Sponsor Images ({{sponsorImgs.length}})</h2> --}}
 
-    <button type="button" data-toggle="modal" data-target="#uploadSponsorImage" class="btn btn-outline-success">Add New</button>
+    {{!-- <button type="button" data-toggle="modal" data-target="#uploadSponsorImage" class="btn btn-outline-success">Add New</button> --}}
     <div class="modal fade" id="uploadSponsorImage" tabindex="-1" role="dialog" aria-labelledby="uploadSponsorImage"
         aria-hidden="true">
         <form method="post" action="/upload" enctype="multipart/form-data">
@@ -98,33 +104,30 @@
         </form>
     </div>
 
-    <h3>Current Carousel Image Files</h3>
-    <table class="filetable">
-        <tr>
-            <th>File Name</th>
-            <th></th>
-        </tr>
+    <div class="admin-home-jumbotron">
+        <h3>
+            <span>Change Sponsor Images ({{sponsorImgs.length}})</span>
+            <button type="button" data-toggle="modal" data-target="#uploadSponsorImage" class="btn btn-outline-success add_image_button">Add New</button>
+        </h3>
+    <table class="filetable table-responsive">
     
         {{#each sponsorImgs}}
-        <tr>
-            <td><a href="#" data-toggle="popover" title="{{this}}" data-content='<img src="/images/index/sponsors/{{this}}" width="100%"/>'>{{this}}</a></td>
+        <tr style="background-color: white;">
+            <td style="width: 90%;"><a class="admin_image_text" href="#" data-toggle="popover" title="{{this}}" data-content='<img src="/images/index/sponsors/{{this}}" width="100%"/>'>{{this}}</a></td>
             <td>
                 <form method="POST" action="/deleteFile">
                     <input type="hidden" name="path" value="./public/images/index/sponsors/{{this}}">
-                    <button type="submit" class="btn btn-outline-danger">Delete</button>
+                    <button type="submit" class="btn btn-outline-danger delete_image_button">Delete</button>
                 </form>
             </td>
         </tr>
         {{/each}}
     </table>
-
     </div>
-
+    </div>
 </body>
-<div class="maincontent">
 {{> footer}}
 
 <script type="text/javascript" src="/js/admin/webcontent/home_script.js"></script>
-</div>
 
 </html>

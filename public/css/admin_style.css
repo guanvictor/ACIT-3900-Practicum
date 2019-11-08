@@ -194,7 +194,7 @@ p.sidenav_panel {
 }
 
 .jumbotron {
-    height: 100vh;
+    height: 68vh;
     overflow: scroll;
     margin-bottom: 0 !important;
 
@@ -256,4 +256,8 @@ p.sidenav_panel {
 .no_background_colour {
     background-color:transparent !important;
 
+}
+
+.account_table form {
+    margin:0;
 }

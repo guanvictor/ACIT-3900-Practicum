@@ -294,14 +294,12 @@ app.get('/admin/events', checkAdmin, async (request, response) => {
         events[i].eventDate = formatDate(events[i].eventDate);
     }
 
-    console.log(events);
-
     response.render("administrator/events.hbs", {
         title: "Events",
         heading: "Events",
         event: events,
-        event_isActive: true,
-        today: today
+        today: today,
+        event_isActive: true
     });
 });
 

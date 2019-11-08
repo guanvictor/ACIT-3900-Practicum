@@ -13,11 +13,50 @@
         {{> menu}}
 
         <h1>{{heading}}</h1>
-        
-        <div class="jumbotron">
+        <p><h3>Admin Accounts</h3></p>
+        <table class="adminTable">
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th></th>
+            </tr>
+            {{#each admins}}
+            <tr>
+                <td class="adminTableCell">{{firstName}} {{lastName}}</td>
+                <td class="adminTableCell">{{email}}</td>
+                <td class="adminTableCell">
+                    <form method="post" action="/changeAdminStatus">
+                        <input type="hidden" name="account_uuid" value={{account_uuid}}> 
+                        <input type="hidden" name="adminStatus" value="0">
+                        <button type="submit" class="btn btn-outline-danger">Demote</button>
+                    </form>
+                </td>
+            </tr>
+            {{/each}}
+        </table>
+        <br><br>
 
-        </div>
-
+        <p><h3>Non-Admin Accounts</h3></p>
+        <table class="nonAdminTable">
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th></th>
+            </tr>
+            {{#each nonAdmins}}
+            <tr>
+                <td class="adminTableCell">{{firstName}} {{lastName}}</td>
+                <td class="adminTableCell">{{email}}</td>
+                <td class="adminTableCell">
+                    <form method="post" action="/changeAdminStatus">
+                        <input type="hidden" name="account_uuid" value={{account_uuid}}> 
+                        <input type="hidden" name="adminStatus" value="1">
+                        <button type="submit" class="btn btn-outline-primary">Promote</button>
+                    </form>
+                </td>
+            </tr>
+            {{/each}}
+        </table>
     </div>
 
 </body>

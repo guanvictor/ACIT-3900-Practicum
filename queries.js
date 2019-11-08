@@ -186,12 +186,73 @@ const deleteUser = async (request, response) => {
         console.log(`User ${account_uuid} successfully deleted by admin`);
 
         return response.redirect("/admin/useraccounts");
-    })
+    });
 };
 
+/*
+ADMIN PANEL - manage admin accounts page.
+Retrieves all admin accounts that currently exist.
+*/
+const getAdmins = () => {
+    return new Promise((resolve, reject) => {
+        let adminStatus = 1;
+
+        let con = db.getDb();
+        let sql = "SELECT account_uuid, firstName, lastName, email, isadmin FROM accounts WHERE isadmin=?";
+
+        con.query(sql, adminStatus, (err, result) => {
+            if (err) {
+                reject (err);
+            }
+
+            resolve(result);
+        });
+    });
+};
+
+const getNonAdmins = () => {
+    return new Promise((resolve, reject) => {
+        let adminStatus = 0;
+
+        let con = db.getDb()
+        let sql = "SELECT account_uuid, firstName, lastName, email, isadmin FROM accounts WHERE isadmin=?";
+
+        con.query(sql, adminStatus, (err, result) => {
+            if (err) {
+                reject (err);
+            }
+
+            resolve(result);
+        });
+    });
+};
+
+const changeAdminStatus = async (request, response) => {
+    let account_uuid = await request.body.account_uuid;
+    let adminStatus = request.body.adminStatus;
+
+    let con = db.getDb();
+    let sql = "UPDATE accounts SET isadmin=? WHERE account_uuid=?";
+    let values = [adminStatus, account_uuid];
+
+    con.query(sql, values, (err, result) => {
+        if (err) {
+            throw err;
+        }
+
+        if (adminStatus == 1) {
+            console.log(`User ${account_uuid} promoted`);
+        } else {
+            console.log(`User ${account_uuid} demoted`);
+        }
+
+        return response.redirect("/admin/adminaccount");
+    });
+};
 
 router.post('/editUser', editUser);
 router.post('/deleteUser', deleteUser);
+router.post('/changeAdminStatus', changeAdminStatus);
 
 module.exports = {
     eventPromise: eventPromise,
@@ -202,6 +263,8 @@ module.exports = {
     getRow: getRow,
     getAllUsers: getAllUsers,
     getUser: getUser,
+    getAdmins: getAdmins,
+    getNonAdmins: getNonAdmins,
 
     router: router
 };

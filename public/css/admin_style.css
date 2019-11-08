@@ -41,6 +41,15 @@ td a:visited {
     width: 25% !important;
 }
 
+
+.adminTable, .nonAdminTable {
+    white-space: nowrap;
+    width: 50%
+}
+
+.adminTableCell {
+    width: 35%
+
 /* SIDEBAR NAVIGATION */
 
 .sidenav {
@@ -245,4 +254,5 @@ p.sidenav_panel {
 
 .no_background_colour {
     background-color:transparent !important;
+
 }

@@ -1,8 +1,13 @@
 const nodemailer = require('nodemailer');
 const mailGun = require('nodemailer-mailgun-transport');
-const api_key = require('./api_key.js');
+// const api_key = require('./api_key.js');
 
-const auth = api_key.auth
+// const auth = api_key.auth
+
+const auth = {auth: {
+    api_key: process.env.API_KEY,
+    domain: process.env.DOMAIN
+    }}
 
 const transporter = nodemailer.createTransport(mailGun(auth));
 

@@ -9,13 +9,14 @@ const auth = {auth: {
     domain: process.env.DOMAIN
     }}
 
+
 const transporter = nodemailer.createTransport(mailGun(auth));
 
 const sendMail = (email, subject, text) => {
 
     const mailOptions = {
         from: email,
-        to: 'collabevent2020@gmail.com',
+        to: 'vg.guanvictor@gmail.com',
         subject,
         text
     };

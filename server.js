@@ -384,3 +384,11 @@ app.post('/email', (req, res) => {
     });
 
 });
+
+//Reset Password Page
+app.get('/forgotpassword', (request, response) => {
+    response.render("forgotpassword.hbs", {
+        title:"Forgot Password",
+        heading: "Forgot Password"
+    });
+});

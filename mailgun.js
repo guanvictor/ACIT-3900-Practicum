@@ -16,7 +16,7 @@ const sendMail = (email, subject, text) => {
 
     const mailOptions = {
         from: email,
-        to: 'guanvictor@hotmail.com',
+        to: 'collabevent2020@gmail.com',
         subject,
         text
     };

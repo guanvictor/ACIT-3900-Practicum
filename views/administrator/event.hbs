@@ -16,6 +16,10 @@
     <h1>{{heading}}</h1>
 
     <br>
+    <a href="#" id="printDoc">Export Event</a>
+    <div class="embed-responsive embed-responsive-16by9">
+        <iframe class="embed-responsive-item" src="" id="iframePDF" allowfullscreen></iframe>
+    </div>
 
     <button type="button" data-toggle="modal" data-target="#editEventForm">Edit Event</button>
     <div class="modal fade" id="editEventForm" tabindex="-1" role="dialog" aria-labelledby="editEventFormLabel" aria-hidden="true">
@@ -54,11 +58,11 @@
     <br>
 
     <h3>Event Description</h3>
-    <p>{{date}}</p>
-    <p>{{desc}}</p>
+    <p id="eventDate">{{date}}</p>
+    <p id="eventDesc">{{desc}}</p>
     
     <h3>Attendees</h3>
-    <p>Number of attendees: {{countAttendees}}</p>
+    <p id="eventCount">Number of Attendees: {{countAttendees}}</p>
     <p></p><button type="button" data-toggle="modal" data-target="#addAttendeeForm">Add Attendee</button></p>
     <div class="modal fade" id="addAttendeeForm" tabindex="-1" role="dialog" aria-labelledby="addAttendeeFormLabel" aria-hidden="true">
         <form method="post" action="/addAttendee">
@@ -84,7 +88,7 @@
             </div>
         </form>
     </div>
-    <table>
+    <table id="attendeeTable">
         <tr>
             <th>Name</th>
             <th>Email</th>
@@ -109,4 +113,7 @@
 </body>
 </div>
 {{> footer}}
+<script src="/js/admin/print/blob-stream.js"></script>
+<script src="/js/admin/print/pdfkit.js"></script>
+<script src="/js/admin/print/print.js"></script>
 </html>

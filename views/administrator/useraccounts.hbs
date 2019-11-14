@@ -15,10 +15,29 @@
         <h1>{{heading}}</h1>
 
         <div class="jumbotron no_background_colour">
+            <p><button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#userFilters" aria-expanded="false" aria-controls="collapseExample">Show Filters</button></p>
+            <br>
+            <div class="collapse" id="userFilters">
+                <p>Plant Classifications</p>
+                <input type="radio" id="all" name="plantClassification">Show All
+                <input type="radio" id="N/A" name="plantClassification">N/A
+                <input type="radio" id="1st Class" name="plantClassification">1st Class
+                <input type="radio" id="2nd Class" name="plantClassification">2nd Class
+                <input type="radio" id="3rd Class" name="plantClassification">3rd Class
+                <input type="radio" id="4th Class" name="plantClassification">4th Class
+                <input type="radio" id="5th Class" name="plantClassification">5th Class
+                <input type="radio" id="RPO" name="plantClassification">RPO
+            </div>
+
             <table class="usersTable">
                 <tr>
                     <th>Name</th>
                     <th>Email</th>
+                    <th>Company Name</th>
+                    <th>Division</th>
+                    <th>Plant Classification</th>
+                    <th>Field Position</th>
+                    <th>Business Phone</th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -27,6 +46,12 @@
                 <tr class="account_table">
                     <td><a href="/admin/useraccounts/{{account_uuid}}">{{lastName}}, {{firstName}}</td></a>
                     <td>{{email}}</td>
+                    <td>{{companyName}}</td>
+                    <td>{{Division}}</td>
+                    <td id="plantClassification">{{plantClassification}}</td>
+                    <td>{{fieldPosition}}</td>
+                    <td>{{businessPhone}}</td>
+                 
                     <td><a href="/admin/useraccounts/{{account_uuid}}"><button class="btn btn-outline-primary">Edit user</button></a></td>
                     <td>
                         <form method="post" action="/deleteUser">
@@ -40,6 +65,7 @@
         </div>
     </div>
 
+    <script type="text/javascript" src="/js/admin/user_table_filter.js"></script>
 </body>
 {{> footer}}
 </html>

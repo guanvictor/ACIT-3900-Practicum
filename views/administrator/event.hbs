@@ -17,7 +17,7 @@
 
     <br>
     <a href="#" id="printDoc">Export Event</a>
-    <div class="embed-responsive embed-responsive-16by9">
+    <div class="embed-responsive embed-responsive-16by9" style="display:none" id="iframediv">
         <iframe class="embed-responsive-item" src="" id="iframePDF" allowfullscreen></iframe>
     </div>
 
@@ -93,8 +93,8 @@
             <th>Name</th>
             <th>Email</th>
             <th>Company</th>
-            <th>plantClassification</th>
-            <th>fieldPosition</th>
+            <th>Plant Classification</th>
+            <th>Field Position</th>
             <th></th>
         </tr>
         {{#each eventAttendees}}

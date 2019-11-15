@@ -4,6 +4,7 @@ element.addEventListener('click', () => {
     let doc = new PDFDocument();
     let stream = doc.pipe(blobStream());
     let iframe = document.getElementById('iframePDF');
+    let iframediv = document.getElementById('iframediv');
 
     let eventName = document.getElementsByTagName('h1')[0].textContent;
     let eventDate = 'Event Date: ' + document.getElementById('eventDate').textContent;
@@ -46,13 +47,13 @@ element.addEventListener('click', () => {
     string_array = JSON.stringify(array, undefined, 2);
     
 
-    doc.fontSize(25).text(eventName, 100, 80)
+    doc.fontSize(25).text(eventName, 60, 80)
         .font('Helvetica', 11)
         .moveDown()
         .text(eventDate)
         .moveDown()
         .text(eventDesc, {
-            width: 412,
+            width: 500,
             align: 'justify',
             height: 300,
             ellipsis: true
@@ -74,7 +75,7 @@ element.addEventListener('click', () => {
     stream.on('finish', function () {
         let url = stream.toBlobURL('application/pdf');
 
-        // window.open(url, '_blank');
+        iframediv.style = "display:block; float: right";
         iframe.src = url;
     });
 });

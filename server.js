@@ -15,6 +15,7 @@ const events = require("./event.js");
 const profile = require("./profile.js");
 const admin = require("./admin.js");
 const sendMail = require('./mailgun');
+const resetPassword = require('./resetpassword');
 
 const app = express();
 
@@ -391,4 +392,21 @@ app.get('/forgotpassword', (request, response) => {
         title:"Forgot Password",
         heading: "Forgot Password"
     });
+});
+
+//Reset Password Emails
+app.post('/resetpassword', (req, res) => {
+    const {email} = req.body;
+    //let text = "You requested a link to reset your password.";
+    // const {email, subject, text} = req.body;
+    console.log(req.body)
+    
+    resetPassword(email, function(err, data) {
+        if (err) {
+            res.status(500).json({ message: 'An error has occurred' });
+        } else {
+            res.json({ message: 'Message sent successfully.'});
+        }
+    });
+
 });

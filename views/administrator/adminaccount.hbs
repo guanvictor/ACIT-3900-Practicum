@@ -13,50 +13,55 @@
         {{> menu}}
 
         <h1>{{heading}}</h1>
-        <p><h3>Admin Accounts</h3></p>
-        <table class="adminTable">
+        <br><br>
+        <div class="admin-account-jumbotron">
+        <h3>Admin Accounts</h3>
+        <table class="adminTable table-responsive filetable">
             <tr>
                 <th>Name</th>
                 <th>Email</th>
                 <th></th>
             </tr>
             {{#each admins}}
-            <tr class="account_table">
-                <td class="adminTableCell">{{firstName}} {{lastName}}</td>
-                <td class="adminTableCell">{{email}}</td>
+            <tr class="user_acount_table" >
+                <td style="width: 45%;" class="adminTableCell">{{firstName}} {{lastName}}</td>
+                <td style="width: 45%;" class="adminTableCell">{{email}}</td>
                 <td class="adminTableCell">
                     <form method="post" action="/changeAdminStatus">
                         <input type="hidden" name="account_uuid" value={{account_uuid}}> 
                         <input type="hidden" name="adminStatus" value="0">
-                        <button type="submit" class="btn btn-outline-danger">Demote</button>
+                        <button type="submit" class="btn btn-outline-danger admin_account_button">Demote</button>
                     </form>
                 </td>
             </tr>
             {{/each}}
         </table>
+        </div>
         <br><br>
 
-        <p><h3>Non-Admin Accounts</h3></p>
-        <table class="nonAdminTable">
+        <div class="non-admin-account-jumbotron">
+        <h3 style="color: ">Non-Admin Accounts</h3>
+        <table class="adminTable table-responsive filetable">
             <tr>
                 <th>Name</th>
                 <th>Email</th>
                 <th></th>
             </tr>
             {{#each nonAdmins}}
-            <tr class="account_table">
-                <td class="adminTableCell">{{firstName}} {{lastName}}</td>
-                <td class="adminTableCell">{{email}}</td>
+            <tr class="user_acount_table">
+                <td style="width: 45%;" class="adminTableCell">{{firstName}} {{lastName}}</td>
+                <td style="width: 45%;"class="adminTableCell">{{email}}</td>
                 <td class="adminTableCell">
                     <form method="post" action="/changeAdminStatus">
                         <input type="hidden" name="account_uuid" value={{account_uuid}}> 
                         <input type="hidden" name="adminStatus" value="1">
-                        <button type="submit" class="btn btn-outline-primary">Promote</button>
+                        <button type="submit" class="btn btn-outline-primary admin_account_button">Promote</button>
                     </form>
                 </td>
             </tr>
             {{/each}}
         </table>
+        </div>
     </div>
 
 </body>

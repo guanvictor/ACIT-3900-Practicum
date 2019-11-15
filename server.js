@@ -303,11 +303,16 @@ app.get('/admin', checkAdmin, (request, response) => {
 app.get('/admin/events', checkAdmin, async (request, response) => {
     let events = await queries.eventPromise();
     let today = formatDate();
+    let temp_str = '';
 
     for (let i=0; i<events.length; i++){
         events[i].eventDate = formatDate(events[i].eventDate);
-    }
 
+        temp_str = events[i].eventDescription;
+
+        if (temp_str.length > 100)
+        events[i].eventDescription = temp_str.substring(0, 97) + '...';
+    }
     response.render("administrator/events.hbs", {
         title: "Events",
         heading: "Events",
@@ -321,7 +326,6 @@ app.get('/admin/events/:event_id', checkAdmin, async (request, response) => {
     let event = await queries.getEvent(request.params.event_id);
     let eventAttendees = await queries.getEventAttendees(request.params.event_id);
     let event_uuid = request.params.event_id;
-
     // // formats the input event date
     let eventDate = await event.eventDate;
 

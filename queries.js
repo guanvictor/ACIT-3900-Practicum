@@ -93,12 +93,12 @@ let getRow = () => {
 
 /*
 ADMIN PANEL - user accounts page.
-Retrives all currently-registered users (account_uuid, email, firstName, lastName).
+Retrives all currently-registered users.
 */
 const getAllUsers = () => {
     return new Promise((resolve, reject) => {
         let con = db.getDb();
-        let sql = "SELECT account_uuid, email, firstName, lastName FROM accounts ORDER BY lastName";
+        let sql = "SELECT account_uuid, email, firstName, lastName, companyName, division, plantClassification, fieldPosition, businessPhone FROM accounts ORDER BY lastName";
 
         con.query(sql, (err, result) => {
             if (err) {

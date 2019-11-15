@@ -380,7 +380,7 @@ app.post('/email', (req, res) => {
         if (err) {
             res.status(500).json({ message: 'An error has occurred' });
         } else {
-            res.json({ message: 'Message sent successfully.'});
+            res.status(200).json({ message: 'Message sent successfully.'});
         }
     });
 
@@ -405,7 +405,7 @@ app.post('/resetpassword', (req, res) => {
         if (err) {
             res.status(500).json({ message: 'An error has occurred' });
         } else {
-            res.json({ message: 'Message sent successfully.'});
+            res.status(200).json({ message: 'Message sent successfully.'});
         }
     });
 

@@ -17,6 +17,19 @@ let eventPromise = () => {
     });
 };
 
+// Retrieves speakers
+let getSpeakers = () => {
+    return new Promise((resolve, reject) => {
+        let con = db.getDb();
+        let sql = "SELECT * FROM speakers ORDER BY time";
+
+        con.query(sql, (err, result) => {
+            if (err) reject(err);
+            resolve(result);
+        });
+    });
+};
+
 /*
 ADMIN PANEL - individual event page.
 Retrieves all details, and populates edit form with current details.
@@ -305,6 +318,7 @@ router.post('/sendFeedback', sendFeedback);
 module.exports = {
     eventPromise: eventPromise,
     getEvent: getEvent,
+    getSpeakers: getSpeakers,
     getEventAttendees: getEventAttendees,
     getRSVPS: getRSVPS,
     getFiles: getFiles,

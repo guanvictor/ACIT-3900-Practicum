@@ -271,10 +271,13 @@ app.get('/agenda', (request, response) => {
 });
 
 // Speaker Page
-app.get('/speaker', (request, response) => {
+app.get('/speaker', async (request, response) => {
+    let speakers = await queries.getSpeakers();
+
     response.render("speakers.hbs", {
         title: "Speaker",
-        heading: "Speaker"
+        heading: "Speaker",
+        speakers: speakers
     });
 });
 

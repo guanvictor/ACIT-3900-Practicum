@@ -13,10 +13,11 @@
         {{> menu}}
 
         <h1>{{heading}}</h1>
-
-        <div class="jumbotron no_background_colour">
-            <table class="usersTable">
-                <tr>
+        <br><br>
+        <div class="user-account-jumbotron">
+            <h3>User Accounts</h3>
+            <table class="usersTable table-responsive filetable">
+                <tr class="user_acount_table" style="background-color: white;">
                     <th>Name</th>
                     <th>Email</th>
                     <th></th>
@@ -24,14 +25,14 @@
                 </tr>
 
                 {{#each users}}
-                <tr>
-                    <td><a href="/admin/useraccounts/{{account_uuid}}">{{lastName}}, {{firstName}}</td></a>
-                    <td>{{email}}</td>
-                    <td><a href="/admin/useraccounts/{{account_uuid}}"><button class="btn btn-outline-primary">Edit user</button></a></td>
+                <tr class="user_acount_table" style="background-color: white;">
+                    <td style="width: 40%;"><a style="color: black;" href="/admin/useraccounts/{{account_uuid}}">{{lastName}}, {{firstName}}</td></a>
+                    <td style="width: 40%;">{{email}}</td>
+                    <td style="width: 10%;"><a href="/admin/useraccounts/{{account_uuid}}"><button class="btn btn-outline-primary user_account_button">Edit user</button></a></td>
                     <td>
                         <form method="post" action="/deleteUser">
                             <input type="hidden" name="account_uuid" value="{{account_uuid}}">
-                            <button type="submit" class="btn btn-outline-danger">Delete</button>
+                            <button type="submit" class="btn btn-outline-danger user_account_button">Delete</button>
                         </form>
                     </td>
                 </tr>

@@ -93,6 +93,8 @@
             <th>Name</th>
             <th>Email</th>
             <th>Company</th>
+            <th>plantClassification</th>
+            <th>fieldPosition</th>
             <th></th>
         </tr>
         {{#each eventAttendees}}
@@ -100,6 +102,8 @@
             <td>{{firstName}} {{lastName}}</td>
             <td>{{email}}</td>
             <td>{{companyName}}</td>
+            <td>{{plantClassification}}</td>
+            <td>{{fieldPosition}}</td>
             <td>
                 <form method="post" action="/deleteAttendee">
                     <input type="hidden" name="accountID" value={{account_uuid}}>

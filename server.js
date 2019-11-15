@@ -320,7 +320,6 @@ app.get('/admin/events/:event_id', checkAdmin, async (request, response) => {
     let event = await queries.getEvent(request.params.event_id);
     let eventAttendees = await queries.getEventAttendees(request.params.event_id);
     let event_uuid = request.params.event_id;
-
     // // formats the input event date
     let eventDate = await event.eventDate;
 

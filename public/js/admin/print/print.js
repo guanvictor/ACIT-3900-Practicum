@@ -9,13 +9,6 @@ element.addEventListener('click', () => {
     let eventDate = 'Event Date: ' + document.getElementById('eventDate').textContent;
     let eventDesc = document.getElementById('eventDesc').textContent;
     let eventCount = document.getElementById('eventCount').textContent;
-    
-    // let arr = $.map($('#attendeeTable th:not(:first)'), function (el, i) {
-    //     return [
-    //         [$(el).text(), $('#attendeeTable td:eq(' + i + ')').text()]
-    //     ];
-    // });
-    // console.log(JSON.stringify(arr, undefined, 2));
 
     var array = [];
     var headers = [];
@@ -25,14 +18,57 @@ element.addEventListener('click', () => {
     $('#attendeeTable tr').has('td').each(function () {
         var arrayItem = {};
         $('td', $(this)).each(function (index, item) {
-            console.log($(item).html());
-            arrayItem[headers[index]] = $(item).html();
+            let string = $(item).html();
+            let pattern = /<form(.|\s)*<\/form>/;
+            let email_pattern = />.*@\w*.\w*/;
+            let new_string = '';
+
+            if (string.match(pattern) != null){
+                // let email_pattern = /.*@.*\..*/;
+                string.match(email_pattern);
+
+                new_string = string.match(pattern);
+            }
+            else if (string.match(email_pattern) != null){
+                new_string = string.match(email_pattern)[0];
+                new_string = new_string.replace(/>/g, '');
+                arrayItem[headers[index]] = new_string;
+            }
+            else {
+                new_string = string;
+                arrayItem[headers[index]] = new_string;
+            }
+
         });
         array.push(arrayItem);
     });
 
-    // console.log(JSON.stringify(array, undefined, 2));
+    string_array = JSON.stringify(array, undefined, 2);
+    
 
+    doc.fontSize(25).text(eventName, 100, 80)
+        .font('Helvetica', 11)
+        .moveDown()
+        .text(eventDate)
+        .moveDown()
+        .text(eventDesc, {
+            width: 412,
+            align: 'justify',
+            height: 300,
+            ellipsis: true
+        })
+        .moveDown()
+        .text(eventCount)
+        .moveDown()
+        .fontSize(18).text('Attendees')
+        .fontSize(11);
+
+        for (let i = 0; i < array.length; i++) {
+            let object = JSON.stringify(array[i], undefined, 2);
+            console.log(object);
+            object = object.replace(/{|}|"/g, '');
+            doc.text(object);
+        }
 
     doc.end();
     stream.on('finish', function () {

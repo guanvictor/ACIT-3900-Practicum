@@ -48,6 +48,7 @@ app.use(register);
 app.use(passport);
 app.use(profile);
 app.use(admin);
+app.use(queries.router);
 
 //Checks Account Administrator Status
 checkAdmin = (request, response, next) => {
@@ -99,7 +100,7 @@ hbs.registerHelper("convertDate", (dateString) => {
     let new_date = date.toDateString();
 
     return new_date;
-})
+});
 
 hbs.registerHelper("setActive", index => {
     if (index == 0) {
@@ -107,6 +108,35 @@ hbs.registerHelper("setActive", index => {
     }
     return "";
 });
+
+
+/*
+Compares account's isadmin with 1 or 0.
+May be used for toggling fields HTML elements later?
+*/
+hbs.registerHelper("isAdminStatus", (statusNum, isAdmin, options) => {
+    if (statusNum === isAdmin) {
+        return options.fn(this);
+    }
+
+    return options.inverse(this);
+});
+
+// Functions
+function formatDate(inputDate = '') {
+    let date = '';
+
+    if (inputDate == '') date = new Date();
+    else date = new Date(inputDate);
+
+    let dd = String(date.getDate()).padStart(2, '0');
+    let mm = String(date.getMonth() + 1).padStart(2, '0');
+    let yy = date.getFullYear();
+
+    let returnDate = yy + "-" + mm + "-" + dd;
+
+    return returnDate;
+}
 
 //Checks Authentication (is user logged in?)
 checkAuthentication = (request, response, next) => {
@@ -215,7 +245,8 @@ app.get('/about', async (request, response) => {
 app.get('/registration', checkAuthentication_false, (request, response) => {
     response.render("registration.hbs", {
         title:"Registration",
-        heading: "Registration"
+        heading: "Registration",
+        action: "/registerUser"
     });
 });
 
@@ -271,12 +302,18 @@ app.get('/admin', checkAdmin, (request, response) => {
 
 app.get('/admin/events', checkAdmin, async (request, response) => {
     let events = await queries.eventPromise();
+    let today = formatDate();
+
+    for (let i=0; i<events.length; i++){
+        events[i].eventDate = formatDate(events[i].eventDate);
+    }
 
     response.render("administrator/events.hbs", {
         title: "Events",
         heading: "Events",
         event: events,
-        event_isActive: true
+        today: today,
+        events_isActive: true
     });
 });
 
@@ -285,12 +322,11 @@ app.get('/admin/events/:event_id', checkAdmin, async (request, response) => {
     let eventAttendees = await queries.getEventAttendees(request.params.event_id);
     let event_uuid = request.params.event_id;
 
+    // // formats the input event date
     let eventDate = await event.eventDate;
-    let x = new Date(eventDate);
-    let dd = x.getDate();
-    let mm = x.getMonth() + 1;
-    let yy = x.getFullYear();
-    let date = yy + "-" + mm + "-" + dd;
+
+    let date = formatDate(eventDate);
+    let today = formatDate();
     
     let countAttendees = _.size(eventAttendees);
 
@@ -300,10 +336,11 @@ app.get('/admin/events/:event_id', checkAdmin, async (request, response) => {
         name: event.eventName,
         date: date,
         desc: event.eventDescription,
-        event_isActive: true,
+        events_isActive: true,
         eventAttendees: eventAttendees,
         countAttendees: countAttendees,
-        event_uuid: event_uuid
+        event_uuid: event_uuid,
+        today: today
     });
 });
 
@@ -367,19 +404,41 @@ app.get('/admin/webcontent', checkAdmin, async (request, response) => {
     });
 });
 
-app.get('/admin/useraccounts', async (request, response) => {
+app.get('/admin/useraccounts', checkAdmin, async (request, response) => {
+    let users = await queries.getAllUsers();
+
     response.render("administrator/useraccounts.hbs", {
         title: "User Accounts",
         heading: "Manage User Accounts",
-        ua_isActive: true
+        ua_isActive: true,
+
+        users: users
     });
 });
 
-app.get('/admin/adminaccount', async (request, response) => {
+app.get('/admin/useraccounts/:account_uuid', checkAdmin, async (request, response) => {
+    let user = await queries.getUser(request.params.account_uuid);
+
+    response.render('administrator/user.hbs', {
+        title: `${user.firstName} ${user.lastName}'s Profile`,
+        heading: `${user.firstName} ${user.lastName}`,
+
+        user: user,
+        account_uuid: user.account_uuid
+    });
+});
+
+app.get('/admin/adminaccount', checkAdmin, async (request, response) => {
+    let admins = await queries.getAdmins();
+    let nonAdmins = await queries.getNonAdmins();
+
     response.render("administrator/adminaccount.hbs", {
         title: "Admin Account",
-        heading: "Manage Admin Account",
-        adminacc_isActive: true
+        heading: "Manage Administrator Accounts",
+        adminacc_isActive: true,
+
+        admins: admins,
+        nonAdmins: nonAdmins
     });
 });
 

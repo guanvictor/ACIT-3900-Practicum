@@ -5,24 +5,24 @@
     {{> menu}}
     <br><br>
     <div class="container">
-        <div>
-            <iframe
-                src="{{details.googleMaps}}"
-                width="800px" height="600px" frameborder="0" style="border:0;" allowfullscreen="" class="map"></iframe>
-            <h6 class="address">BCIT | 3700 Willingdon Ave, Burnaby, BC</h6>
-
+        <div class="grid-container">
+            <div class="col-md-4 col-lg-5 mr-auto my-md-4 my-0 mt-4 mb-1">
+                <h3>{{details.title}}</h3>
+                <p>{{convertDate details.date}} | {{convertTime details.startTime}} - {{convertTime details.endTime}}</p>
+                <br><br>
+                <p>{{details.description}}</p>
+            </div>
+            <div class="grid-item">
+                <iframe src="{{details.googleMaps}}" id="about-map" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+                {{!-- <iframe src="{{details.googleMaps}}" width="800px" height="600px" frameborder="0" style="border:0;" allowfullscreen=""
+                    class="map"></iframe> --}}
+            </div>
         </div>
-
-        <div class="col-md-4 col-lg-5 mr-auto my-md-4 my-0 mt-4 mb-1">
-            <h3>{{details.title}}</h3>
-            <p>{{convertDate details.date}} | {{convertTime details.startTime}} - {{convertTime details.endTime}}</p>
-            <br><br>
-            <p>{{details.description}}</p>
-        </div>
-
-        <div>
+        {{!-- <h6 class="address">BCIT | 3700 Willingdon Ave, Burnaby, BC</h6> --}}
+        <br><br>
+        {{!-- <div>
             <iframe src="https://calendar.google.com/calendar/embed?src=utcejt57laan1o4q9glenidqvg%40group.calendar.google.com&ctz=America%2FVancouver" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
-        </div>
+        </div> --}}
         
     </div>
 </body>

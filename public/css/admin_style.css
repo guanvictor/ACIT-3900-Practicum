@@ -133,7 +133,7 @@ td a:visited {
     height: 100%;
 }
 
-p.sidenav_panel {
+a.sidenav_panel {
     margin: 5% !important;
     padding: 10px;
     color: white;
@@ -338,4 +338,8 @@ text{
 #iframediv {
     margin: 2%;
     width: 80% !important;
+}
+
+#feedbackTable th {
+    width: 300px;
 }

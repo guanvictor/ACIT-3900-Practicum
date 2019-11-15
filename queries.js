@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const db = require("./database");
 const fs = require("fs");
+const uuidv1 = require('uuid/v1');
 
 // Populates event table with eventName and date
 let eventPromise = () => {
@@ -11,6 +12,19 @@ let eventPromise = () => {
         
         con.query(sql, (err, result) => {
             if (err) reject (err);
+            resolve(result);
+        });
+    });
+};
+
+// Retrieves speakers
+let getSpeakers = () => {
+    return new Promise((resolve, reject) => {
+        let con = db.getDb();
+        let sql = "SELECT * FROM speakers ORDER BY time";
+
+        con.query(sql, (err, result) => {
+            if (err) reject(err);
             resolve(result);
         });
     });
@@ -198,7 +212,7 @@ const getAdmins = () => {
         let adminStatus = 1;
 
         let con = db.getDb();
-        let sql = "SELECT account_uuid, firstName, lastName, email, isadmin FROM accounts WHERE isadmin=?";
+        let sql = "SELECT account_uuid, firstName, lastName, email, isadmin, isSU FROM accounts WHERE isadmin=?";
 
         con.query(sql, adminStatus, (err, result) => {
             if (err) {
@@ -214,7 +228,7 @@ const getNonAdmins = () => {
     return new Promise((resolve, reject) => {
         let adminStatus = 0;
 
-        let con = db.getDb()
+        let con = db.getDb();
         let sql = "SELECT account_uuid, firstName, lastName, email, isadmin FROM accounts WHERE isadmin=?";
 
         con.query(sql, adminStatus, (err, result) => {
@@ -250,13 +264,61 @@ const changeAdminStatus = async (request, response) => {
     });
 };
 
+/*
+Used in /feedback
+Saves feedback form data into db
+*/
+const sendFeedback = async (request, response) => {
+    let feedback_id = uuidv1();
+    let content = await request.body.content;
+    let length = await request.body.length;
+    let organization = await request.body.organization;
+    let format = await request.body.format;
+    let overall_rating = await request.body.overall_rating;
+    let relevance = await request.body.relevance;
+    let comments = await request.body.comments;
+
+    let con = db.getDb();
+    let sql = "INSERT INTO feedback (feedback_id, content, length, organization, format, overall_rating, relevance, comments) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    let values = [feedback_id, content, length, organization, format, overall_rating, relevance, comments];
+
+    con.query(sql, values, (err, result) => {
+        if (err) {
+            throw err;
+        }
+
+        return response.redirect("/");
+    });
+};
+
+/*
+ADMIN PANEL - landing page.
+Shows all feedback form data, retrieved from db.
+*/
+const getAllFeedback = () => {
+    return new Promise((resolve, reject) => {
+        let con = db.getDb();
+        let sql = "SELECT * from feedback";
+
+        con.query(sql, (err, result) => {
+            if (err) {
+                reject (err);
+            }
+
+            resolve(result);
+        });
+    });
+};
+
 router.post('/editUser', editUser);
 router.post('/deleteUser', deleteUser);
 router.post('/changeAdminStatus', changeAdminStatus);
+router.post('/sendFeedback', sendFeedback);
 
 module.exports = {
     eventPromise: eventPromise,
     getEvent: getEvent,
+    getSpeakers: getSpeakers,
     getEventAttendees: getEventAttendees,
     getRSVPS: getRSVPS,
     getFiles: getFiles,
@@ -265,6 +327,6 @@ module.exports = {
     getUser: getUser,
     getAdmins: getAdmins,
     getNonAdmins: getNonAdmins,
-
+    getAllFeedback: getAllFeedback,
     router: router
 };

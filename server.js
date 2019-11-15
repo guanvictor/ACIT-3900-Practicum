@@ -312,7 +312,7 @@ app.get('/admin/events', checkAdmin, async (request, response) => {
         heading: "Events",
         event: events,
         today: today,
-        event_isActive: true
+        events_isActive: true
     });
 });
 
@@ -335,7 +335,7 @@ app.get('/admin/events/:event_id', checkAdmin, async (request, response) => {
         name: event.eventName,
         date: date,
         desc: event.eventDescription,
-        event_isActive: true,
+        events_isActive: true,
         eventAttendees: eventAttendees,
         countAttendees: countAttendees,
         event_uuid: event_uuid,

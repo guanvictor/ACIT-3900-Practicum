@@ -70,6 +70,19 @@ checkAdmin_false = (request, response, next) => {
     }
 };
 
+checkSU = (request, response, next) => {
+    if (request.isAuthenticated()) {
+        if (request.user.isSU == 1) {
+            return next();
+        }
+        else {
+            // response.status(401).json({error: 401, message:'You are not authenticated. Please contact a super user.'});
+            // response.send('You are not authenticated. Please contact a super user.');
+            response.redirect('/admin');
+        }
+    }
+};
+
 // Home
 app.get("/", async (request, response) => {
     let sponsorFolder = './public/images/index/sponsors';
@@ -300,10 +313,14 @@ app.get("/rsvp", checkAuthentication, checkAdmin_false, async (request, response
 });
 
 //Admin Page
-app.get('/admin', checkAdmin, (request, response) => {
+app.get('/admin', checkAdmin, async (request, response) => {
+    let feedback = await queries.getAllFeedback();
+
     response.render("administrator/index.hbs", {
         title: "Administrator Panel",
-        heading: "Administrator Panel"
+        heading: "Administrator Panel",
+
+        feedback: feedback
     });
 });
 
@@ -439,7 +456,7 @@ app.get('/admin/useraccounts/:account_uuid', checkAdmin, async (request, respons
     });
 });
 
-app.get('/admin/adminaccount', checkAdmin, async (request, response) => {
+app.get('/admin/adminaccount', checkSU, async (request, response) => {
     let admins = await queries.getAdmins();
     let nonAdmins = await queries.getNonAdmins();
 
@@ -456,7 +473,7 @@ app.get('/admin/adminaccount', checkAdmin, async (request, response) => {
 //Contact Form Emails
 app.post('/email', (req, res) => {
     const {email, subject, text} = req.body;
-    console.log(req.body)
+    console.log(req.body);
 
     sendMail(email, subject, text, function(err, data) {
         if (err) {
@@ -465,5 +482,11 @@ app.post('/email', (req, res) => {
             res.json({ message: 'Message sent successfully.'});
         }
     });
+});
 
+app.get('/feedback', (request, response) => {
+    response.render("feedback.hbs", {
+        title: "Feedback",
+        heading: "Give us your feedback!"
+    });
 });

@@ -20,12 +20,14 @@
             <tr>
                 <th>Name</th>
                 <th>Email</th>
+                <th>Administrator Status</th>
                 <th></th>
             </tr>
             {{#each admins}}
             <tr class="user_acount_table" >
-                <td style="width: 45%;" class="adminTableCell">{{firstName}} {{lastName}}</td>
-                <td style="width: 45%;" class="adminTableCell">{{email}}</td>
+                <td style="width: 30%;" class="adminTableCell">{{firstName}} {{lastName}}</td>
+                <td style="width: 30%;" class="adminTableCell">{{email}}</td>
+                <td style="wdith: 30%;" class="adminTableCell">{{#if isSU}}Super User{{else if isadmin}}Administrator{{else}}{{/if}}</td>
                 <td class="adminTableCell">
                     <form method="post" action="/changeAdminStatus">
                         <input type="hidden" name="account_uuid" value={{account_uuid}}> 

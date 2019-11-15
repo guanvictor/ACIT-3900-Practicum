@@ -15,18 +15,18 @@
         <h1>{{heading}}</h1>
 
         <div class="jumbotron no_background_colour">
-            <p><button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#userFilters" aria-expanded="false" aria-controls="collapseExample">Show Filters</button></p>
+            <p><button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#userFilters" aria-expanded="false" aria-controls="collapseExample">Show Filter</button></p>
             <br>
             <div class="collapse" id="userFilters">
                 <p>Plant Classifications</p>
-                <input type="radio" id="all" name="plantClassification">Show All
-                <input type="radio" id="N/A" name="plantClassification">N/A
-                <input type="radio" id="1st Class" name="plantClassification">1st Class
-                <input type="radio" id="2nd Class" name="plantClassification">2nd Class
-                <input type="radio" id="3rd Class" name="plantClassification">3rd Class
-                <input type="radio" id="4th Class" name="plantClassification">4th Class
-                <input type="radio" id="5th Class" name="plantClassification">5th Class
-                <input type="radio" id="RPO" name="plantClassification">RPO
+                <input type="radio" style="margin-left: 15px;" id="all" name="plantClassification">Show All
+                <input type="radio" style="margin-left: 15px;" id="N/A" name="plantClassification">N/A
+                <input type="radio" style="margin-left: 15px;" id="1st Class" name="plantClassification">1st Class
+                <input type="radio" style="margin-left: 15px;" id="2nd Class" name="plantClassification">2nd Class
+                <input type="radio" style="margin-left: 15px;" id="3rd Class" name="plantClassification">3rd Class
+                <input type="radio" style="margin-left: 15px;" id="4th Class" name="plantClassification">4th Class
+                <input type="radio" style="margin-left: 15px;" id="5th Class" name="plantClassification">5th Class
+                <input type="radio" style="margin-left: 15px;" id="RPO" name="plantClassification">RPO
             </div>
 
             <table class="usersTable">
@@ -48,7 +48,7 @@
                     <td>{{email}}</td>
                     <td>{{companyName}}</td>
                     <td>{{Division}}</td>
-                    <td id="plantClassification">{{plantClassification}}</td>
+                    <td class="plantClassification">{{plantClassification}}</td>
                     <td>{{fieldPosition}}</td>
                     <td>{{businessPhone}}</td>
                  

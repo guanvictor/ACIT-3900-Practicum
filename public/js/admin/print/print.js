@@ -25,12 +25,9 @@ element.addEventListener('click', () => {
             let new_string = '';
 
             if (string.match(pattern) != null){
-                // let email_pattern = /.*@.*\..*/;
-                string.match(email_pattern);
-
                 new_string = string.match(pattern);
             }
-            else if (string.match(email_pattern) != null){
+            else if (string.match(email_pattern) != null && string.includes("@")){
                 new_string = string.match(email_pattern)[0];
                 new_string = new_string.replace(/>/g, '');
                 arrayItem[headers[index]] = new_string;

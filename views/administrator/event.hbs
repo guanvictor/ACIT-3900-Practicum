@@ -16,10 +16,6 @@
     <h1>Event Details</h1>
 
     <br>
-    <a href="#" id="printDoc">Export Event</a>
-    <div class="embed-responsive embed-responsive-16by9" style="display:none" id="iframediv">
-        <iframe class="embed-responsive-item" src="" id="iframePDF" allowfullscreen></iframe>
-    </div>
     
     {{!-- <button type="button" data-toggle="modal" data-target="#editEventForm">Edit Event</button> --}}
 
@@ -62,16 +58,23 @@
         <span style="margin-left: 2%;">Event name: {{heading}}</span>
         <button class="edit_single_event_button" type="button" data-toggle="modal" data-target="#editEventForm">Edit Event</button>
     </h3>
-    <h5 class="single_event_text">Date: {{date}}</h5>
+    <h5 class="single_event_text" id="eventDate">Date: {{date}}</h5>
     <h5 class="single_event_text">Event Description:</h5>
     <div class="event_desc_box">
-        <h5>{{desc}}</h5>
+        <h5 id="eventDesc">{{desc}}</h5>
+    </div>
+
+    <br>
+
+    <a href="#" id="printDoc" class="btn btn-outline-primary">Export Event</a>
+    <div class="embed-responsive embed-responsive-16by9" style="display:none" id="iframediv">
+        <iframe class="embed-responsive-item" src="" id="iframePDF" allowfullscreen></iframe>
     </div>
     
     <br><br>
     <div class="attendees_list">
         <h3>Attendees List:</h3>
-        <h6 class="single_event_text">Number of attendees: {{countAttendees}}</h6>
+        <h6 class="single_event_text" id="eventCount">Number of attendees: {{countAttendees}}</h6>
         
         {{!-- <button type="button" data-toggle="modal" data-target="#addAttendeeForm">Add Attendee</button></p> --}}
         
@@ -101,11 +104,13 @@
                 </div>
             </form>
         </div>
-        <table class="filetable table-responsive">
+        <table class="filetable table-responsive" id="attendeeTable">
             <tr>
-                <th style="width: 30%;">Name</th>
-                <th style="width: 30%;">Email</th>
-                <th style="width: 30%;">Company</th>
+                <th style="width: 20%;">Name</th>
+                <th style="width: 20%;">Email</th>
+                <th style="width: 20%;">Company</th>
+                <th style="width: 15%;">Plant Classification</th>
+                <th style="width: 15%;">Field Position</th>
                 <th><button style="width: 100%;" class="btn btn-outline-success" type="button" data-toggle="modal"
                         data-target="#addAttendeeForm">Add Attendee</button></th>
             </tr>
@@ -114,6 +119,8 @@
                 <td>{{firstName}} {{lastName}}</td>
                 <td>{{email}}</td>
                 <td>{{companyName}}</td>
+                <td>{{plantClassification}}</td>
+                <td>{{fieldPosition}}</td>
                 <td>
                     <form method="post" action="/deleteAttendee">
                         <input type="hidden" name="accountID" value={{account_uuid}}>
@@ -126,32 +133,7 @@
         </table>
     </div>
 
-    <table id="attendeeTable">
-        <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Company</th>
-            <th>Plant Classification</th>
-            <th>Field Position</th>
-            <th></th>
-        </tr>
-        {{#each eventAttendees}}
-        <tr>
-            <td>{{firstName}} {{lastName}}</td>
-            <td>{{email}}</td>
-            <td>{{companyName}}</td>
-            <td>{{plantClassification}}</td>
-            <td>{{fieldPosition}}</td>
-            <td>
-                <form method="post" action="/deleteAttendee">
-                    <input type="hidden" name="accountID" value={{account_uuid}}>
-                    <input type="hidden" name="event_uuid" value={{../event_uuid}}>
-                    <input type="submit" value="Delete">
-                </form>
-            </td>
-        </tr>
-        {{/each}}
-    </table>
+    
 
 </body>
 </div>

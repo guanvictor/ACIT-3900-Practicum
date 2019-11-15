@@ -7,7 +7,7 @@ element.addEventListener('click', () => {
     let iframediv = document.getElementById('iframediv');
 
     let eventName = document.getElementsByTagName('h1')[0].textContent;
-    let eventDate = 'Event Date: ' + document.getElementById('eventDate').textContent;
+    let eventDate = 'Event ' + document.getElementById('eventDate').textContent;
     let eventDesc = document.getElementById('eventDesc').textContent;
     let eventCount = document.getElementById('eventCount').textContent;
 
@@ -72,7 +72,7 @@ element.addEventListener('click', () => {
     stream.on('finish', function () {
         let url = stream.toBlobURL('application/pdf');
 
-        iframediv.style = "display:block; float: right";
+        iframediv.style = "display:block;";
         iframe.src = url;
     });
 });

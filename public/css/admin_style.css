@@ -236,24 +236,24 @@ p.sidenav_panel {
 }
 
 .admin-account-jumbotron {
-    background-color: #0037c9;
-    border: 15px solid #0037c9;
+    /* background-color: #0037c9; */
+    /* border: 15px solid #0037c9; */
     height: 50%;
     margin-left: 2%;
     margin-right: 2%;
 }
 
 .non-admin-account-jumbotron {
-    background-color: #F17C0E;
-    border: 15px solid #F17C0E;
+    /* background-color: #F17C0E; */
+    /* border: 15px solid #F17C0E; */
     height: 50%;
     margin-left: 2%;
     margin-right: 2%;
 }
 
 .user-account-jumbotron {
-    background-color: #F17C0E;
-    border: 15px solid #F17C0E;
+    /* background-color: #F17C0E; */
+    /* border: 15px solid #F17C0E; */
     height: 50%;
     margin-left: 2%;
     margin-right: 2%;
@@ -329,4 +329,13 @@ p.sidenav_panel {
 
 text{
     display: none;
+}
+
+#printDoc {
+    margin-left: 2%;
+}
+
+#iframediv {
+    margin: 2%;
+    width: 80% !important;
 }

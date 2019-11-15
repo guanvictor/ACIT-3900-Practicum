@@ -15,15 +15,15 @@
         <h1>{{heading}}</h1>
         <br><br>
         <div class="admin-account-jumbotron">
-        <h3 style="color: white">Admin Accounts</h3>
+        <h3>Admin Accounts</h3>
         <table class="adminTable table-responsive filetable">
-            <tr style="background-color: white;">
+            <tr>
                 <th>Name</th>
                 <th>Email</th>
                 <th></th>
             </tr>
             {{#each admins}}
-            <tr class="user_acount_table" style="background-color: white;">
+            <tr class="user_acount_table" >
                 <td style="width: 45%;" class="adminTableCell">{{firstName}} {{lastName}}</td>
                 <td style="width: 45%;" class="adminTableCell">{{email}}</td>
                 <td class="adminTableCell">
@@ -42,13 +42,13 @@
         <div class="non-admin-account-jumbotron">
         <h3 style="color: ">Non-Admin Accounts</h3>
         <table class="adminTable table-responsive filetable">
-            <tr style="background-color: white;">
+            <tr>
                 <th>Name</th>
                 <th>Email</th>
                 <th></th>
             </tr>
             {{#each nonAdmins}}
-            <tr class="user_acount_table" style="background-color: white;">
+            <tr class="user_acount_table">
                 <td style="width: 45%;" class="adminTableCell">{{firstName}} {{lastName}}</td>
                 <td style="width: 45%;"class="adminTableCell">{{email}}</td>
                 <td class="adminTableCell">

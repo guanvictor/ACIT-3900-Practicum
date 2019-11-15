@@ -312,7 +312,7 @@ app.get('/admin/events', checkAdmin, async (request, response) => {
         heading: "Events",
         event: events,
         today: today,
-        event_isActive: true
+        events_isActive: true
     });
 });
 
@@ -320,7 +320,6 @@ app.get('/admin/events/:event_id', checkAdmin, async (request, response) => {
     let event = await queries.getEvent(request.params.event_id);
     let eventAttendees = await queries.getEventAttendees(request.params.event_id);
     let event_uuid = request.params.event_id;
-
     // // formats the input event date
     let eventDate = await event.eventDate;
 
@@ -335,7 +334,7 @@ app.get('/admin/events/:event_id', checkAdmin, async (request, response) => {
         name: event.eventName,
         date: date,
         desc: event.eventDescription,
-        event_isActive: true,
+        events_isActive: true,
         eventAttendees: eventAttendees,
         countAttendees: countAttendees,
         event_uuid: event_uuid,
@@ -403,7 +402,7 @@ app.get('/admin/webcontent', checkAdmin, async (request, response) => {
     });
 });
 
-app.get('/admin/useraccounts', async (request, response) => {
+app.get('/admin/useraccounts', checkAdmin, async (request, response) => {
     let users = await queries.getAllUsers();
 
     response.render("administrator/useraccounts.hbs", {
@@ -415,7 +414,7 @@ app.get('/admin/useraccounts', async (request, response) => {
     });
 });
 
-app.get('/admin/useraccounts/:account_uuid', async (request, response) => {
+app.get('/admin/useraccounts/:account_uuid', checkAdmin, async (request, response) => {
     let user = await queries.getUser(request.params.account_uuid);
 
     response.render('administrator/user.hbs', {
@@ -427,7 +426,7 @@ app.get('/admin/useraccounts/:account_uuid', async (request, response) => {
     });
 });
 
-app.get('/admin/adminaccount', async (request, response) => {
+app.get('/admin/adminaccount', checkAdmin, async (request, response) => {
     let admins = await queries.getAdmins();
     let nonAdmins = await queries.getNonAdmins();
 

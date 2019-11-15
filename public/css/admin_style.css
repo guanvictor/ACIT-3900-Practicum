@@ -57,7 +57,7 @@ td a:visited {
     width: 160px;
     position: fixed;
     /* position: absolute; */
-
+    z-index: 1;
     background-color: black;
     overflow: hidden;
     padding-top: 20px;
@@ -211,7 +211,6 @@ p.sidenav_panel {
     height: 100vh;
     /* overflow: scroll; */
     margin-bottom: 0 !important;
-
 }
 
 .edit_event_button,
@@ -318,6 +317,10 @@ p.sidenav_panel {
 
 .user_acount_table{
     border: 0.05cm solid grey;
+}
+
+.user_account_table form{
+  margin: 0;
 }
 
 .event_tr:nth-child(even) {

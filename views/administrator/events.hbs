@@ -65,7 +65,7 @@
             {{#each event}}
             <tr class="event_tr">
                 <td class="event_text"><a class="event_link" href="/admin/events/{{event_uuid}}">{{eventName}}</a></td>
-                <td class="event_text"><a class="event_link" href="/admin/events/{{event_uuid}}">{{eventDescription}}</a></td>
+                <td class="event_text"><a class="event_link" href="/admin/events/{{event_uuid}}">{{eventDescription_short}}</a></td>
                 <td class="event_text"><a class="event_link" href="/admin/events/{{event_uuid}}">{{eventDate}}</a></td>
                 <td class="event_text">
                     <button class="edit_event_button btn btn-outline-primary" type="button" data-toggle="modal" data-target="#editEventForm{{event_uuid}}">Edit</button>

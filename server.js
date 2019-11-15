@@ -337,8 +337,12 @@ app.get('/admin/events', checkAdmin, async (request, response) => {
 
         temp_str = events[i].eventDescription;
 
-        if (temp_str.length > 100)
-        events[i].eventDescription = temp_str.substring(0, 97) + '...';
+        if (temp_str.length > 100) {
+            events[i].eventDescription_short = temp_str.substring(0, 97) + '...';
+        }
+        else {
+            events[i].eventDescription_short = temp_str;
+        }
     }
     response.render("administrator/events.hbs", {
         title: "Events",

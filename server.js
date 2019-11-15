@@ -265,6 +265,14 @@ app.get('/speaker', (request, response) => {
     });
 });
 
+// Calendar Page
+app.get('/calendar', (request, response) => {
+    response.render("calendar.hbs", {
+        title: "Calendar",
+        heading: "Calendar"
+    });
+});
+
 // Contact Page
 app.get('/contact', (request, response) => {
     response.render("contact.hbs", {

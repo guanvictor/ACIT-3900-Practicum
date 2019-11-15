@@ -62,6 +62,7 @@ td a:visited {
     overflow: hidden;
     padding-top: 20px;
     text-align: justify;
+    z-index: 1;
 }
 
 
@@ -129,7 +130,6 @@ td a:visited {
 .maincontent {
     margin-left: 160px;
     /* Same as the width of the sidenav */
-    padding: 0px 10px;
     height: 100%;
 }
 
@@ -161,7 +161,8 @@ p.sidenav_panel {
     text-shadow: 0px 1px #888888;
 }
 
-.add_image_button {
+.add_image_button,
+.edit_single_event_button {
     padding: 0;
     border: none;
     background: white;
@@ -170,6 +171,19 @@ p.sidenav_panel {
     margin-right: 0.7%;
     text-shadow: 0px 1px #888888;
     width: 140px;
+}
+
+@media screen and (max-width: 1400px) {
+    .add_image_button {
+        padding: 0;
+        border: none;
+        background: white;
+        float: right;
+        font-size: 18px;
+        margin-right: 1.4%;
+        text-shadow: 0px 1px #888888;
+        width: 140px;
+    }
 }
 
 .admin_event_header {
@@ -194,10 +208,9 @@ p.sidenav_panel {
 }
 
 .jumbotron {
-    height: 68vh;
-    overflow: scroll;
+    height: 100vh;
+    /* overflow: scroll; */
     margin-bottom: 0 !important;
-
 }
 
 .edit_event_button,
@@ -218,14 +231,41 @@ p.sidenav_panel {
     background-color: #e9ecef;
     border: 15px solid #e9ecef;
     height: 50%;
+    margin-left: 2%;
+    margin-right: 2%;
 }
 
+.admin-account-jumbotron {
+    background-color: #0037c9;
+    border: 15px solid #0037c9;
+    height: 50%;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+.non-admin-account-jumbotron {
+    background-color: #F17C0E;
+    border: 15px solid #F17C0E;
+    height: 50%;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+.user-account-jumbotron {
+    background-color: #F17C0E;
+    border: 15px solid #F17C0E;
+    height: 50%;
+    margin-left: 2%;
+    margin-right: 2%;
+}
 
 .table-responsive {
     display: inline-table !important;
 }
 
-.delete_image_button {
+.delete_image_button,
+.admin_account_button,
+.user_account_button {
     width: 140px;
     align-items: center;
 }
@@ -258,6 +298,35 @@ p.sidenav_panel {
 
 }
 
-.account_table form {
-    margin:0;
+.single_event_text {
+    text-indent: 4%;
+}
+
+.event_desc_box {
+    background-color: #e9ecef;
+    border: 15px solid #e9ecef;
+    height: 30%;
+    margin-left: 4%;
+    margin-right: 2%;
+}
+
+.attendees_list{
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+.user_acount_table{
+    border: 0.05cm solid grey;
+}
+
+.user_account_table form{
+  margin: 0;
+}
+
+.event_tr:nth-child(even) {
+    background-color: #f2f2f2
+}
+
+text{
+    display: none;
 }

@@ -415,11 +415,26 @@ app.get('/admin/webcontent/agenda', checkAdmin, async (request, response) => {
     });
 });
 app.get('/admin/webcontent/speakers', checkAdmin, async (request, response) => {
+    let speakers = await queries.getSpeakers();
+    let temp = '';
+
+    for (let i=0; i<speakers.length; i++){
+        temp = speakers[i].biography;
+
+        if (temp.length > 100){
+            speakers[i].biography_short = temp.substring(0, 97) + '...';
+        }
+        else {
+            speakers[i].biography_short = temp;
+        }
+    }
+
     response.render("administrator/webcontent/speaker.hbs", {
         title: 'Admin - Speaker',
         heading: 'Manage Speaker Page Content',
         webcontent_speakersisActive: true,
-        webcontent_isActive: true
+        webcontent_isActive: true,
+        speakers: speakers
     });
 });
 app.get('/admin/webcontent/contact', checkAdmin, async (request, response) => {

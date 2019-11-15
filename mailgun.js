@@ -4,6 +4,12 @@ const api_key = require('./api_key.js');
 
 const auth = api_key.auth
 
+// const auth = {auth: {
+//     api_key: process.env.API_KEY,
+//     domain: process.env.DOMAIN
+//     }}
+
+
 const transporter = nodemailer.createTransport(mailGun(auth));
 
 const sendMail = (email, subject, text) => {

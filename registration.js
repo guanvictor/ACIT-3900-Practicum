@@ -34,8 +34,6 @@ const registerUser = async (request, response) => {
     let province_state = await request.body.province_state;
     let pc_zip = await request.body.pc_zip;
 
-    let consent = await request.body.consent;
-
     con = db.getDb();
 
     // checks that an account does NOT already exist
@@ -48,8 +46,8 @@ const registerUser = async (request, response) => {
         }
         else {
             // creates a new account
-            sql = "INSERT INTO accounts (account_uuid, email, password, title, firstName, lastName, companyName, plantClassification, fieldPosition, businessPhone, homePhone, cellPhone, addressL1, addressL2, country, city, province_state, pc_zip, consent) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-            let values = [uuid, email, password, title, firstName, lastName, companyName, plantClassification, fieldPosition, businessPhone, homePhone, cellPhone, addressL1, addressL2, country, city, province_state, pc_zip, consent];
+            sql = "INSERT INTO accounts (account_uuid, email, password, title, firstName, lastName, companyName, plantClassification, fieldPosition, businessPhone, homePhone, cellPhone, addressL1, addressL2, country, city, province_state, pc_zip) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            let values = [uuid, email, password, title, firstName, lastName, companyName, plantClassification, fieldPosition, businessPhone, homePhone, cellPhone, addressL1, addressL2, country, city, province_state, pc_zip];
 
             con.query(sql, values, (err, result) => {
                 if (err) throw err;

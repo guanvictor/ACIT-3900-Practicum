@@ -1,8 +1,14 @@
 const express = require("express");
 const router = express.Router();
+
 const db = require("./database");
+
 const fs = require("fs");
-const uuidv1 = require('uuid/v1');
+
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+
+const uuidv4 = require('uuid/v4');
 
 // Populates event table with eventName and date
 let eventPromise = () => {
@@ -112,7 +118,7 @@ Retrives all currently-registered users.
 const getAllUsers = () => {
     return new Promise((resolve, reject) => {
         let con = db.getDb();
-        let sql = "SELECT account_uuid, email, firstName, lastName, companyName, division, plantClassification, fieldPosition, businessPhone FROM accounts ORDER BY lastName";
+        let sql = "SELECT account_uuid, email, firstName, lastName, companyName, plantClassification, fieldPosition, businessPhone FROM accounts ORDER BY lastName";
 
         con.query(sql, (err, result) => {
             if (err) {
@@ -145,6 +151,71 @@ const getUser = (account_uuid) => {
 };
 
 /*
+ADMIN PANEL - add new user page.
+Enables admins to add a new user. Password is generated on account creation.
+*/
+const addNewUser = async (request, response) => {
+    let account_uuid = uuidv4();
+
+    let email = await request.body.email;
+
+    let title = await request.body.title;
+    let firstName = await request.body.firstName;
+    let lastName = await request.body.lastName;
+
+    let companyName = await request.body.companyName;
+    let plantClassification = await request.body.plantClassification;
+    let fieldPosition = await request.body.fieldPosition;
+
+    let businessPhone = await request.body.businessPhone;
+    let homePhone = await request.body.homePhone;
+    let cellPhone = await request.body.cellPhone;
+
+    let addressL1 = await request.body.addressL1;
+    let addressL2 = await request.body.addressL2;
+
+    let country = await request.body.country;
+    let city = await request.body.city;
+    let province_state = await request.body.province_state;
+    let pc_zip = await request.body.pc_zip;
+
+    // Generate password based on name and a uuid
+    let firstInitial = firstName.substring(0, 1);
+    let randomChars = uuidv4().substring(0,5);
+    let temp = firstInitial + lastName + randomChars;
+    let password = await bcrypt.hash(temp, saltRounds);
+
+    // FOR TESTING PURPOSES - DELETE AFTER!!
+    console.log(firstInitial + lastName + randomChars);
+
+    con = db.getDb();
+
+    let sql = "SELECT * FROM accounts WHERE email=?";
+
+    con.query(sql, email, (err, result) => {
+        if (err) {
+            throw err;
+        }
+
+        if (result.length > 0) {
+            console.log("Error: An account with this email already exists");
+            return response.redirect("/admin/adduser");
+        } else {
+            sql = "INSERT INTO accounts (account_uuid, email, password, title, firstName, lastName, companyName, plantClassification, fieldPosition, businessPhone, homePhone, cellPhone, addressL1, addressL2, country, city, province_state, pc_zip) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            let values = [account_uuid, email, password, title, firstName, lastName, companyName, plantClassification, fieldPosition, businessPhone, homePhone, cellPhone, addressL1, addressL2, country, city, province_state, pc_zip];
+
+            con.query(sql, values, (err, result) => {
+                if (err) throw err;
+                console.log(`User - ${firstName} ${lastName} - added by admin`);
+            });
+
+            return response.redirect("/admin/useraccounts");
+        }
+    });
+};
+
+
+/*
 ADMIN PANEL - individual user page.
 Updates user details based on values in the form.
 */
@@ -154,7 +225,6 @@ const editUser = async (request, response) => {
     let firstName = await request.body.firstName;
     let lastName = await request.body.lastName;
     let companyName = await request.body.companyName;
-    let division = await request.body.division;
     let plantClassification = await request.body.plantClassification;
     let fieldPosition = await request.body.fieldPosition;
     let businessPhone = await request.body.businessPhone;
@@ -168,8 +238,8 @@ const editUser = async (request, response) => {
     let pc_zip = await request.body.pc_zip;
 
     let con = db.getDb();
-    let sql = "UPDATE accounts SET title=?, firstName=?, lastName=?, companyName=?, division=?, plantClassification=?, fieldPosition=?, businessPhone=?, homePhone=?, cellPhone=?, addressL1=?, addressL2=?, country=?, city=?, province_state=?, pc_zip=? WHERE account_uuid=?";
-    let values = [title, firstName, lastName, companyName, division, plantClassification, fieldPosition, businessPhone, homePhone, cellPhone, addressL1, addressL2, country, city, province_state, pc_zip, account_uuid];
+    let sql = "UPDATE accounts SET title=?, firstName=?, lastName=?, companyName=?, plantClassification=?, fieldPosition=?, businessPhone=?, homePhone=?, cellPhone=?, addressL1=?, addressL2=?, country=?, city=?, province_state=?, pc_zip=? WHERE account_uuid=?";
+    let values = [title, firstName, lastName, companyName, plantClassification, fieldPosition, businessPhone, homePhone, cellPhone, addressL1, addressL2, country, city, province_state, pc_zip, account_uuid];
     
     con.query(sql, values, (err, result) => {
         if (err) {
@@ -269,7 +339,7 @@ Used in /feedback
 Saves feedback form data into db
 */
 const sendFeedback = async (request, response) => {
-    let feedback_id = uuidv1();
+    let feedback_id = uuidv4();
     let content = await request.body.content;
     let length = await request.body.length;
     let organization = await request.body.organization;
@@ -339,6 +409,7 @@ router.post('/editUser', editUser);
 router.post('/deleteUser', deleteUser);
 router.post('/changeAdminStatus', changeAdminStatus);
 router.post('/sendFeedback', sendFeedback);
+router.post('/addNewUser', addNewUser);
 router.post('/editSpeaker', editSpeaker);
 
 module.exports = {

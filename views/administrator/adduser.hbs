@@ -11,24 +11,25 @@
 <div class="maincontent">
     {{> menu}}
 
-    <form method="post" action="/editUser">
+    <form method="post" action="/addNewUser">
         <h1>{{heading}}</h1>
         <p><i>A * denotes required information.</i></p>
+        <p><i>A password will automatically be generated and emailed to the user.</i></p>
 
         <p><label for="email"><b>Email Address *</b></label></p>
-        <input type="email" name="email" value="{{user.email}}" placeholder="{{user.email}}" required>  
+        <input type="email" name="email" required>  
 
         <p><label for="title"><b>Title</b></label></p>
-        <input type="text" name="title" value="{{user.title}}" placeholder="{{user.title}}">
+        <input type="text" name="title">
 
         <p><label for="firstName"><b>First Name *</b></label></p>
-        <input type="text" name="firstName" value="{{user.firstName}}" placeholder="{{user.firstName}}" required>
+        <input type="text" name="firstName" required>
 
         <p><label for="lastName"><b>Last Name *</b></label></p>
-        <input type="text" name="lastName" value="{{user.lastName}}" placeholder="{{user.lastName}}" required>
+        <input type="text" name="lastName" required>
 
         <p><label for="companyName"><b>Company Name *</b></label></p>
-        <input type="text" name="companyName" value="{{user.companyName}}" placeholder="{{user.companyName}}"required>
+        <input type="text" name="companyName" required>
 
         <p><b>Plant Classification</b></p>
         <select name="plantClassification">
@@ -52,20 +53,20 @@
         </select>
 
         <p><label for="businessPhone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"><b>Business Phone Number</b> (format: 123-456-7890)</label></p>
-        <input type="tel" name="businessPhone" value="{{user.businessPhone}}" placeholder="{{user.businessPhone}}">
+        <input type="tel" name="businessPhone">
 
         <p><label for="homePhone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"><b>Home phone Number</b> (format: 123-456-7890)</label></p>
-        <input type="tel" name="homePhone" value="{{user.homePhone}}" placeholder="{{user.homePhone}}">
+        <input type="tel" name="homePhone">
 
         <p><label for="cellPhone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"><b>Cellular Phone Number</b> (format: 123-456-7890)</label></p>
-        <input type="tel" name="cellPhone" value="{{user.cellPhone}}" placeholder="{{user.cellPhone}}">
+        <input type="tel" name="cellPhone">
 
         <p><label for="address"><b>House Address</b></label></p>
-        <input type="text" name="addressL1" value="{{user.addressL1}}" placeholder="{{user.addressL1}}">
-        <input type="text" name="addressL2" value="{{user.addressL2}}" placeholder="{{user.addressL2}}">
+        <input type="text" name="addressL1">
+        <input type="text" name="addressL2">
 
         <p><label for="City"><b>City</b></label></p>
-        <input type="text" name="city" value="{{user.city}}" placeholder="{{user.city}}">
+        <input type="text" name="city">
 
         <p><b>Country</b></p>
         <select name="country">
@@ -93,9 +94,7 @@
         </select>
 
         <p><label for="pc_zip"><b>Postal Code</b></label></p>
-        <input type="text" name="pc_zip" value="{{user.pc_zip}}" placeholder="{{user.pc_zip}}">
-
-        <input type="hidden" name="account_uuid" value="{{user.account_uuid}}">
+        <input type="text" name="pc_zip">
 
         <br><br>
 

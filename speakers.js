@@ -2,10 +2,10 @@ const db = require("./database.js");
 
 const express = require("express");
 const router = express.Router();
-const uuidv1 = require('uuid/v1');
+const uuidv4 = require('uuid/v4');
 
 const addSpeaker = async (request, response) => {
-    let speaker_id = uuidv1();
+    let speaker_id = uuidv4();
 
     let firstName = await request.body.firstName;
     let lastName = await request.body.lastName;

@@ -315,6 +315,10 @@ a.sidenav_panel {
     margin-right: 2%;
 }
 
+.collapseButton, .addNewUserBotton {
+    display: inline;
+}
+
 .user_acount_table{
     border: 0.05cm solid grey;
 }

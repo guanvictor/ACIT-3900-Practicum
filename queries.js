@@ -112,7 +112,7 @@ Retrives all currently-registered users.
 const getAllUsers = () => {
     return new Promise((resolve, reject) => {
         let con = db.getDb();
-        let sql = "SELECT account_uuid, email, firstName, lastName, companyName, division, plantClassification, fieldPosition, businessPhone FROM accounts ORDER BY lastName";
+        let sql = "SELECT account_uuid, email, firstName, lastName, companyName, plantClassification, fieldPosition, businessPhone FROM accounts ORDER BY lastName";
 
         con.query(sql, (err, result) => {
             if (err) {
@@ -154,7 +154,6 @@ const editUser = async (request, response) => {
     let firstName = await request.body.firstName;
     let lastName = await request.body.lastName;
     let companyName = await request.body.companyName;
-    let division = await request.body.division;
     let plantClassification = await request.body.plantClassification;
     let fieldPosition = await request.body.fieldPosition;
     let businessPhone = await request.body.businessPhone;
@@ -168,8 +167,8 @@ const editUser = async (request, response) => {
     let pc_zip = await request.body.pc_zip;
 
     let con = db.getDb();
-    let sql = "UPDATE accounts SET title=?, firstName=?, lastName=?, companyName=?, division=?, plantClassification=?, fieldPosition=?, businessPhone=?, homePhone=?, cellPhone=?, addressL1=?, addressL2=?, country=?, city=?, province_state=?, pc_zip=? WHERE account_uuid=?";
-    let values = [title, firstName, lastName, companyName, division, plantClassification, fieldPosition, businessPhone, homePhone, cellPhone, addressL1, addressL2, country, city, province_state, pc_zip, account_uuid];
+    let sql = "UPDATE accounts SET title=?, firstName=?, lastName=?, companyName=?, plantClassification=?, fieldPosition=?, businessPhone=?, homePhone=?, cellPhone=?, addressL1=?, addressL2=?, country=?, city=?, province_state=?, pc_zip=? WHERE account_uuid=?";
+    let values = [title, firstName, lastName, companyName, plantClassification, fieldPosition, businessPhone, homePhone, cellPhone, addressL1, addressL2, country, city, province_state, pc_zip, account_uuid];
     
     con.query(sql, values, (err, result) => {
         if (err) {

@@ -219,7 +219,6 @@ app.get("/profile/:account_uuid", checkAuthentication, async (request, response)
         firstName: user.firstName,
         lastName: user.lastName,
         companyName: user.companyName,
-        division: user.division,
         plantClassification: user.plantClassification,
         fieldPosition: user.fieldPosition,
         businessPhone: user.businessPhone,

@@ -2,14 +2,14 @@ const db = require('./database.js');
 
 const express = require("express");
 const router = express.Router();
-const uuidv1 = require('uuid/v1');
+const uuidv4 = require('uuid/v4');
 
 const bcrypt = require('bcrypt');
 
 const saltRounds = 10;
 
 const registerUser = async (request, response) => {
-    let uuid = uuidv1();
+    let uuid = uuidv4();
 
     let email = await request.body.email;
     let password = await bcrypt.hash(request.body.password, saltRounds);

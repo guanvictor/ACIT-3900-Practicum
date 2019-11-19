@@ -465,6 +465,13 @@ app.get('/admin/useraccounts', checkAdmin, async (request, response) => {
     });
 });
 
+app.get('/admin/adduser', checkAdmin, (request, response) => {
+    response.render("administrator/adduser.hbs", {
+        title: "Add a New User",
+        heading: "Add a New User"
+    });
+});
+
 app.get('/admin/useraccounts/:account_uuid', checkAdmin, async (request, response) => {
     let user = await queries.getUser(request.params.account_uuid);
 

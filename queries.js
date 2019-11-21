@@ -385,7 +385,6 @@ router.post('/deleteUser', deleteUser);
 router.post('/changeAdminStatus', changeAdminStatus);
 router.post('/sendFeedback', sendFeedback);
 router.post('/addNewUser', addNewUser);
-router.post('/editSpeaker', editSpeaker);
 
 module.exports = {
     eventPromise: eventPromise,

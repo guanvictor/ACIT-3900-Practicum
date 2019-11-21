@@ -19,6 +19,8 @@ const resetPassword = require('./resetpassword');
 
 const app = express();
 
+var current_tokens = {};
+
 let server = app.listen(port, () => {
     console.log(`Server is up on the port ${port}`);
     db.init();
@@ -466,24 +468,44 @@ app.get('/forgotpassword', (request, response) => {
 });
 
 //Reset Password Emails
-app.post('/resetpassword', (req, res) => {
+app.post('/resetpassword', async (req, res) => {
+    console.log(`current tokens ${JSON.stringify(current_tokens)}`);
     const {email} = req.body;
     console.log(req.body["email"]);
-    // let token = resetPassword.generateToken();
+    var token = "";
+    setTimeout(() => {
+        token = resetPassword.generateToken();
+        console.log(`inside of timeout ${token}`);
+        current_tokens[`${token}`] = email;
+        resetPassword.sendMail(email, token);
 
+    }, 2000);
+    // console.log(await resetPassword.realToken);
+    // let token = resetPassword.generateToken();
+    console.log( `outside of timeout: ${resetPassword.generateToken()}`);
     
-    if (resetPassword.checkEmail(email)){
-        resetPassword.sendMail(req.body["email"], function(err, data) {
-            if (err) {
-                res.status(500).json({ message: 'An error has occurred' });
-            } else {
-                res.status(200).json({ message: 'Message sent successfully.'});
-            }
-        });
-    }else{
-        console.log("Email not sent")
-    }
+    // if (){
+       
+        console.log(resetPassword.generateToken());
+        // resetPassword.sendMail(req.body["email"], function(err, data) {
+        //     if (err) {
+        //         res.status(500).json({ message: 'An error has occurred' });
+        //     } else {
+        //         res.status(200).json({ message: 'Message sent successfully.'});
+        //     }
+        // });
+    // }else{
+    //     console.log("Email not sent")
+    // }
 
    
 
 });
+
+app.get('/resetpassword/:token', (request, response) => {
+    response.render("resetpassword.hbs", {
+        title:"Reset Password",
+        heading: "Reset Password"
+    });
+});
+

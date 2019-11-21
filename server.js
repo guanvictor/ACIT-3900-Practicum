@@ -468,16 +468,22 @@ app.get('/forgotpassword', (request, response) => {
 //Reset Password Emails
 app.post('/resetpassword', (req, res) => {
     const {email} = req.body;
-    //let text = "You requested a link to reset your password.";
-    // const {email, subject, text} = req.body;
-    console.log(req.body)
+    console.log(req.body["email"]);
+    // let token = resetPassword.generateToken();
+
     
-    resetPassword(email, function(err, data) {
-        if (err) {
-            res.status(500).json({ message: 'An error has occurred' });
-        } else {
-            res.status(200).json({ message: 'Message sent successfully.'});
-        }
-    });
+    if (resetPassword.checkEmail(email)){
+        resetPassword.sendMail(req.body["email"], function(err, data) {
+            if (err) {
+                res.status(500).json({ message: 'An error has occurred' });
+            } else {
+                res.status(200).json({ message: 'Message sent successfully.'});
+            }
+        });
+    }else{
+        console.log("Email not sent")
+    }
+
+   
 
 });

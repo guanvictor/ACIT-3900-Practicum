@@ -10,7 +10,6 @@ const editProfile = async (request, response) => {
     let lastName = await request.body.lastName;
 
     let companyName = await request.body.companyName;
-    let division = await request.body.division;
     let plantClassification = await request.body.plantClassification;
     let fieldPosition = await request.body.fieldPosition;
 
@@ -30,8 +29,8 @@ const editProfile = async (request, response) => {
 
     let con = db.getDb();
 
-    let sql = "UPDATE accounts SET email=?, title=?, firstName=?, lastName=?, companyName=?, division=?, plantClassification=?, fieldPosition=?, businessPhone=?, homePhone=?, cellPhone=?, addressL1=?, addressL2=?, country=?, city=?, province_state=?, pc_zip=? WHERE account_uuid=?";
-    let values = [email, title, firstName, lastName, companyName, division, plantClassification, fieldPosition, businessPhone, homePhone, cellPhone, addressL1, addressL2, country, city, province_state, pc_zip, user_uuid];
+    let sql = "UPDATE accounts SET email=?, title=?, firstName=?, lastName=?, companyName=?, plantClassification=?, fieldPosition=?, businessPhone=?, homePhone=?, cellPhone=?, addressL1=?, addressL2=?, country=?, city=?, province_state=?, pc_zip=? WHERE account_uuid=?";
+    let values = [email, title, firstName, lastName, companyName, plantClassification, fieldPosition, businessPhone, homePhone, cellPhone, addressL1, addressL2, country, city, province_state, pc_zip, user_uuid];
 
     con.query(sql, values, (err, result) => {
         if (err) {

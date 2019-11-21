@@ -221,7 +221,6 @@ app.get("/profile/:account_uuid", checkAuthentication, async (request, response)
         firstName: user.firstName,
         lastName: user.lastName,
         companyName: user.companyName,
-        division: user.division,
         plantClassification: user.plantClassification,
         fieldPosition: user.fieldPosition,
         businessPhone: user.businessPhone,
@@ -465,6 +464,13 @@ app.get('/admin/useraccounts', checkAdmin, async (request, response) => {
         ua_isActive: true,
 
         users: users
+    });
+});
+
+app.get('/admin/adduser', checkAdmin, (request, response) => {
+    response.render("administrator/adduser.hbs", {
+        title: "Add a New User",
+        heading: "Add a New User"
     });
 });
 

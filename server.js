@@ -235,6 +235,14 @@ app.get("/profile/:account_uuid", checkAuthentication, async (request, response)
         }
         return options.inverse(this);
     });
+
+    hbs.registerHelper("defaultDropdown", (formValue, dbValue) => {
+        if (dbValue == formValue) {
+            return "selected";
+        } else {
+            return "";
+        }
+    });
 });
 
 //  Page
@@ -483,6 +491,14 @@ app.get('/admin/adduser', checkAdmin, (request, response) => {
 
 app.get('/admin/useraccounts/:account_uuid', checkAdmin, async (request, response) => {
     let user = await queries.getUser(request.params.account_uuid);
+
+    hbs.registerHelper("defaultDropdown", (formValue, dbValue) => {
+        if (dbValue == formValue) {
+            return "selected";
+        } else {
+            return "";
+        }
+    });
 
     response.render('administrator/user.hbs', {
         title: `${user.firstName} ${user.lastName}'s Profile`,

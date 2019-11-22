@@ -392,9 +392,8 @@ Used in /feedback
 Saves feedback form data into db
 */
 const sendFeedback = async (request, response) => {
-    let feedback_id = uuidv4();
     let content = await request.body.content;
-    let length = await request.body.length;
+    let speakerQuality = await request.body.speakerQuality;
     let organization = await request.body.organization;
     let format = await request.body.format;
     let overall_rating = await request.body.overall_rating;
@@ -402,8 +401,8 @@ const sendFeedback = async (request, response) => {
     let comments = await request.body.comments;
 
     let con = db.getDb();
-    let sql = "INSERT INTO feedback (feedback_id, content, length, organization, format, overall_rating, relevance, comments) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-    let values = [feedback_id, content, length, organization, format, overall_rating, relevance, comments];
+    let sql = "INSERT INTO feedback (content, speakerQuality, organization, format, overall_rating, relevance, comments) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    let values = [content, speakerQuality, organization, format, overall_rating, relevance, comments];
 
     con.query(sql, values, (err, result) => {
         if (err) {
@@ -414,6 +413,25 @@ const sendFeedback = async (request, response) => {
     });
 };
 
+/* 
+ADMIN PANEL
+Deletes a feedback based on feedback_id
+*/
+const deleteFeedback = async (request, response) => {
+    let feedback_id = await request.body.feedback_id;
+
+    let con = db.getDb();
+    let sql = "DELETE FROM feedback WHERE feedback_id=?";
+
+    con.query(sql, feedback_id, (err, result) => {
+        if (err) {
+            throw err;
+        }
+
+        return response.redirect("/admin");
+    });
+};
+
 /*
 ADMIN PANEL - landing page.
 Shows all feedback form data, retrieved from db.
@@ -421,7 +439,7 @@ Shows all feedback form data, retrieved from db.
 const getAllFeedback = () => {
     return new Promise((resolve, reject) => {
         let con = db.getDb();
-        let sql = "SELECT * from feedback";
+        let sql = "SELECT * FROM feedback ORDER BY feedback_id DESC";
 
         con.query(sql, (err, result) => {
             if (err) {
@@ -502,6 +520,7 @@ router.post('/deleteUser', deleteUser);
 router.post('/changeAdminStatus', changeAdminStatus);
 router.post('/changeSUStatus', changeSUStatus);
 router.post('/sendFeedback', sendFeedback);
+router.post('/deleteFeedback', deleteFeedback);
 router.post('/addNewUser', addNewUser);
 router.post('/addAgendaItem', addAgendaItem);
 router.post('/deleteAgendaItem', deleteAgendaItem);

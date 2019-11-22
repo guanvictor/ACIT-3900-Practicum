@@ -38,4 +38,4 @@ $('#password, #passwordConfirm').on('keyup', function () {
         $("#submitRegister").prop('disabled', false);
     } else 
         $("#submitRegister").prop('disabled', true);
-  });
+});

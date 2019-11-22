@@ -451,6 +451,70 @@ const getAllFeedback = () => {
     });
 };
 
+/*
+ADMIN PANEL - agenda page
+Adds new agenda items/times to agenda table
+*/
+const addAgendaItem = async (request, response) => {
+    let agenda_uuid = uuidv4();
+    let timeStart = await request.body.timeStart;
+    let timeEnd = await request.body.timeEnd;
+    let description = await request.body.description;
+
+    let con = db.getDb();
+    let sql = "INSERT INTO agenda (agenda_uuid, timeStart, timeEnd, description) VALUES (?, ?, ?, ?)";
+    let values = [agenda_uuid, timeStart, timeEnd, description];
+
+    con.query(sql, values, (err, result) => {
+        if (err) {
+            throw (err);
+        }
+
+        console.log(`Agenda item ${agenda_uuid} successfully added`);
+        
+        return response.redirect("/admin/webcontent/agenda");
+    });
+};
+
+/*
+ADMIN PANEL - agenda page.
+Deletes a row of agenda items by agenda id.
+*/
+const deleteAgendaItem = async (request, response) => {
+    let agenda_uuid = await request.body.agenda_uuid;
+
+    let con = db.getDb();
+    let sql = "DELETE FROM agenda WHERE agenda_uuid = ?";
+
+    con.query(sql, agenda_uuid, (err, result) => {
+        if (err) {
+            throw (err);
+        }
+
+        console.log(`Agenda item ${agenda_uuid} successfully deleted`);
+
+        return response.redirect("/admin/webcontent/agenda");
+    });
+};
+
+/*
+Retrieves all agenda items, which will be populated to the table.
+*/
+const getAgendaItems = () => {
+    return new Promise ((resolve, reject) => {
+        let con = db.getDb();
+        let sql = "SELECT * FROM agenda ORDER BY timeStart ASC";
+
+        con.query(sql, (err, result) => {
+            if (err) {
+                reject (err);
+            }
+
+            resolve(result);
+        });
+    });
+};
+
 router.post('/editUser', editUser);
 router.post('/deleteUser', deleteUser);
 router.post('/changeAdminStatus', changeAdminStatus);
@@ -458,6 +522,8 @@ router.post('/changeSUStatus', changeSUStatus);
 router.post('/sendFeedback', sendFeedback);
 router.post('/deleteFeedback', deleteFeedback);
 router.post('/addNewUser', addNewUser);
+router.post('/addAgendaItem', addAgendaItem);
+router.post('/deleteAgendaItem', deleteAgendaItem);
 
 module.exports = {
     eventPromise: eventPromise,
@@ -473,5 +539,6 @@ module.exports = {
     getAdmins: getAdmins,
     getNonAdmins: getNonAdmins,
     getAllFeedback: getAllFeedback,
+    getAgendaItems: getAgendaItems,
     router: router
 };

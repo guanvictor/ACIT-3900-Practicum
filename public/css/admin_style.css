@@ -34,7 +34,7 @@ td a:visited {
 }
 
 .half_width {
-    width: 50% !important;
+    width: 80vh !important;
 }
 
 .quarter_width {
@@ -56,13 +56,11 @@ td a:visited {
     height: 100%;
     width: 160px;
     position: fixed;
-    /* position: absolute; */
     z-index: 1;
     background-color: black;
     overflow: hidden;
     padding-top: 20px;
     text-align: justify;
-    z-index: 1;
 }
 
 
@@ -235,10 +233,16 @@ a.sidenav_panel {
     margin-right: 2%;
 }
 
+.superuser-account-jumbotron {
+    height: 33%;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
 .admin-account-jumbotron {
     /* background-color: #0037c9; */
     /* border: 15px solid #0037c9; */
-    height: 50%;
+    height: 33%;
     margin-left: 2%;
     margin-right: 2%;
 }
@@ -246,7 +250,7 @@ a.sidenav_panel {
 .non-admin-account-jumbotron {
     /* background-color: #F17C0E; */
     /* border: 15px solid #F17C0E; */
-    height: 50%;
+    height: 33%;
     margin-left: 2%;
     margin-right: 2%;
 }
@@ -319,9 +323,9 @@ a.sidenav_panel {
     display: inline;
 }
 
-.user_acount_table{
+/* .user_acount_table{
     border: 0.05cm solid grey;
-}
+} */
 
 .user_account_table form{
   margin: 0;
@@ -350,4 +354,8 @@ text{
 
 #feedbackTable form {
     margin: 0;
+}
+
+label {
+    margin-bottom: 1rem !important;
 }

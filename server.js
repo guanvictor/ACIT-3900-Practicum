@@ -503,6 +503,7 @@ app.get('/admin/useraccounts/:account_uuid', checkAdmin, async (request, respons
 });
 
 app.get('/admin/adminaccount', checkSU, async (request, response) => {
+    let su = await queries.getSU();
     let admins = await queries.getAdmins();
     let nonAdmins = await queries.getNonAdmins();
 
@@ -510,7 +511,7 @@ app.get('/admin/adminaccount', checkSU, async (request, response) => {
         title: "Admin Account",
         heading: "Manage Administrator Accounts",
         adminacc_isActive: true,
-
+        superusers: su,
         admins: admins,
         nonAdmins: nonAdmins
     });

@@ -277,6 +277,23 @@ const deleteUser = async (request, response) => {
 ADMIN PANEL - manage admin accounts page.
 Retrieves all admin accounts that currently exist.
 */
+const getSU = () => {
+    return new Promise((resolve, reject) => {
+        let suStatus = 1;
+
+        let con = db.getDb();
+        let sql = "SELECT account_uuid, firstName, lastName, email, isSU FROM accounts WHERE isSU=?";
+
+        con.query(sql, suStatus, (err, result) => {
+            if (err) {
+                reject(err);
+            }
+
+            resolve(result);
+        });
+    });
+};
+
 const getAdmins = () => {
     return new Promise((resolve, reject) => {
         let adminStatus = 1;
@@ -325,11 +342,47 @@ const changeAdminStatus = async (request, response) => {
         }
 
         if (adminStatus == 1) {
-            console.log(`User ${account_uuid} promoted`);
+            console.log(`User ${account_uuid} promoted to Admin`);
         } else {
-            console.log(`User ${account_uuid} demoted`);
+            console.log(`User ${account_uuid} demoted to User`);
         }
 
+        return response.redirect("/admin/adminaccount");
+    });
+};
+
+const changeSUStatus = async (request, response) => {
+    let account_uuid = await request.body.account_uuid;
+    let suStatus = request.body.suStatus;
+    let current_user = await request.user.account_uuid;
+
+    let con = db.getDb();
+    let sql = "SELECT count(*) as numSU FROM accounts where isSU=1";
+
+    con.query(sql, (err, result) => {
+        if (err) throw (err);
+        if (result[0].numSU == 1 && suStatus == 0){
+            console.log('You must always have at least 1 Super User account');
+        }
+        else if (current_user == account_uuid){
+            console.log('Request Denied: Cannot demote current logged in user');
+        }
+        else {
+            sql = "UPDATE accounts SET isSU=? WHERE account_uuid=?";
+            let values = [suStatus, account_uuid];
+
+            con.query(sql, values, (err, result) => {
+                if (err) {
+                    throw err;
+                }
+
+                if (suStatus == 1) {
+                    console.log(`User ${account_uuid} promoted to SU`);
+                } else {
+                    console.log(`User ${account_uuid} demoted to Admin`);
+                }
+            });
+        }
         return response.redirect("/admin/adminaccount");
     });
 };
@@ -401,6 +454,7 @@ const getAllFeedback = () => {
 router.post('/editUser', editUser);
 router.post('/deleteUser', deleteUser);
 router.post('/changeAdminStatus', changeAdminStatus);
+router.post('/changeSUStatus', changeSUStatus);
 router.post('/sendFeedback', sendFeedback);
 router.post('/deleteFeedback', deleteFeedback);
 router.post('/addNewUser', addNewUser);
@@ -415,6 +469,7 @@ module.exports = {
     getRow: getRow,
     getAllUsers: getAllUsers,
     getUser: getUser,
+    getSU: getSU,
     getAdmins: getAdmins,
     getNonAdmins: getNonAdmins,
     getAllFeedback: getAllFeedback,

@@ -45,6 +45,7 @@ form {
 .IPE_header{
     grid-area: 1 / 1 / 2 / 6;
     padding-left: 15px;
+    margin: 0 auto;
 }
 .home-header-text{
     font-size: 24pt;

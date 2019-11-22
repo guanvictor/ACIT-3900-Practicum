@@ -1,12 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+{{#if inAdminPanel}}
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/admin_style.css">
+    {{> head}}
+</head>
+{{/if}}
 
 {{> head}}
 
 <body>
+    {{#if inAdminPanel}}
+    {{> admin_menu}}
+
+    <div class="maincontent">
+        {{> menu}}
+        <form method="post" action="/addNewUser">
+    {{else}}
     {{> menu}}
     <div class="container">
         <form method="post" action="/registerUser">
+    {{/if}}
             <h1>{{heading}}</h1>
             <p><i>Please fill in the following fields.</i></p>
             <p><i>A * denotes required information.</i></p>
@@ -16,6 +30,7 @@
                     <label for="email"><b>Email *</b></label>
                     <input type="email" class="form-control" name="email" required>
                 </div>
+                {{#unless inAdminPanel}}
                 <div class="form-group col-md-4">
                     <label for="password"><b>Password *</b></label>
                     <input type="password" class="form-control" name="password" id="password" minlength=6 required>
@@ -24,6 +39,7 @@
                     <label for="confirmPassword"><b>Confirm Password*</b></label>
                     <input type="password" class="form-control" name="confirmPassword" id="passwordConfirm" minlength=6 required>
                 </div>
+                {{/unless}}
             </div>
             <div class="form-row">
                 <div class="form-group col-md-2">
@@ -45,8 +61,7 @@
                     <input type="tel" class="form-control" placeholder="123-456-7890" name="businessPhone">
                 </div>
                 <div class="form-group col-md-4">
-                    <p><label for="homePhone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"><b>Home Phone Number</b></label>
-                    </p>
+                    <label for="homePhone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"><b>Home Phone Number</b></label>
                     <input type="tel" class="form-control" placeholder="123-456-7890" name="homePhone">
                 </div>
                 <div class="form-group col-md-4">
@@ -55,10 +70,17 @@
                 </div>
             </div>
             <div class="form-group">
-                <div class="form-group">
-                    <label for="address"><b>Address</b></label>
-                    <input type="text" class="form-control" name="addressL1" placeholder="Street and Number (E.g. 1234 Main St)">
+                <div class="form-row">
+                    <div class="form-group col-md-10">
+                        <label for="address"><b>Address</b></label>
+                        <input type="text" class="form-control" name="addressL1" placeholder="Street and Number (E.g. 1234 Main St)">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="pc_zip"><b>Postal Code/Zip</b></label>
+                        <input type="text" class="form-control" name="pc_zip">
+                    </div>
                 </div>
+                
                 <div class="form-group">
                     <input type="text" class="form-control" name="addressL2" placeholder="Apartment, suite, unit, building, floor, etc.">
                 </div>
@@ -76,8 +98,6 @@
                     <div class="form-group col-md-4">
                         <select name="provincestate" class="form-control provincestate">
                             <option disabled selected value="null_value">select your province</option>
-                            <option value="BC">British Columbia</option>
-                            <option value="Ontario">Ontario</option>
                         </select>
                     </div>
                 </div>
@@ -112,12 +132,14 @@
                 </div>
             </div>
 
-            <button type="submit" id="submitRegister" class="btn btn-outline-primary" disabled>Submit</button>
+            <button type="submit" id="submitRegister" class="btn btn-outline-primary" {{#unless inAdminPanel}}disabled{{/unless}}>Submit</button>
         </form>
     </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+{{#unless inAdminPanel}}
 <script src="/static/js/registration.js"></script>
+{{/unless}}
 </body>
 
 {{> footer}}

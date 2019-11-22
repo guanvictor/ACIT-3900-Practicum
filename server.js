@@ -204,12 +204,7 @@ app.get("/logout", checkAuthentication, (request, response) => {
 
 // Profile
 app.get("/profile/:account_uuid", checkAuthentication, async (request, response) => {
-    if (request.user == undefined) {
-        response.render("profile.hbs");
-    }
-
     let user = request.user;
-
     let profile_uuid = request.params.account_uuid;
 
     response.render("profile.hbs", {
@@ -256,10 +251,13 @@ app.get('/about', async (request, response) => {
 
 // Registration Page
 app.get('/registration', checkAuthentication_false, (request, response) => {
+    let inAdminPanel = false;
+
     response.render("registration.hbs", {
         title:"Registration",
         heading: "Registration",
-        action: "/registerUser"
+        action: "/registerUser",
+        inAdminPanel: inAdminPanel
     });
 });
 
@@ -468,9 +466,12 @@ app.get('/admin/useraccounts', checkAdmin, async (request, response) => {
 });
 
 app.get('/admin/adduser', checkAdmin, (request, response) => {
-    response.render("administrator/adduser.hbs", {
+    let inAdminPanel = true;
+
+    response.render("registration.hbs", {
         title: "Add a New User",
-        heading: "Add a New User"
+        heading: "Add a New User",
+        inAdminPanel: inAdminPanel
     });
 });
 

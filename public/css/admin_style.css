@@ -235,10 +235,16 @@ a.sidenav_panel {
     margin-right: 2%;
 }
 
+.superuser-account-jumbotron {
+    height: 33%;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
 .admin-account-jumbotron {
     /* background-color: #0037c9; */
     /* border: 15px solid #0037c9; */
-    height: 50%;
+    height: 33%;
     margin-left: 2%;
     margin-right: 2%;
 }
@@ -246,7 +252,7 @@ a.sidenav_panel {
 .non-admin-account-jumbotron {
     /* background-color: #F17C0E; */
     /* border: 15px solid #F17C0E; */
-    height: 50%;
+    height: 33%;
     margin-left: 2%;
     margin-right: 2%;
 }

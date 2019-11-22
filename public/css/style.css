@@ -97,6 +97,11 @@ form {
         position: relative;
     }
 
+/* Login CSS */
+#failedLogin {
+    color: red;
+}
+
 /*Sponsors css*/
     .child_3 {
         grid-area: 4 / 1 / 5 / 6;

@@ -73,36 +73,38 @@
                 <th></th>
             </tr>
             {{#each speakers}}
-
-            <tr class="user_acount_table">
-                <td style="width: 10%;">{{lastName}}</td>
-                <td style="width: 10%;">{{firstName}}</td>
-                <td style="width: 10%;">{{topic}}</td>
-                <td style="width: 10%;">{{time}}</td>
-                <td style="width: 10%;">{{location}}</td>
-                <td style="width: 30%;">{{biography_short}}</td>
-                <td style="width: 10%;">
-                    <button class="btn btn-outline-primary user_account_button" type="button" data-toggle="modal" data-target="#editSpeakerForm{{speaker_id}}">Edit</button>
-                    <div class="modal fade" id="editSpeakerForm{{speaker_id}}" tabindex="-1" role="dialog" aria-labelledby="editSpeakerFormLabel" aria-hidden="true">
-                        <form method="post" action="/editSpeaker" id="editspeaker_form">
-                            <input type="hidden" name="speaker_id" value="{{speaker_id}}">
-                            <div id="editSpeaker" class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header text-center">
-                                        <h4 class="modal-title w-100 font-weight-bold">Edit Speaker</h4>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <tr class="user_acount_table">
+                    <td style="width: 10%;">{{lastName}}</td>
+                    <td style="width: 10%;">{{firstName}}</td>
+                    <td style="width: 10%;">{{topic}}</td>
+                    <td style="width: 10%;">{{time}}</td>
+                    <td style="width: 10%;">{{location}}</td>
+                    <td style="width: 50%;">{{biography_short}}</td>
+                    <td style="width: 140px;">
+                        <button class="btn btn-outline-primary user_account_button" type="button" data-toggle="modal" data-target="#editSpeakerForm{{speaker_id}}">Edit</button>
+                        <div class="modal fade" id="editSpeakerForm{{speaker_id}}" tabindex="-1" role="dialog"
+                            aria-labelledby="editSpeakerFormLabel" aria-hidden="true">
+                            <form method="post" action="/editSpeaker" id="editspeaker_form">
+                                <input type="hidden" name="speaker_id" value="{{speaker_id}}">
+                                <div id="editSpeaker" class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header text-center">
+                                            <h4 class="modal-title w-100 font-weight-bold">Edit Speaker</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
-                                        </button>
+                                            </button>
                                     </div>
                         
                                     <div class="modal-body">
-                                        <div class="form-group">
-                                            <label data-error="wrong" data-success="right" for="speakerForm-fname">First Name</label>
-                                            <input type="text" class="form-control validate" name="fname" value="{{firstName}}">
-                                        </div>
-                                        <div class="form-group">
-                                            <label data-error="wrong" data-success="right" for="speakerForm-lname">Last Name</label>
-                                            <input type="text" class="form-control validate" name="lname" value={{lastName}}>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label data-error="wrong" data-success="right" for="speakerForm-fname">First Name</label>
+                                                <input type="text" class="form-control validate" name="fname" value="{{firstName}}">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label data-error="wrong" data-success="right" for="speakerForm-lname">Last Name</label>
+                                                <input type="text" class="form-control validate" name="lname" value={{lastName}}>
+                                            </div>
                                         </div>
                                         <div class="form-group">
                                             <label data-error="wrong" data-success="right" for="speakerForm-topic">Topic</label>
@@ -114,7 +116,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="speakerTime">Time</label>
-                                            <input type="time" class="form-control half_width" name="time" value="{{time}}" required>
+                                            <input type="time" class="form-control" name="time" value="{{time}}" required>
                                         </div>
                                         <div class="form-group">
                                             <label data-error="wrong" data-success="right" for="speakerForm-bio">Biography</label>
@@ -125,14 +127,11 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
-                    </div>
-                </td>
-                <td style="width: 10%;" >
-                    <button type="button" class="btn btn-outline-danger user_account_button" data-toggle="modal" data-target="#delete{{speaker_id}}">
-                            Delete
-                    </button>
+                            </form>
+                        </div>
+                    </td>
+                    <td style="width: 58px">
+                        <button type="button" class="btn btn-outline-danger user_account_button" data-toggle="modal" data-target="#delete{{speaker_id}}">Delete</button>
 
                     <!-- Modal -->
                     <div class="modal fade" id="delete{{speaker_id}}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">

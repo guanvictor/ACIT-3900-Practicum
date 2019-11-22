@@ -34,7 +34,7 @@ td a:visited {
 }
 
 .half_width {
-    width: 50% !important;
+    width: 80vh !important;
 }
 
 .quarter_width {
@@ -56,13 +56,11 @@ td a:visited {
     height: 100%;
     width: 160px;
     position: fixed;
-    /* position: absolute; */
     z-index: 1;
     background-color: black;
     overflow: hidden;
     padding-top: 20px;
     text-align: justify;
-    z-index: 1;
 }
 
 
@@ -352,4 +350,8 @@ text{
 
 #feedbackTable th {
     width: 300px;
+}
+
+label {
+    margin-bottom: 1rem !important;
 }

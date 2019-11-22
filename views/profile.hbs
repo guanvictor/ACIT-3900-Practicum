@@ -8,88 +8,117 @@
     {{#if isAuthenticated}}
         {{#compareUser profile_uuid current_uuid}}
             <form method="post" action="/editProfile">
-                <label for="email"><b>Email Address *</b></label></p>
-                <input type="email" name="email" value={{../email}} required>
 
-                <p><label for="title"><b>Title</b></label></p>
-                <input type="text" name="title" value={{../title}}>
+                <label for="title" style="margin-right: 5rem">
+                    <span style="display: block; margin: 0 0 3px;"><b>Title</b></span>
+                    <input type="text" name="title" value={{../title}}>
+                </label>
 
-                <p><label for="firstName"><b>First Name *</b></label></p>
-                <input type="text" name="firstName" value={{../firstName}} required>
+                <label for="firstName" style="margin-right: 6.4rem">
+                    <span style="display: block; margin: 0 0 3px;"><b>First Name *</b></span>
+                    <input style="width: 197px;" type="text" name="firstName" value={{../firstName}} required>
+                </label>
 
-                <p><label for="lastName"><b>Last Name *</b></label></p>
-                <input type="text" name="lastName" value={{../lastName}} required>
+                <label for="lastName">
+                    <span style="display: block; margin: 0 0 3px;"><b>Last Name *</b></span>
+                    <input type="text" name="lastName" value={{../lastName}} required>
+                </label>
+                <br>
+                <label for="companyName" style="margin-right: 5rem">
+                    <span style="display: block; margin: 0 0 3px;"><b>Company Name *</b></span>
+                    <input type="text" name="companyName" value={{../companyName}} required>
+                </label>
 
-                <p><label for="companyName"><b>Company Name *</b></label></p>
-                <input type="text" name="companyName" value={{../companyName}} required>
+                <label style="margin-right: 6.3rem">
+                    <span style="display: block; margin: 0 0 3px;"><b>Plant Classification</b></span>
+                    <select name="plantClassification">
+                        <option disabled selected value="null_value">Select plant classification</option>
+                        <option value="Other">Other</option>
+                        <option value="1st Class">1st Class</option>
+                        <option value="2nd Class">2nd Class</option>
+                        <option value="3rd Class">3rd Class</option>
+                        <option value="4th Class">4th Class</option>  
+                        <option value="5th Class">5th Class</option>
+                        <option value="RPO">RPO</option>
+                    </select>
+                </label>
+                
 
-                <p><label for="division"><b>Division</b></label></p>
-                <input type="text" name="division" value={{../division}}>
+                <label for="fieldPosition" style="margin-right: 5rem">
+                    <span style="display: block; margin: 0 0 3px;"><b>Field Position</b></span>
+                    <select name="fieldPosition" style="width: 182px;">
+                        <option disabled selected value="null_value">Select position</option>
+                        <option value="Other">Other</option>
+                        <option value="Chief Engineer">Chief Engineer</option>
+                        <option value="Shift Engineer">Shift Engineer</option>
+                        <option value="Operator">Operator</option>
+                    </select>
+                </label>
+                <br>
+                <label for="businessPhone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" style="margin-right: 5rem">
+                    <span style="display: block; margin: 0 0 3px;"><b>Business Phone Number</b></span>
+                    <input type="tel" name="businessPhone" value="{{../businessPhone}}" placeholder="123-456-7890">
+                </label>
+                
+                <label for="homePhone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" style="margin-right: 6.3rem">
+                    <span style="display: block; margin: 0 0 3px;"><b>Home phone Number</b></span>
+                    <input style="width: 197px;" type="tel" name="homePhone" value="{{../homePhone}}" placeholder="123-456-7890">
+                </label>
 
-                <p><b>Plant Classification</b></p>
-                <select name="plantClassification">
-                    <option disabled selected value="null_value">select your plant classification</option>
-                    <option value="na">N/A</option>
-                    <option value="first">1st Class</option>
-                    <option value="second">2nd Class</option>
-                    <option value="third">3rd Class</option>
-                    <option value="fourth">4th Class</option>  
-                    <option value="fifth">5th Class</option>
-                    <option value="rpo">RPO</option>
-                </select>
+                <label for="cellPhone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" style="margin-right: 6rem">
+                    <span style="display: block; margin: 0 0 3px;"><b>Cellular Phone Number</b></span>
+                    <input type="tel" name="cellPhone" value="{{../cellPhone}}" placeholder="123-456-7890">
+                </label>
 
-                <p><label for="fieldPosition"><b>Field Position</b></label></p>
-                <select name="fieldPosition">
-                    <option disabled selected value="null_value">select your position</option>
-                    <option value="na">N/A</option>
-                    <option value="chiefEngineer">Chief Engineer</option>
-                    <option value="shiftEngineer">Shift Engineer</option>
-                    <option value="operator">Operator</option>
-                </select>
-
-                <p><label for="businessPhone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"><b>Business Phone Number</b> (format: 123-456-7890)</label></p>
-                <input type="tel" name="businessPhone" value={{../businessPhone}}>
-
-                <p><label for="homePhone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"><b>Home phone Number</b> (format: 123-456-7890)</label></p>
-                <input type="tel" name="homePhone" value={{../homePhone}}>
-
-                <p><label for="cellPhone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"><b>Cellular Phone Number</b> (format: 123-456-7890)</label></p>
-                <input type="tel" name="cellPhone" value={{../cellPhone}}>
-
-                <p><label for="address"><b>House Address</b></label></p>
-                <input type="text" name="addressL1" placeholder="Street and number" value={{../addressL1}}>
-                <input type="text" name="addressL2" placeholder="Apartment, suite, unit, building, floor, etc." value={{../addressL2}}>
-
-                <p><label for="City"><b>City</b></label></p>
-                <input type="text" name="city" value={{../city}}>
-
-                <p><b>Country</b></p>
-                <select name="country">
-                    <option disabled selected value="null_value">select your country</option>
-                    <option value="Canada">Canada</option>
-                    <option value="US">United States</option>
-                </select>
-
-                <p><b>Province/Territory</b></p>
-                <select name="province_state">
-                    <option disabled selected value="null_value">select your province</option>
-                    <option value="Alberta">Alberta</option>
-                    <option value="British Columbia">British Columbia</option>
-                    <option value="Manitoba">Manitoba</option>
-                    <option value="New Brunswick">New Brunswick</option>  
-                    <option value="Newfoundland and Labrador">Newfoundland and Labrador</option>
-                    <option value="Nova Scotia">Nova Scotia</option>  
-                    <option value="Ontario">Ontario</option>
-                    <option value="Prince Edward Island">Prince Edward Island</option>
-                    <option value="Quebec">Quebec</option>   
-                    <option value="Saskatchewan">Saskatchewan</option>
-                    <option value="Yukon">Yukon</option>
-                    <option value="Northwest Territories">Northwest Territories</option>
-                    <option value="Nunavut">Nunavut</option>
-                </select>
-
-                <p><label for="pc_zip"><b>Postal Code</b></label></p>
-                <input type="text" name="pc_zip" value={{../pc_zip}}>
+                <label for="email">
+                    <span style="display: block; margin: 0 0 3px;"><b>Email Address *</b></span>
+                    <input type="email" name="email" value={{../email}} required>
+                </label>
+                <br>
+                <label for="address">
+                    <span style="display: block; margin: 0 0 3px;"><b>House Address</b></span>
+                    <input type="text" name="addressL1" placeholder="Street and number" value={{../addressL1}}>
+                    <input type="text" name="addressL2" placeholder="Apartment, Suite, Unit" value={{../addressL2}}>
+                </label>
+                <br>
+                <label for="City">
+                    <span style="display: block; margin: 0 0 3px;"><b>City</b></span>
+                    <input type="text" name="city" value={{../city}}>
+                </label>
+                <br>
+                <label>
+                    <span style="display: block; margin: 0 0 3px;"><b>Country</b></span>
+                    <select name="country" style="width: 182px;">
+                        <option disabled selected value="null_value">Select country</option>
+                        <option value="Canada">Canada</option>
+                        <option value="US">United States</option>
+                    </select>
+                </label>
+                <br>
+                <laebl>
+                    <span style="display: block; margin: 0 0 3px;"><b>Province/Territory</b></span>
+                    <select name="province_state" style="width: 182px;">
+                        <option disabled selected value="null_value">Select province</option>
+                        <option value="Alberta">Alberta</option>
+                        <option value="British Columbia">British Columbia</option>
+                        <option value="Manitoba">Manitoba</option>
+                        <option value="New Brunswick">New Brunswick</option>  
+                        <option value="Newfoundland and Labrador">Newfoundland and Labrador</option>
+                        <option value="Nova Scotia">Nova Scotia</option>  
+                        <option value="Ontario">Ontario</option>
+                        <option value="Prince Edward Island">Prince Edward Island</option>
+                        <option value="Quebec">Quebec</option>   
+                        <option value="Saskatchewan">Saskatchewan</option>
+                        <option value="Yukon">Yukon</option>
+                        <option value="Northwest Territories">Northwest Territories</option>
+                        <option value="Nunavut">Nunavut</option>
+                    </select>
+                </laebl>
+                <br><br>
+                <label for="pc_zip">
+                    <span style="display: block; margin: 0 0 3px;"><b>Postal Code</b></span>
+                    <input type="text" name="pc_zip" value={{../pc_zip}}>
+                </label>
 
                 <br><br>
 
@@ -102,6 +131,9 @@
     <p>Please login to see this page.</p>
     {{/if}}
     </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="/static/js/registration.js"></script>
 </body>
 
 {{> footer}}

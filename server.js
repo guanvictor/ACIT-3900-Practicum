@@ -16,6 +16,7 @@ const profile = require("./profile.js");
 const admin = require("./admin.js");
 const sendMail = require('./mailgun');
 const resetPassword = require('./resetpassword');
+const speakers = require('./speakers.js');
 
 const app = express();
 
@@ -51,6 +52,7 @@ app.use(passport);
 app.use(profile);
 app.use(admin);
 app.use(queries.router);
+app.use(speakers);
 
 //Checks Account Administrator Status
 checkAdmin = (request, response, next) => {
@@ -222,7 +224,6 @@ app.get("/profile/:account_uuid", checkAuthentication, async (request, response)
         firstName: user.firstName,
         lastName: user.lastName,
         companyName: user.companyName,
-        division: user.division,
         plantClassification: user.plantClassification,
         fieldPosition: user.fieldPosition,
         businessPhone: user.businessPhone,
@@ -340,8 +341,12 @@ app.get('/admin/events', checkAdmin, async (request, response) => {
 
         temp_str = events[i].eventDescription;
 
-        if (temp_str.length > 100)
-        events[i].eventDescription = temp_str.substring(0, 97) + '...';
+        if (temp_str.length > 100) {
+            events[i].eventDescription_short = temp_str.substring(0, 97) + '...';
+        }
+        else {
+            events[i].eventDescription_short = temp_str;
+        }
     }
     response.render("administrator/events.hbs", {
         title: "Events",
@@ -414,11 +419,26 @@ app.get('/admin/webcontent/agenda', checkAdmin, async (request, response) => {
     });
 });
 app.get('/admin/webcontent/speakers', checkAdmin, async (request, response) => {
+    let speakers = await queries.getSpeakers();
+    let temp = '';
+
+    for (let i=0; i<speakers.length; i++){
+        temp = speakers[i].biography;
+
+        if (temp.length > 100){
+            speakers[i].biography_short = temp.substring(0, 97) + '...';
+        }
+        else {
+            speakers[i].biography_short = temp;
+        }
+    }
+
     response.render("administrator/webcontent/speaker.hbs", {
         title: 'Admin - Speaker',
         heading: 'Manage Speaker Page Content',
         webcontent_speakersisActive: true,
-        webcontent_isActive: true
+        webcontent_isActive: true,
+        speakers: speakers
     });
 });
 app.get('/admin/webcontent/contact', checkAdmin, async (request, response) => {
@@ -447,6 +467,13 @@ app.get('/admin/useraccounts', checkAdmin, async (request, response) => {
         ua_isActive: true,
 
         users: users
+    });
+});
+
+app.get('/admin/adduser', checkAdmin, (request, response) => {
+    response.render("administrator/adduser.hbs", {
+        title: "Add a New User",
+        heading: "Add a New User"
     });
 });
 

@@ -262,10 +262,13 @@ app.get('/registration', checkAuthentication_false, (request, response) => {
 });
 
 // Agenda Page
-app.get('/agenda', (request, response) => {
+app.get('/agenda', async (request, response) => {
+    let agendaItems = await queries.getAgendaItems();
+
     response.render("agenda.hbs", {
         title:"Agenda",
-        heading: "Agenda"
+        heading: "Agenda",
+        agendaItems: agendaItems
     });
 });
 
@@ -406,11 +409,14 @@ app.get('/admin/webcontent/about', checkAdmin, async (request, response) => {
     });
 });
 app.get('/admin/webcontent/agenda', checkAdmin, async (request, response) => {
+    let agendaItems = await queries.getAgendaItems();
+
     response.render("administrator/webcontent/agenda.hbs", {
         title: 'Admin - Agenda',
         heading: 'Manage Agenda Page Content',
         webcontent_agendaisActive: true,
-        webcontent_isActive: true
+        webcontent_isActive: true,
+        agendaItems: agendaItems
     });
 });
 app.get('/admin/webcontent/speakers', checkAdmin, async (request, response) => {

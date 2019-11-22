@@ -19,6 +19,8 @@ const resetPassword = require('./resetpassword');
 
 const app = express();
 
+var current_tokens = {};
+
 let server = app.listen(port, () => {
     console.log(`Server is up on the port ${port}`);
     db.init();
@@ -498,20 +500,66 @@ app.get('/forgotpassword', (request, response) => {
 });
 
 //Reset Password Emails
-app.post('/resetpassword', (req, res) => {
+app.post('/resetpassword', async (req, res) => {
+    console.log(`current tokens ${JSON.stringify(current_tokens)}`);
     const {email} = req.body;
-    //let text = "You requested a link to reset your password.";
-    // const {email, subject, text} = req.body;
-    console.log(req.body)
+    console.log(req.body["email"]);
+    var token = "";
+    setTimeout(() => {
+        token = resetPassword.generateToken();
+        console.log(`inside of timeout ${token}`);
+        current_tokens[`${token}`] = email;
+        resetPassword.sendMail(email, token);
+
+    }, 2000);
+    // console.log(await resetPassword.realToken);
+    // let token = resetPassword.generateToken();
+    console.log( `outside of timeout: ${resetPassword.generateToken()}`);
     
-    resetPassword(email, function(err, data) {
-        if (err) {
-            res.status(500).json({ message: 'An error has occurred' });
-        } else {
-            res.status(200).json({ message: 'Message sent successfully.'});
-        }
+    // if (){
+       
+        console.log(resetPassword.generateToken());
+        // resetPassword.sendMail(req.body["email"], function(err, data) {
+        //     if (err) {
+        //         res.status(500).json({ message: 'An error has occurred' });
+        //     } else {
+        //         res.status(200).json({ message: 'Message sent successfully.'});
+        //     }
+        // });
+    // }else{
+    //     console.log("Email not sent")
+    // }
+
+   
+
+});
+
+app.get('/resetpassword/:token', (request, response) => {
+    response.render("resetpassword.hbs", {
+        title:"Reset Password",
+        heading: "Reset Password"
     });
 });
+
+app.post('/resetpassword/:token', (request, response) => {
+    // console.log(request.params.token);
+   
+    let email = current_tokens[`${request.params.token}`];
+    let password = request.body[`password`];
+    console.log("password entered is: " +password);
+    console.log("email found: " +email);
+    resetPassword.changepassword(email, password).then((result) =>{
+        console.log(`${resetPassword.changepassword()}`);
+        // response.send("You Fucken did it son");
+        response.redirect('/login');
+
+    }).catch((err) => {
+        console.log(err);
+    });
+});
+
+
+
 
 app.get('/feedback', (request, response) => {
     response.render("feedback.hbs", {

@@ -509,3 +509,22 @@ app.get('/resetpassword/:token', (request, response) => {
     });
 });
 
+app.post('/resetpassword/:token', (request, response) => {
+    // console.log(request.params.token);
+   
+    let email = current_tokens[`${request.params.token}`];
+    let password = request.body[`password`];
+    console.log("password enterd is: " +password);
+    console.log("email found: " +email);
+    resetPassword.changepassword(email, password).then((result) =>{
+        console.log(`${resetPassword.changepassword()}`);
+        response.send("You Fucken did it son");
+
+    }).catch((err) => {
+        console.log(err);
+    });
+
+
+
+
+});

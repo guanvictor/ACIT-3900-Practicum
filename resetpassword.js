@@ -2,9 +2,12 @@ const nodemailer = require('nodemailer');
 const mailGun = require('nodemailer-mailgun-transport');
 const api_key = require('./api_key.js');
 const crypto = require('crypto');
+const bcrypt = require('bcrypt');
 const db = require('./database.js');
 
 const auth = api_key.auth;
+
+const saltRounds = 10;
 
 
 
@@ -73,6 +76,40 @@ const checkEmail = (email, token) => {
 
 
 
+/**
+ *  Updates the password associated with the email and the token generated from the reset password e-mail link
+ *
+ * @param {*} email
+ * @param {*} password
+ * @returns
+ */
+const changepassword = (email, password) => {
+
+    return new Promise((resolve, reject) => {
+        try {
+            let hashed_password = bcrypt.hash(password, saltRounds);
+            let con = db.getDb();
+            let sql = `update accounts set password = "${hashed_password}" where email like "${email}"`
+    
+            con.query(sql, (err, result) => {
+                if (err)
+                    reject(err);
+                else {
+                    resolve(result);       
+                }
+    
+            });
+
+        }catch (err){
+            console.log("HUEHUE");
+        }
+  
+
+    });
+};
+
+
+
 
 
 const transporter = nodemailer.createTransport(mailGun(auth));
@@ -114,6 +151,7 @@ const sendMail = (email, realToken) => {
 
 
 
+
 // module.exports = generateToken;
 // module.exports = checkEmail;
 
@@ -122,5 +160,6 @@ module.exports = {
     generateToken,
     checkEmail,
     sendMail,
+    changepassword,
 }
 // {/* <script src="/static/js/api_key.js"></script> */ }

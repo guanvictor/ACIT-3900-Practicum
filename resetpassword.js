@@ -83,27 +83,20 @@ const checkEmail = (email, token) => {
  * @param {*} password
  * @returns
  */
-const changepassword = (email, password) => {
+const changepassword =   (email, password) => {
+    return new Promise(async (resolve, reject) => {
+        let hashed_password = await bcrypt.hash(password, saltRounds);
+        let con = db.getDb();
+        let sql = `update accounts set password = "${hashed_password}" where email like "${email}"`
 
-    return new Promise((resolve, reject) => {
-        try {
-            let hashed_password = bcrypt.hash(password, saltRounds);
-            let con = db.getDb();
-            let sql = `update accounts set password = "${hashed_password}" where email like "${email}"`
-    
-            con.query(sql, (err, result) => {
-                if (err)
-                    reject(err);
-                else {
-                    resolve(result);       
-                }
-    
-            });
+        con.query(sql, (err, result) => {
+            if (err)
+                reject(err);
+            else {
+                resolve(result);       
+            }
 
-        }catch (err){
-            console.log("HUEHUE");
-        }
-  
+        })
 
     });
 };

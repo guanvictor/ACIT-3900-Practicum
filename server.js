@@ -514,11 +514,12 @@ app.post('/resetpassword/:token', (request, response) => {
    
     let email = current_tokens[`${request.params.token}`];
     let password = request.body[`password`];
-    console.log("password enterd is: " +password);
+    console.log("password entered is: " +password);
     console.log("email found: " +email);
     resetPassword.changepassword(email, password).then((result) =>{
         console.log(`${resetPassword.changepassword()}`);
-        response.send("You Fucken did it son");
+        // response.send("You Fucken did it son");
+        response.redirect('/login');
 
     }).catch((err) => {
         console.log(err);

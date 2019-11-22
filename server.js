@@ -15,6 +15,7 @@ const events = require("./event.js");
 const profile = require("./profile.js");
 const admin = require("./admin.js");
 const sendMail = require('./mailgun');
+const speakers = require('./speakers.js');
 
 const app = express();
 
@@ -48,6 +49,7 @@ app.use(passport);
 app.use(profile);
 app.use(admin);
 app.use(queries.router);
+app.use(speakers);
 
 //Checks Account Administrator Status
 checkAdmin = (request, response, next) => {

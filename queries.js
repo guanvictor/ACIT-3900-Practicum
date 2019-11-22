@@ -380,37 +380,11 @@ const getAllFeedback = () => {
     });
 };
 
-/*
-ADMIN PANEL - Speaker page.
-Edits Speaker Information
-*/
-const editSpeaker = (request, response) => {
-    let fName = request.body.fname;
-    let lName = request.body.lname;
-    let topic = request.body.topic;
-    let location = request.body.location;
-    let time = request.body.time;
-    let bio = request.body.biography;
-    let speaker_id = request.body.speaker_id;
-
-
-    let con = db.getDb();
-    let sql = "UPDATE speakers SET lastName=?, firstName=?, topic=?, time=?, location=?, biography=? WHERE speaker_id=?";
-    let values = [lName, fName, topic, time, location, bio, speaker_id];
-
-    con.query(sql, values, (err, result) => {
-        if (err) throw (err);
-
-        return response.redirect('/admin/webcontent/speakers');
-    });
-};
-
 router.post('/editUser', editUser);
 router.post('/deleteUser', deleteUser);
 router.post('/changeAdminStatus', changeAdminStatus);
 router.post('/sendFeedback', sendFeedback);
 router.post('/addNewUser', addNewUser);
-router.post('/editSpeaker', editSpeaker);
 
 module.exports = {
     eventPromise: eventPromise,

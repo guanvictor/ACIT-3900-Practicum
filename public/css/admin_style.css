@@ -352,6 +352,10 @@ text{
     width: 300px;
 }
 
+#feedbackTable form {
+    margin: 0;
+}
+
 label {
     margin-bottom: 1rem !important;
 }

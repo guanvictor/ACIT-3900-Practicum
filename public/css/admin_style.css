@@ -347,3 +347,7 @@ text{
 #feedbackTable th {
     width: 300px;
 }
+
+#feedbackTable form {
+    margin: 0;
+}

@@ -73,6 +73,19 @@ checkAdmin_false = (request, response, next) => {
     }
 };
 
+checkSU = (request, response, next) => {
+    if (request.isAuthenticated()) {
+        if (request.user.isSU == 1) {
+            return next();
+        }
+        else {
+            // response.status(401).json({error: 401, message:'You are not authenticated. Please contact a super user.'});
+            // response.send('You are not authenticated. Please contact a super user.');
+            response.redirect('/admin');
+        }
+    }
+};
+
 // Home
 app.get("/", async (request, response) => {
     let sponsorFolder = './public/images/index/sponsors';
@@ -261,10 +274,21 @@ app.get('/agenda', (request, response) => {
 });
 
 // Speaker Page
-app.get('/speaker', (request, response) => {
+app.get('/speaker', async (request, response) => {
+    let speakers = await queries.getSpeakers();
+
     response.render("speakers.hbs", {
         title: "Speaker",
-        heading: "Speaker"
+        heading: "Speaker",
+        speakers: speakers
+    });
+});
+
+// Calendar Page
+app.get('/calendar', (request, response) => {
+    response.render("calendar.hbs", {
+        title: "Calendar",
+        heading: "Calendar"
     });
 });
 
@@ -295,21 +319,30 @@ app.get("/rsvp", checkAuthentication, checkAdmin_false, async (request, response
 });
 
 //Admin Page
-app.get('/admin', checkAdmin, (request, response) => {
+app.get('/admin', checkAdmin, async (request, response) => {
+    let feedback = await queries.getAllFeedback();
+
     response.render("administrator/index.hbs", {
         title: "Administrator Panel",
-        heading: "Administrator Panel"
+        heading: "Administrator Panel",
+
+        feedback: feedback
     });
 });
 
 app.get('/admin/events', checkAdmin, async (request, response) => {
     let events = await queries.eventPromise();
     let today = formatDate();
+    let temp_str = '';
 
     for (let i=0; i<events.length; i++){
         events[i].eventDate = formatDate(events[i].eventDate);
-    }
 
+        temp_str = events[i].eventDescription;
+
+        if (temp_str.length > 100)
+        events[i].eventDescription = temp_str.substring(0, 97) + '...';
+    }
     response.render("administrator/events.hbs", {
         title: "Events",
         heading: "Events",
@@ -323,7 +356,6 @@ app.get('/admin/events/:event_id', checkAdmin, async (request, response) => {
     let event = await queries.getEvent(request.params.event_id);
     let eventAttendees = await queries.getEventAttendees(request.params.event_id);
     let event_uuid = request.params.event_id;
-
     // // formats the input event date
     let eventDate = await event.eventDate;
 
@@ -430,7 +462,7 @@ app.get('/admin/useraccounts/:account_uuid', checkAdmin, async (request, respons
     });
 });
 
-app.get('/admin/adminaccount', checkAdmin, async (request, response) => {
+app.get('/admin/adminaccount', checkSU, async (request, response) => {
     let admins = await queries.getAdmins();
     let nonAdmins = await queries.getNonAdmins();
 
@@ -447,7 +479,7 @@ app.get('/admin/adminaccount', checkAdmin, async (request, response) => {
 //Contact Form Emails
 app.post('/email', (req, res) => {
     const {email, subject, text} = req.body;
-    console.log(req.body)
+    console.log(req.body);
 
     sendMail(email, subject, text, function(err, data) {
         if (err) {
@@ -524,8 +556,14 @@ app.post('/resetpassword/:token', (request, response) => {
     }).catch((err) => {
         console.log(err);
     });
+});
 
 
 
 
+app.get('/feedback', (request, response) => {
+    response.render("feedback.hbs", {
+        title: "Feedback",
+        heading: "Give us your feedback!"
+    });
 });

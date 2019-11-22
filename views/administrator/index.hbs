@@ -9,14 +9,44 @@
     {{> admin_menu}}
 
 
-    <div class="maincontent">
+    <div class="mainlength maincontent">
         {{> menu}}
 
         <h1>{{heading}}</h1>
-    </div>
-    <div class="jumbotron">
-    
-    </div>
+            {{#each feedback}}
+            <table class="table table-striped" id="feedbackTable">
+                <tr>
+                    <th>Content of Conference</th>
+                    <td>{{content}}</td>
+                </tr>
+                <tr>
+                    <th>Length of Conference</th>
+                    <td>{{length}}</td>
+                </tr>
+                <tr>
+                    <th>Organization of Conference</th>
+                    <td>{{organization}}</td>
+                </tr>                                                
+                <tr>
+                    <th>Format of Conference</th>
+                    <td>{{format}}</td>
+                </tr> 
+                <tr>
+                    <th>Overall Rating of Conference</th>
+                    <td>{{overall_rating}}</td>
+                </tr>
+                <tr>
+                    <th>Relevance to your Occupation</th>
+                    <td>{{relevance}}</td>                        
+                </tr>
+                <tr>
+                    <th>Comments</th>
+                    <td>{{comments}}</td>                       
+                </tr>                       
+            </table>
+            {{/each}}
+    </div>   
+        
 </body>
 
 {{> footer}}

@@ -73,10 +73,30 @@ const updateAbout = async (request, response) => {
             con.query(sql, link, (err, result) => {
                 if (err) throw (err);
 
-                console.log("Successfully changed Google Maps iframe");
+                console.log("Successfully changed Google Maps iFrame");
             });
         }
     }
+
+// updates calendar iFrame
+// used in admin/webcontent/calendar
+
+const updateCalendar = async (request, response) => {
+    let con = db.getDb();
+
+    let iFrame = request.body.calendariFrame;
+    let regex = /https[^"]*/;
+    let array = regex.exec(iFrame);
+
+    let sql = "Update calendar SET calendariFrame=?";
+
+    con.query(sql, array[0], (err, result) => {
+        if (err) throw (err);
+
+        console.log("Successfully changed calendar iFrame");
+    });
+
+}
 
     
     sql = "UPDATE about_event SET title=?, date=?, startTime=?, endTime=?, description=?";

@@ -65,7 +65,7 @@ td a:visited {
 
 
 .sidenav a {
-    height: 10%;
+    /* height: 10%; */
     padding: 15px 15px 15px 10px;
     text-decoration: none;
     font-size: 20px;
@@ -77,7 +77,7 @@ td a:visited {
 }
 
 .dropdown_menu {
-    height: 15%;
+    /* height: 15%; */
     padding: 15px 15px 15px 10px;
     text-decoration: none;
     font-size: 18px;

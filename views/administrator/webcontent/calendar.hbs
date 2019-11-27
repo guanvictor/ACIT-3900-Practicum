@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/admin_style.css">
+    {{> head}}
+</head>
+
+<body>
+    {{> admin_menu}}
+
+    <div class="maincontent">
+
+        {{> menu}}
+
+        <h1>{{heading}}</h1>
+        <br><br>
+        <h2 style="margin-left: 2%;">Change Event Page</h2>
+        <form method="POST" action="/updateAbout" class="half_width">
+            <div class="form-group col-md-12 ">
+                <label for="calendariFrame">Calendar Link</label>
+                <textarea class="form-control" id="calendariFrame" name="calendariFrame" rows="5" required></textarea>
+                <small id="gmapsHelpBlock" class="form-text text-muted">
+                    If you're unsure of what to put in here, follow these <a href="#calendarInstructions">instructions</a>
+                </small>
+            </div>
+            <button style="float: right; margin-right: 2%;" type="submit" class="btn btn-primary">Change</button>
+
+            {{!-- <button type="submit" class="btn btn-primary">Change</button> --}}
+        </form>
+
+        <br><br>
+
+        <div id="calendariFrame" style="margin-left: 2%;">
+            <h3>How to Insert a New Calendar</h3>
+            <ol>
+                <li>Log into the <a href="https://outlook.live.com/owa/">outlook</a> account with the Calendar you would like to change to.</li>
+            </ol>
+        </div>
+    </div>
+
+</body>
+
+{{> footer}}
+
+</html>

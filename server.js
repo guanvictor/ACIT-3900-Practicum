@@ -123,7 +123,6 @@ hbs.registerHelper("setActive", index => {
     return "";
 });
 
-
 /*
 Compares account's isadmin with 1 or 0.
 May be used for toggling fields HTML elements later?
@@ -257,17 +256,39 @@ app.get('/about', async (request, response) => {
     });
 });
 
+// Registration Routing Page
+app.get('/registration/type', checkAuthentication_false, (request, response) => {
+    
+    response.render("registration_choose.hbs", {
+        title: "Registration",
+        heading: "Are you a..."
+    });
+});
+
 // Registration Page
-app.get('/registration', checkAuthentication_false, (request, response) => {
+app.get('/registration/type/:account_type', checkAuthentication_false, (request, response) => {
     let inAdminPanel = false;
+    let type = request.params.account_type;
+    let type_sponsor = false;
+    let type_vendor = false;
+    let type_attendee = false;
+
+    if (type == 'sponsor') {type_sponsor = true;}
+    else if (type == 'vendor') {type_vendor = true;}
+    else if (type == 'attendee') {type_attendee = true;}
 
     response.render("registration.hbs", {
         title:"Registration",
         heading: "Registration",
         action: "/registerUser",
-        inAdminPanel: inAdminPanel
+        inAdminPanel: inAdminPanel,
+        type: type,
+        type_sponsor: type_sponsor,
+        type_vendor: type_vendor,
+        type_attendee: type_attendee
     });
 });
+
 
 // Agenda Page
 app.get('/agenda', async (request, response) => {

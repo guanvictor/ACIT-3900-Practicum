@@ -12,14 +12,16 @@ const auth = api_key.auth
 
 const transporter = nodemailer.createTransport(mailGun(auth));
 
-const sendMail = (email, subject, text) => {
+const sendMail = (email) => {
 
-    const mailOptions = {
-        from: `${email} <postmaster@mail.victorguan.com>`,
-        // to: 'collabevent2020@gmail.com',
-        to: 'collabevent2020@outlook.com',
-        subject,
-        text
+    let mailOptions = {
+        from: "postmaster@mail.victorguan.com",
+        to: email,
+        subject: 'Thank you for signing up!',
+        text: "You have signed up for BCIT IPE Events.\n\n" +
+            `Username: ${email}\n\n` +
+            `Password: What you set in the WebApp \n\n` + 
+            'Our next event is the Collaborators Event 2020.\n\n'
     };
 
     transporter.sendMail(mailOptions, function (err, data) {
@@ -32,7 +34,8 @@ const sendMail = (email, subject, text) => {
     });
 }
 
-module.exports = sendMail;
+module.exports = {
+    sendMail,};
 
 
 

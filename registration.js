@@ -1,4 +1,5 @@
 const db = require('./database.js');
+const confirmationEmail = require('./confirmationEmail.js');
 
 const express = require("express");
 const router = express.Router();
@@ -52,7 +53,18 @@ const registerUser = async (request, response) => {
             con.query(sql, values, (err, result) => {
                 if (err) throw err;
                 console.log("Number of records inserted: " + result.affectedRows);
+
+                console.log(email)
+                confirmationEmail.sendMail({ email }, function (err, data) {
+                    if (err) {
+                        console.log("Email could not be sent.")
+                    } else {
+                        console.log("Email Sent.")
+                    }
+                });
             });
+
+
 
             return response.redirect("/login");
         }

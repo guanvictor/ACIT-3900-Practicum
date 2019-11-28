@@ -13,13 +13,13 @@ const auth = api_key.auth
 const transporter = nodemailer.createTransport(mailGun(auth));
 
 const sendMail = (email) => {
-
+    // console.log(email);
     let mailOptions = {
         from: "postmaster@mail.victorguan.com",
-        to: email,
+        to: email['email'],
         subject: 'Thank you for signing up!',
         text: "You have signed up for BCIT IPE Events.\n\n" +
-            `Username: ${email}\n\n` +
+            `Username: ${email['email']}\n\n` +
             `Password: What you set in the WebApp \n\n` + 
             'Our next event is the Collaborators Event 2020.\n\n'
     };

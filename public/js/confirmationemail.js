@@ -14,7 +14,7 @@ $('form').on('submit', (e) => {
         //   subject,
         // text
 
-    $.post('/registration', data, function () {
+    $.post('/registerUser', data, function () {
         console.log('Server received the data');
     });
 });;

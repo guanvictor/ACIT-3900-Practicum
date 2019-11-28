@@ -16,7 +16,7 @@ const profile = require("./profile.js");
 const admin = require("./admin.js");
 const sendMail = require('./mailgun');
 const resetPassword = require('./resetpassword');
-const confirmationEmail = require('./confirmationEmail.js');
+// const confirmationEmail = require('./confirmationEmail.js');
 const speakers = require('./speakers.js');
 
 const app = express();
@@ -608,20 +608,19 @@ app.post('/resetpassword/:token', (request, response) => {
 });
 
 
-app.post('/registration', (req, res) => {
-    const { email } = req.body;
-    console.log(req.body);
+// app.post('/registration', (req, res) => {
+//     const { email } = req.body;
+//     console.log(req.body);
 
-    confirmationEmail.sendMail(email, function (err, data) {
-        if (err) {
-            res.status(500).json({ message: 'An error has occurred' });
-        } else {
-            res.status(200).json({ message: 'Message sent successfully.' });
-        }
-    });
+//     confirmationEmail.sendMail(email, function (err, data) {
+//         if (err) {
+//             res.status(500).json({ message: 'An error has occurred' });
+//         } else {
+//             res.status(200).json({ message: 'Message sent successfully.' });
+//         }
+//     });
 
-});
-
+// });
 
 
 

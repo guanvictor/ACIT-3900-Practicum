@@ -28,7 +28,7 @@
             <div class="form-row">
                 <div class="form-group col-md-4">
                     <label for="email"><b>Email *</b></label>
-                    <input type="email" class="form-control" name="email" required>
+                    <input type="email" class="form-control" name="email" id="email" required>
                 </div>
                 {{#unless inAdminPanel}}
                 <div class="form-group col-md-4">
@@ -139,7 +139,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 {{#unless inAdminPanel}}
 <script src="/static/js/registration.js"></script>
-<script src="/static/js/confirmationemail.js"></script>
 {{/unless}}
 </body>
 

@@ -208,12 +208,7 @@ app.get("/logout", checkAuthentication, (request, response) => {
 
 // Profile
 app.get("/profile/:account_uuid", checkAuthentication, async (request, response) => {
-    if (request.user == undefined) {
-        response.render("profile.hbs");
-    }
-
     let user = request.user;
-
     let profile_uuid = request.params.account_uuid;
 
     response.render("profile.hbs", {
@@ -244,6 +239,14 @@ app.get("/profile/:account_uuid", checkAuthentication, async (request, response)
         }
         return options.inverse(this);
     });
+
+    hbs.registerHelper("defaultDropdown", (formValue, dbValue) => {
+        if (dbValue == formValue) {
+            return "selected";
+        } else {
+            return "";
+        }
+    });
 });
 
 //  Page
@@ -260,18 +263,24 @@ app.get('/about', async (request, response) => {
 
 // Registration Page
 app.get('/registration', checkAuthentication_false, (request, response) => {
+    let inAdminPanel = false;
+
     response.render("registration.hbs", {
         title: "Registration",
         heading: "Registration",
-        action: "/registerUser"
+        action: "/registerUser",
+        inAdminPanel: inAdminPanel
     });
 });
 
 // Agenda Page
-app.get('/agenda', (request, response) => {
+app.get('/agenda', async (request, response) => {
+    let agendaItems = await queries.getAgendaItems();
+
     response.render("agenda.hbs", {
-        title: "Agenda",
-        heading: "Agenda"
+        title:"Agenda",
+        heading: "Agenda",
+        agendaItems: agendaItems
     });
 });
 
@@ -412,11 +421,14 @@ app.get('/admin/webcontent/about', checkAdmin, async (request, response) => {
     });
 });
 app.get('/admin/webcontent/agenda', checkAdmin, async (request, response) => {
+    let agendaItems = await queries.getAgendaItems();
+
     response.render("administrator/webcontent/agenda.hbs", {
         title: 'Admin - Agenda',
         heading: 'Manage Agenda Page Content',
         webcontent_agendaisActive: true,
-        webcontent_isActive: true
+        webcontent_isActive: true,
+        agendaItems: agendaItems
     });
 });
 app.get('/admin/webcontent/speakers', checkAdmin, async (request, response) => {
@@ -442,6 +454,16 @@ app.get('/admin/webcontent/speakers', checkAdmin, async (request, response) => {
         speakers: speakers
     });
 });
+
+app.get('/admin/webcontent/calendar', checkAdmin, async (request, response) => {
+    response.render("administrator/webcontent/calendar.hbs", {
+        title: 'Admin - Calendar',
+        heading: 'Manage Calendar Page Content',
+        webcontent_calendarisActive: true,
+        webcontent_isActive: true
+    });
+});
+
 app.get('/admin/webcontent/contact', checkAdmin, async (request, response) => {
     response.render("administrator/webcontent/contact.hbs", {
         title: 'Admin - Contact',
@@ -472,14 +494,25 @@ app.get('/admin/useraccounts', checkAdmin, async (request, response) => {
 });
 
 app.get('/admin/adduser', checkAdmin, (request, response) => {
-    response.render("administrator/adduser.hbs", {
+    let inAdminPanel = true;
+
+    response.render("registration.hbs", {
         title: "Add a New User",
-        heading: "Add a New User"
+        heading: "Add a New User",
+        inAdminPanel: inAdminPanel
     });
 });
 
 app.get('/admin/useraccounts/:account_uuid', checkAdmin, async (request, response) => {
     let user = await queries.getUser(request.params.account_uuid);
+
+    hbs.registerHelper("defaultDropdown", (formValue, dbValue) => {
+        if (dbValue == formValue) {
+            return "selected";
+        } else {
+            return "";
+        }
+    });
 
     response.render('administrator/user.hbs', {
         title: `${user.firstName} ${user.lastName}'s Profile`,
@@ -491,6 +524,7 @@ app.get('/admin/useraccounts/:account_uuid', checkAdmin, async (request, respons
 });
 
 app.get('/admin/adminaccount', checkSU, async (request, response) => {
+    let su = await queries.getSU();
     let admins = await queries.getAdmins();
     let nonAdmins = await queries.getNonAdmins();
 
@@ -498,7 +532,7 @@ app.get('/admin/adminaccount', checkSU, async (request, response) => {
         title: "Admin Account",
         heading: "Manage Administrator Accounts",
         adminacc_isActive: true,
-
+        superusers: su,
         admins: admins,
         nonAdmins: nonAdmins
     });

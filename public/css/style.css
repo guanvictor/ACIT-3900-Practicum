@@ -42,6 +42,16 @@ form {
     color: white;
 }
 
+.IPE_header{
+    grid-area: 1 / 1 / 2 / 6;
+    padding-left: 15px;
+    margin: 0 auto;
+}
+.home-header-text{
+    font-size: 24pt;
+    word-spacing: 5px;
+}
+
 
 .parent {
     display: grid;
@@ -78,7 +88,7 @@ form {
 }
     .child_1 img {
         width: 100%;
-        height: 50%;
+        grid-area: 1 / 1 / 2 / 2;
     }
 
     .child_2 { 
@@ -96,6 +106,11 @@ form {
         float: right;
         position: relative;
     }
+
+/* Login CSS */
+#failedLogin {
+    color: red;
+}
 
 /*Sponsors css*/
     .child_3 {

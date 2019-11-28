@@ -277,6 +277,23 @@ const deleteUser = async (request, response) => {
 ADMIN PANEL - manage admin accounts page.
 Retrieves all admin accounts that currently exist.
 */
+const getSU = () => {
+    return new Promise((resolve, reject) => {
+        let suStatus = 1;
+
+        let con = db.getDb();
+        let sql = "SELECT account_uuid, firstName, lastName, email, isSU FROM accounts WHERE isSU=?";
+
+        con.query(sql, suStatus, (err, result) => {
+            if (err) {
+                reject(err);
+            }
+
+            resolve(result);
+        });
+    });
+};
+
 const getAdmins = () => {
     return new Promise((resolve, reject) => {
         let adminStatus = 1;
@@ -325,11 +342,47 @@ const changeAdminStatus = async (request, response) => {
         }
 
         if (adminStatus == 1) {
-            console.log(`User ${account_uuid} promoted`);
+            console.log(`User ${account_uuid} promoted to Admin`);
         } else {
-            console.log(`User ${account_uuid} demoted`);
+            console.log(`User ${account_uuid} demoted to User`);
         }
 
+        return response.redirect("/admin/adminaccount");
+    });
+};
+
+const changeSUStatus = async (request, response) => {
+    let account_uuid = await request.body.account_uuid;
+    let suStatus = request.body.suStatus;
+    let current_user = await request.user.account_uuid;
+
+    let con = db.getDb();
+    let sql = "SELECT count(*) as numSU FROM accounts where isSU=1";
+
+    con.query(sql, (err, result) => {
+        if (err) throw (err);
+        if (result[0].numSU == 1 && suStatus == 0){
+            console.log('You must always have at least 1 Super User account');
+        }
+        else if (current_user == account_uuid){
+            console.log('Request Denied: Cannot demote current logged in user');
+        }
+        else {
+            sql = "UPDATE accounts SET isSU=? WHERE account_uuid=?";
+            let values = [suStatus, account_uuid];
+
+            con.query(sql, values, (err, result) => {
+                if (err) {
+                    throw err;
+                }
+
+                if (suStatus == 1) {
+                    console.log(`User ${account_uuid} promoted to SU`);
+                } else {
+                    console.log(`User ${account_uuid} demoted to Admin`);
+                }
+            });
+        }
         return response.redirect("/admin/adminaccount");
     });
 };
@@ -339,9 +392,8 @@ Used in /feedback
 Saves feedback form data into db
 */
 const sendFeedback = async (request, response) => {
-    let feedback_id = uuidv4();
     let content = await request.body.content;
-    let length = await request.body.length;
+    let speakerQuality = await request.body.speakerQuality;
     let organization = await request.body.organization;
     let format = await request.body.format;
     let overall_rating = await request.body.overall_rating;
@@ -349,8 +401,8 @@ const sendFeedback = async (request, response) => {
     let comments = await request.body.comments;
 
     let con = db.getDb();
-    let sql = "INSERT INTO feedback (feedback_id, content, length, organization, format, overall_rating, relevance, comments) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-    let values = [feedback_id, content, length, organization, format, overall_rating, relevance, comments];
+    let sql = "INSERT INTO feedback (content, speakerQuality, organization, format, overall_rating, relevance, comments) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    let values = [content, speakerQuality, organization, format, overall_rating, relevance, comments];
 
     con.query(sql, values, (err, result) => {
         if (err) {
@@ -361,6 +413,25 @@ const sendFeedback = async (request, response) => {
     });
 };
 
+/* 
+ADMIN PANEL
+Deletes a feedback based on feedback_id
+*/
+const deleteFeedback = async (request, response) => {
+    let feedback_id = await request.body.feedback_id;
+
+    let con = db.getDb();
+    let sql = "DELETE FROM feedback WHERE feedback_id=?";
+
+    con.query(sql, feedback_id, (err, result) => {
+        if (err) {
+            throw err;
+        }
+
+        return response.redirect("/admin");
+    });
+};
+
 /*
 ADMIN PANEL - landing page.
 Shows all feedback form data, retrieved from db.
@@ -368,7 +439,71 @@ Shows all feedback form data, retrieved from db.
 const getAllFeedback = () => {
     return new Promise((resolve, reject) => {
         let con = db.getDb();
-        let sql = "SELECT * from feedback";
+        let sql = "SELECT * FROM feedback ORDER BY feedback_id DESC";
+
+        con.query(sql, (err, result) => {
+            if (err) {
+                reject (err);
+            }
+
+            resolve(result);
+        });
+    });
+};
+
+/*
+ADMIN PANEL - agenda page
+Adds new agenda items/times to agenda table
+*/
+const addAgendaItem = async (request, response) => {
+    let agenda_uuid = uuidv4();
+    let timeStart = await request.body.timeStart;
+    let timeEnd = await request.body.timeEnd;
+    let description = await request.body.description;
+
+    let con = db.getDb();
+    let sql = "INSERT INTO agenda (agenda_uuid, timeStart, timeEnd, description) VALUES (?, ?, ?, ?)";
+    let values = [agenda_uuid, timeStart, timeEnd, description];
+
+    con.query(sql, values, (err, result) => {
+        if (err) {
+            throw (err);
+        }
+
+        console.log(`Agenda item ${agenda_uuid} successfully added`);
+        
+        return response.redirect("/admin/webcontent/agenda");
+    });
+};
+
+/*
+ADMIN PANEL - agenda page.
+Deletes a row of agenda items by agenda id.
+*/
+const deleteAgendaItem = async (request, response) => {
+    let agenda_uuid = await request.body.agenda_uuid;
+
+    let con = db.getDb();
+    let sql = "DELETE FROM agenda WHERE agenda_uuid = ?";
+
+    con.query(sql, agenda_uuid, (err, result) => {
+        if (err) {
+            throw (err);
+        }
+
+        console.log(`Agenda item ${agenda_uuid} successfully deleted`);
+
+        return response.redirect("/admin/webcontent/agenda");
+    });
+};
+
+/*
+Retrieves all agenda items, which will be populated to the table.
+*/
+const getAgendaItems = () => {
+    return new Promise ((resolve, reject) => {
+        let con = db.getDb();
+        let sql = "SELECT * FROM agenda ORDER BY timeStart ASC";
 
         con.query(sql, (err, result) => {
             if (err) {
@@ -383,8 +518,12 @@ const getAllFeedback = () => {
 router.post('/editUser', editUser);
 router.post('/deleteUser', deleteUser);
 router.post('/changeAdminStatus', changeAdminStatus);
+router.post('/changeSUStatus', changeSUStatus);
 router.post('/sendFeedback', sendFeedback);
+router.post('/deleteFeedback', deleteFeedback);
 router.post('/addNewUser', addNewUser);
+router.post('/addAgendaItem', addAgendaItem);
+router.post('/deleteAgendaItem', deleteAgendaItem);
 
 module.exports = {
     eventPromise: eventPromise,
@@ -396,8 +535,10 @@ module.exports = {
     getRow: getRow,
     getAllUsers: getAllUsers,
     getUser: getUser,
+    getSU: getSU,
     getAdmins: getAdmins,
     getNonAdmins: getNonAdmins,
     getAllFeedback: getAllFeedback,
+    getAgendaItems: getAgendaItems,
     router: router
 };

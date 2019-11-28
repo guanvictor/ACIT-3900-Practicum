@@ -348,9 +348,9 @@ text{
     width: 80% !important;
 }
 
-#feedbackTable th {
-    width: 300px;
-}
+/* #feedbackTable th {
+    width: 200px;
+} */
 
 #feedbackTable form {
     margin: 0;

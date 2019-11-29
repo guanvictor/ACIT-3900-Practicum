@@ -4,6 +4,7 @@ $('.country').on('change', function (e) {
     var valueSelected = this.value;
 
     let provinces = [
+        '<option disabled selected value="null_value">Select Province</option>',
         '<option value = "AB" > Alberta </option>',
         '<option value = "BC" > British Columbia </option>',
         '<option value = "MB" > Manitoba </option>',
@@ -16,16 +17,27 @@ $('.country').on('change', function (e) {
         '<option value = "SK" > Saskatchewan </option>',
         '<option value = "NT" > Northwest Territories </option>',
         '<option value = "NU" > Nunavut </option>',
-        '<option value = "YT" > Yukon </option>'
+        '<option value = "YU" > Yukon </option>'
+    ];
+
+    let states = [
+        '<option disabled selected value="null_value">Select State</option>',
+        '<option value ="CA">California</option>',
+        '<option value="NY">New York</option>'
     ];
 
     let province_string = provinces.join();
+    let state_string = states.join();
+
+    console.log(valueSelected);
+
+    $('.provincestate').html("");
 
     if (valueSelected == "Canada") {
         $('.provincestate').html(province_string);
 
-    } else if (valueSelected == "United_States") {
-        $('.provincestate').html('<option value ="Cali">California</option><option value="NY">New York</option>');
+    } else if (valueSelected == "United States") {
+        $('.provincestate').html(state_string);
     }
 });
 

@@ -123,7 +123,6 @@ hbs.registerHelper("setActive", index => {
     return "";
 });
 
-
 /*
 Compares account's isadmin with 1 or 0.
 May be used for toggling fields HTML elements later?
@@ -226,7 +225,8 @@ app.get("/profile/:account_uuid", checkAuthentication, async (request, response)
         country: user.country,
         city: user.city,
         province_state: user.province_state,
-        pc_zip: user.pc_zip
+        pc_zip: user.pc_zip,
+        user: user
     });
 
     hbs.registerHelper("compareUser", (profileUser, currentUser, options) => {
@@ -257,17 +257,39 @@ app.get('/about', async (request, response) => {
     });
 });
 
+// Registration Routing Page
+app.get('/registration/type', checkAuthentication_false, (request, response) => {
+    
+    response.render("registration_choose.hbs", {
+        title: "Registration",
+        heading: "Are you a..."
+    });
+});
+
 // Registration Page
-app.get('/registration', checkAuthentication_false, (request, response) => {
+app.get('/registration/type/:account_type', checkAuthentication_false, (request, response) => {
     let inAdminPanel = false;
+    let type = request.params.account_type;
+    let type_sponsor = false;
+    let type_vendor = false;
+    let type_attendee = false;
+
+    if (type == 'sponsor') {type_sponsor = true;}
+    else if (type == 'vendor') {type_vendor = true;}
+    else if (type == 'attendee') {type_attendee = true;}
 
     response.render("registration.hbs", {
         title:"Registration",
         heading: "Registration",
         action: "/registerUser",
-        inAdminPanel: inAdminPanel
+        inAdminPanel: inAdminPanel,
+        type: type,
+        type_sponsor: type_sponsor,
+        type_vendor: type_vendor,
+        type_attendee: type_attendee
     });
 });
+
 
 // Agenda Page
 app.get('/agenda', async (request, response) => {
@@ -489,14 +511,46 @@ app.get('/admin/useraccounts', checkAdmin, async (request, response) => {
     });
 });
 
-app.get('/admin/adduser', checkAdmin, (request, response) => {
+app.get('/admin/adduser/type', checkAdmin, (request, response) => {
     let inAdminPanel = true;
 
-    response.render("registration.hbs", {
+    response.render("registration_choose.hbs", {
         title: "Add a New User",
-        heading: "Add a New User",
+        heading: "Who are you Adding?",
         inAdminPanel: inAdminPanel
     });
+});
+
+app.get('/admin/adduser/:account_type', checkAdmin, (request, response) => {
+    let type = request.params.account_type;
+    let type_sponsor = false;
+    let type_vendor = false;
+    let type_attendee = false;
+
+    if (type == 'sponsor') {type_sponsor = true;}
+    else if (type == 'vendor') {type_vendor = true;}
+    else if (type == 'attendee') {type_attendee = true;}
+
+    response.render("registration.hbs", {
+        title: "Add New User",
+        heading: "Registration",
+        inAdminPanel: true,
+        type: type,
+        type_sponsor: type_sponsor,
+        type_vendor: type_vendor,
+        type_attendee: type_attendee
+    });
+});
+
+// Helper used in user registration and edit forms
+// Compares country to the form value to auto-select
+hbs.registerHelper("checkCountry", (formValue, dbValue) => {
+    if (dbValue == formValue) {
+        return true;
+    }
+    else {
+        return false;
+    }
 });
 
 app.get('/admin/useraccounts/:account_uuid', checkAdmin, async (request, response) => {
@@ -507,6 +561,17 @@ app.get('/admin/useraccounts/:account_uuid', checkAdmin, async (request, respons
             return "selected";
         } else {
             return "";
+        }
+    });
+
+    hbs.registerHelper("checkCountry", (formValue, dbValue) => {
+        console.log(formValue);
+        console.log(dbValue);
+        if (dbValue == formValue) {
+            return true;
+        }
+        else {
+            return false;
         }
     });
 

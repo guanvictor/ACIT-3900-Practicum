@@ -247,6 +247,21 @@ a.sidenav_panel {
     margin-right: 2%;
 }
 
+.admin-agenda-jumbotron {
+    /* background-color: #F17C0E; */
+    /* border: 15px solid #F17C0E; */
+    height: 33%;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+.admin-speaker-jumbotron {
+    /* background-color: #F17C0E; */
+    /* border: 15px solid #F17C0E; */
+    height: 33%;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
 .non-admin-account-jumbotron {
     /* background-color: #F17C0E; */
     /* border: 15px solid #F17C0E; */

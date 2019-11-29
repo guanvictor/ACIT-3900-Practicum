@@ -119,7 +119,7 @@ const sendMail = (email, realToken) => {
     console.log(email);
 
     let mailOptions = {
-        from: "postmaster@sandbox0ce75a92d4004709a131ef319fe69e0f.mailgun.org",
+        from: "postmaster@mail.victorguan.com",
         to: email,
         subject: 'Password Reset Link',
         text: "You requested a link to reset your password.\n\n" +

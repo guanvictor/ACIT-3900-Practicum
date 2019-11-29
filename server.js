@@ -450,6 +450,16 @@ app.get('/admin/webcontent/speakers', checkAdmin, async (request, response) => {
         speakers: speakers
     });
 });
+
+app.get('/admin/webcontent/calendar', checkAdmin, async (request, response) => {
+    response.render("administrator/webcontent/calendar.hbs", {
+        title: 'Admin - Calendar',
+        heading: 'Manage Calendar Page Content',
+        webcontent_calendarisActive: true,
+        webcontent_isActive: true
+    });
+});
+
 app.get('/admin/webcontent/contact', checkAdmin, async (request, response) => {
     response.render("administrator/webcontent/contact.hbs", {
         title: 'Admin - Contact',

@@ -9,7 +9,7 @@
     {{> menu}}
     <div>
         <section id="content">
-            <form method="POST" action="/login">
+            <form method="POST" action="/login" class="loginForm">
                 <h1>{{heading}}</h1>
                 <hr>
                 {{#if failureFlag}}
@@ -23,17 +23,15 @@
                     <input type="password" name="password" id="password" placeholder="password" required>
                 </div>
                 <div>
-                    <input type="submit" class="form_button" value="Submit" id="login_button" />
+                    <input type="submit" class="loginButton btn btn-success" value="Submit"/>
                     {{!-- <input type="submit" value="Log in" /> --}}
-                </div>
-
-                 
+                </div> 
             </form><!-- form -->
 
-            <form method="GET" action="/forgotpassword">
-             <button> Forgot Password? </button>
-             <br><br>
-             </form>
+            <form method="GET" action="/forgotpassword" class="loginForm">
+                <button class="loginButton btn btn-link"> Forgot Password? </button>
+                <br><br>
+            </form>
 
         </section><!-- content -->
     </div><!-- container -->

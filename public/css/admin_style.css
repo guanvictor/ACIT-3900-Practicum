@@ -150,7 +150,7 @@ a.sidenav_panel {
 }
 
 
-.add_image_button,
+
 .edit_single_event_button {
     padding: 0;
     border: none;
@@ -206,13 +206,13 @@ a.sidenav_panel {
     table-layout: auto;
 }
 
-.admin-home-jumbotron {
+/* .admin-home-jumbotron {
     background-color: #e9ecef;
     border: 15px solid #e9ecef;
     height: 50%;
     margin-left: 2%;
     margin-right: 2%;
-}
+} */
 
 .superuser-account-jumbotron {
     height: 33%;
@@ -252,7 +252,8 @@ a.sidenav_panel {
 }
 
 .user-account-jumbotron,
-.events-jumbotron {
+.events-jumbotron,
+.admin-home-jumbotron {
     /* background-color: #F17C0E; */
     /* border: 15px solid #F17C0E; */
     height: 50%;

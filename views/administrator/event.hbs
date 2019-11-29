@@ -9,7 +9,7 @@
 <body>
     {{> admin_menu}}
 
-    <div class="maincontent">
+<div class="maincontent">
 
     {{> menu}}
     
@@ -52,8 +52,9 @@
 
     <br>
 
+    <div class="event-detail-section">
     <h3>
-        <span style="margin-left: 2%;">Event name: {{heading}}</span>
+        <span>Event name: {{heading}}</span>
         <button class="edit_single_event_button" type="button" data-toggle="modal" data-target="#editEventForm">Edit Event</button>
     </h3>
     <h5 class="single_event_text" id="eventDate">Date: {{date}}</h5>
@@ -61,18 +62,22 @@
     <div class="event_desc_box">
         <h5 id="eventDesc">{{desc}}</h5>
     </div>
-
+    
     <br>
-
     <a href="#" id="printDoc" class="btn btn-outline-primary">Export Event</a>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
     <div class="embed-responsive embed-responsive-16by9" style="display:none" id="iframediv">
         <iframe class="embed-responsive-item" src="" id="iframePDF" allowfullscreen></iframe>
     </div>
-    
-    <br><br>
+    <br>
+    <br>
     <div class="attendees_list">
         <h3>Attendees List:</h3>
-        <h6 class="single_event_text" id="eventCount">Number of attendees: {{countAttendees}}</h6>
+        <h6 id="eventCount">Number of attendees: {{countAttendees}}</h6>
         
         {{!-- <button type="button" data-toggle="modal" data-target="#addAttendeeForm">Add Attendee</button></p> --}}
         

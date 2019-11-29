@@ -243,6 +243,14 @@ a.sidenav_panel {
     margin-right: 2%;
 }
 
+.event-detail-section {
+    /* background-color: #F17C0E; */
+    /* border: 15px solid #F17C0E; */
+    height: 33%;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
 .non-admin-account-jumbotron {
     /* background-color: #F17C0E; */
     /* border: 15px solid #F17C0E; */
@@ -302,15 +310,13 @@ a.sidenav_panel {
 }
 
 .single_event_text {
-    text-indent: 4%;
+    /* text-indent: 4%; */
 }
 
 .event_desc_box {
     background-color: #e9ecef;
-    border: 15px solid #e9ecef;
+    border: 25px solid #e9ecef;
     height: 30%;
-    margin-left: 4%;
-    margin-right: 2%;
 }
 
 .attendees_list{
@@ -326,6 +332,7 @@ a.sidenav_panel {
     border: 0.05cm solid grey;
 } */
 
+
 .user_account_table,
 .event_table form{
   margin: 0;
@@ -340,7 +347,8 @@ text{
 }
 
 #printDoc {
-    margin-left: 2%;
+    float: right;
+    width: 100%;
 }
 
 #iframediv {

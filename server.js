@@ -225,7 +225,8 @@ app.get("/profile/:account_uuid", checkAuthentication, async (request, response)
         country: user.country,
         city: user.city,
         province_state: user.province_state,
-        pc_zip: user.pc_zip
+        pc_zip: user.pc_zip,
+        user: user
     });
 
     hbs.registerHelper("compareUser", (profileUser, currentUser, options) => {
@@ -539,6 +540,17 @@ app.get('/admin/adduser/:account_type', checkAdmin, (request, response) => {
         type_vendor: type_vendor,
         type_attendee: type_attendee
     });
+});
+
+// Helper used in user registration and edit forms
+// Compares country to the form value to auto-select
+hbs.registerHelper("checkCountry", (formValue, dbValue) => {
+    if (dbValue == formValue) {
+        return true;
+    }
+    else {
+        return false;
+    }
 });
 
 app.get('/admin/useraccounts/:account_uuid', checkAdmin, async (request, response) => {

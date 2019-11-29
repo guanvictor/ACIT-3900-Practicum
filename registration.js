@@ -42,7 +42,7 @@ const registerUser = async (request, response) => {
         if (err) throw err;
         if (result.length > 0) {
             console.log("Error: email already exists");
-            return response.redirect("/registration");
+            return response.redirect("/registration/type");
         }
         else {
             // creates a new account

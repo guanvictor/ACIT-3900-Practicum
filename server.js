@@ -156,7 +156,7 @@ checkAuthentication = (request, response, next) => {
     if (request.isAuthenticated()) {
         return next();
     } else {
-        response.redirect('/registration');
+        response.redirect('/registration/type');
     }
 };
 

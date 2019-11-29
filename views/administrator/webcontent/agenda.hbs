@@ -18,7 +18,13 @@
     <div class="admin-agenda-jumbotron">
 
         <button class="btn btn-outline-primary" type="button" data-toggle="modal" data-target="#addAgendaForm">New Agenda Item</button>
-        <!-- Modal -->
+        
+        <a href="#" id="printDoc_agenda" class="btn btn-outline-primary">Export Event</a>
+        <div class="embed-responsive embed-responsive-16by9" style="display:none" id="iframediv">
+            <iframe class="embed-responsive-item" src="" id="iframePDF" allowfullscreen></iframe>
+        </div>
+
+        <!-- Modal for New Agenda Item -->
         <div class="modal fade" id="addAgendaForm" tabindex="-1" role="dialog" aria-labelledby="newAgendaFormLabel"
             aria-hidden="true">
             <form method="post" action="/addAgendaItem" id="event_form">
@@ -55,7 +61,7 @@
             </form>
         </div>
 
-        <table class="table-responsive filetable">
+        <table class="table-responsive filetable" id="agendaTable">
             <tr>
                 <th>Start Time</th>
                 <th>End Time</th>
@@ -79,5 +85,7 @@
     </div>
     </div>
 </body>
-
+<script src="/js/admin/print/blob-stream.js"></script>
+<script src="/js/admin/print/pdfkit.js"></script>
+<script src="/js/admin/print/print_agenda.js"></script>
 </html>

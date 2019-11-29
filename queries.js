@@ -185,7 +185,7 @@ const addNewUser = async (request, response) => {
     let temp = firstInitial + lastName + randomChars;
     let password = await bcrypt.hash(temp, saltRounds);
 
-    // FOR TESTING PURPOSES - DELETE AFTER!!
+    // TODO: FOR TESTING PURPOSES - DELETE AFTER!!
     console.log(firstInitial + lastName + randomChars);
 
     con = db.getDb();

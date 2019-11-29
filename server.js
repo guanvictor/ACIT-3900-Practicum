@@ -510,13 +510,34 @@ app.get('/admin/useraccounts', checkAdmin, async (request, response) => {
     });
 });
 
-app.get('/admin/adduser', checkAdmin, (request, response) => {
+app.get('/admin/adduser/type', checkAdmin, (request, response) => {
     let inAdminPanel = true;
 
-    response.render("registration.hbs", {
+    response.render("registration_choose.hbs", {
         title: "Add a New User",
-        heading: "Add a New User",
+        heading: "Who are you Adding?",
         inAdminPanel: inAdminPanel
+    });
+});
+
+app.get('/admin/adduser/:account_type', checkAdmin, (request, response) => {
+    let type = request.params.account_type;
+    let type_sponsor = false;
+    let type_vendor = false;
+    let type_attendee = false;
+
+    if (type == 'sponsor') {type_sponsor = true;}
+    else if (type == 'vendor') {type_vendor = true;}
+    else if (type == 'attendee') {type_attendee = true;}
+
+    response.render("registration.hbs", {
+        title: "Add New User",
+        heading: "Registration",
+        inAdminPanel: true,
+        type: type,
+        type_sponsor: type_sponsor,
+        type_vendor: type_vendor,
+        type_attendee: type_attendee
     });
 });
 

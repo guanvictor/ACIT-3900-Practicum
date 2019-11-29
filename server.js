@@ -356,7 +356,7 @@ app.get('/admin/events', checkAdmin, async (request, response) => {
     }
     response.render("administrator/events.hbs", {
         title: "Events",
-        heading: "Events",
+        heading: "Manage Events",
         event: events,
         today: today,
         events_isActive: true

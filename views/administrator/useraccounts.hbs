@@ -13,13 +13,17 @@
         {{> menu}}
 
         <h1>{{heading}}</h1>
-        <br><br>
         <div class="user-account-jumbotron">
-            <a href="/admin/adduser"/><button class="addNewUserButton btn btn-success" type="button">Add New User</button></a>
+            <br><br>
+
+            <h3>User Accounts</h3>
+
+            <a href="/admin/adduser/type"/><button class="addNewUserButton btn btn-success" type="button">Add New User</button></a>
             <button class="collapseButton btn btn-primary" type="button" data-toggle="collapse" data-target="#userFilters" aria-expanded="false" aria-controls="collapseExample">Show Filter</button>
             <br><br>
+
             <div class="collapse" id="userFilters">
-                <p>Plant Classifications</p>
+                <p><b>Plant Classifications</b></p>
                 <input type="radio" style="margin-left: 15px;" id="all" name="plantClassification">Show All
                 <input type="radio" style="margin-left: 15px;" id="Other" name="plantClassification">Other
                 <input type="radio" style="margin-left: 15px;" id="1st Class" name="plantClassification">1st Class
@@ -29,7 +33,7 @@
                 <input type="radio" style="margin-left: 15px;" id="5th Class" name="plantClassification">5th Class
                 <input type="radio" style="margin-left: 15px;" id="RPO" name="plantClassification">RPO
             </div>
-            <h3>User Accounts</h3>
+
             <table class="usersTable table-responsive filetable">
                 <tr class="user_acount_table" style="background-color: white;">
                     <th>Name</th>

@@ -4,7 +4,7 @@ $('.country').on('change', function (e) {
     var valueSelected = this.value;
 
     let provinces = [
-        '<option disabled selected value="null_value">select your province</option>',
+        '<option disabled selected value="null_value">Select Province</option>',
         '<option value = "AB" > Alberta </option>',
         '<option value = "BC" > British Columbia </option>',
         '<option value = "MB" > Manitoba </option>',
@@ -17,10 +17,11 @@ $('.country').on('change', function (e) {
         '<option value = "SK" > Saskatchewan </option>',
         '<option value = "NT" > Northwest Territories </option>',
         '<option value = "NU" > Nunavut </option>',
-        '<option value = "YT" > Yukon </option>'
+        '<option value = "YU" > Yukon </option>'
     ];
 
     let states = [
+        '<option disabled selected value="null_value">Select State</option>',
         '<option value ="CA">California</option>',
         '<option value="NY">New York</option>'
     ];

@@ -80,14 +80,35 @@
                             </div>
                             <div class="form-group col-md-4">
                                 <select name="country" class="form-control country">
-                                    <option disabled selected value="null_value">select your country</option>
-                                    <option value="Canada">Canada</option>
-                                    <option value="United_States">United States</option>
+                                    <option disabled selected value="null_value">Select Country</option>
+                                    <option value="Canada" {{defaultDropdown "Canada" ../country}}>Canada</option>
+                                    <option value="United States" {{defaultDropdown "United States" ../country}}>United States</option>
                                 </select>
                             </div>
                             <div class="form-group col-md-4">
-                                <select name="provincestate" class="form-control provincestate">
-                                    <option disabled selected value="null_value">select your province</option>
+                                <select name="province_state" class="form-control provincestate">
+                                    {{#if (checkCountry "Canada" ../country)}}
+                                    <option disabled selected value="null_value">Select Province</option>
+                                    <option {{defaultDropdown "AB" ../province_state}} value="AB">Alberta</option>
+                                    <option {{defaultDropdown "BC" ../province_state}} value="BC">British Columbia</option>
+                                    <option {{defaultDropdown "MB" ../province_state}} value="MB">Manitoba</option>
+                                    <option {{defaultDropdown "NB" ../province_state}} value="NB">New Brunswick</option>
+                                    <option {{defaultDropdown "NL" ../province_state}} value="NL">Newfoundland and Labrador</option>
+                                    <option {{defaultDropdown "NS" ../province_state}} value="NS">Nova Scotia</option>
+                                    <option {{defaultDropdown "ON" ../province_state}} value="ON">Ontario</option>
+                                    <option {{defaultDropdown "PE" ../province_state}} value="PE">Prince Edward Island</option>
+                                    <option {{defaultDropdown "QC" ../province_state}} value="QC">Quebec</option>
+                                    <option {{defaultDropdown "SK" ../province_state}} value="SK">Saskatchewan</option>
+                                    <option {{defaultDropdown "YT" ../province_state}} value="YT">Yukon</option>
+                                    <option {{defaultDropdown "NT" ../province_state}} value="NT">Northwest Territories</option>
+                                    <option {{defaultDropdown "NU" ../province_state}} value="NU">Nunavut</option>
+                                    {{else if (checkCountry "United States" ../country)}}
+                                    <option disabled selected value="null_value">Select State</option>
+                                    <option {{defaultDropdown "CA" ../province_state}} value="CA">California</option>
+                                    <option {{defaultDropdown "NY" ../province_state}} value="NY">New York</option>
+                                    {{else}}
+                                    <option disabled selected value="null_value">Province/State</option>
+                                    {{/if}}
                                 </select>
                             </div>
                         </div>
@@ -132,3 +153,10 @@
         {{else}}
             <p>Please login to see this page.</p>
         {{/if}}
+    </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="/static/js/registration.js"></script>
+</body>
+{{> footer}}
+
+</html>

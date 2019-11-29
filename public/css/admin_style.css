@@ -149,15 +149,6 @@ a.sidenav_panel {
     }
 }
 
-.add_event_button {
-    padding: 0;
-    border: none;
-    background: white;
-    float: right;
-    font-size: 18px;
-    margin-top: 1.8%;
-    text-shadow: 0px 1px #888888;
-}
 
 .add_image_button,
 .edit_single_event_button {
@@ -169,6 +160,11 @@ a.sidenav_panel {
     margin-right: 0.7%;
     text-shadow: 0px 1px #888888;
     width: 140px;
+}
+
+.eventTableLink {
+    color: black;
+    text-decoration: none;
 }
 
 @media screen and (max-width: 1400px) {
@@ -188,13 +184,6 @@ a.sidenav_panel {
     display: inline;
 }
 
-.event_text {
-    text-align: center;
-    border: 0cm;
-    border-bottom: 0.1cm solid #ddd;
-
-}
-
 .admin_image_text {
     color: black;
     margin-left: 2%;
@@ -211,15 +200,7 @@ a.sidenav_panel {
     margin-bottom: 0 !important;
 }
 
-.edit_event_button,
-.delete_event_button {
-    padding: 0;
-    border: none;
-    background: none;
-    font-size: 16px;
-    margin-top: 1.8%;
-    text-shadow: 0px 1px #888888;
-}
+
 
 .event_table {
     table-layout: auto;
@@ -278,7 +259,8 @@ a.sidenav_panel {
     margin-right: 2%;
 }
 
-.user-account-jumbotron {
+.user-account-jumbotron,
+.events-jumbotron {
     /* background-color: #F17C0E; */
     /* border: 15px solid #F17C0E; */
     height: 50%;
@@ -292,7 +274,8 @@ a.sidenav_panel {
 
 .delete_image_button,
 .admin_account_button,
-.user_account_button {
+.user_account_button,
+.event_button {
     width: 140px;
     align-items: center;
 }
@@ -348,8 +331,10 @@ a.sidenav_panel {
     border: 0.05cm solid grey;
 } */
 
-.user_account_table form{
-    margin: 0;
+
+.user_account_table,
+.event_table form{
+  margin: 0;
 }
 
 .event_tr:nth-child(even) {

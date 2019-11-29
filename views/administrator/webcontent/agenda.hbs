@@ -14,19 +14,17 @@
 
         <h1>{{heading}}</h1>
 
-
-        <a href="#" id="printDoc_agenda" class="btn btn-outline-primary">Export Event</a>
-        <div class="embed-responsive embed-responsive-16by9" style="display:none" id="iframediv">
-            <iframe class="embed-responsive-item" src="" id="iframePDF" allowfullscreen></iframe>
-        </div>
         <br><br>
 
         <div class="user-account-jumbotron">
-            <br><br>
+            <button class="btn btn-success" type="button" data-toggle="modal" data-target="#addAgendaForm">New Agenda Item</button>
+            <a href="#" id="printDoc_agenda" class="btn btn-outline-primary">Export Agenda</a>
+            <div class="embed-responsive embed-responsive-16by9" style="display:none" id="iframediv">
+                <iframe class="embed-responsive-item" src="" id="iframePDF" allowfullscreen></iframe>
+            </div>
 
-            <h3>Agenda</h3> 
-            <button class="btn btn-success" type="button" data-toggle="modal" data-target="#addAgendaForm">Add New Agenda Item</button>
             <br><br>
+            
             <!-- Modal for New Agenda Item -->
             <div class="modal fade" id="addAgendaForm" tabindex="-1" role="dialog" aria-labelledby="newAgendaFormLabel" aria-hidden="true">
                 <form method="post" action="/addAgendaItem" id="event_form">

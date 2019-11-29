@@ -13,11 +13,13 @@
         {{> menu}}
 
         <h1>{{heading}}</h1>
-        <br><br>
-        <div class="events-jumbotron">
+        <div class="events-jumbotron">            
+            <br><br>
+
+            <h3>Events</h3>
             {{!-- ADD EVENT button: Reveals modal --}}
             <button class="event_button btn btn-success" type="button" data-toggle="modal" data-target="#createEventForm">Add New Event</button>
-            
+            <br><br>
             {{!-- ADD EVENT modal --}}
             <div class="modal fade" id="createEventForm" tabindex="-1" role="dialog" aria-labelledby="createEventFormLabel" aria-hidden="true">
                 <form method="post" action="/newEvent" id="event_form">
@@ -29,31 +31,28 @@
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label data-error="wrong" data-success="right" for="eventForm-name">Event Name</label>
-                                <input type="text" class="form-control validate" name="name">
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label data-error="wrong" data-success="right" for="eventForm-name">Event Name</label>
+                                    <input type="text" class="form-control validate" name="name">
+                                </div>
+                                <div class="form-group">
+                                    <label data-error="wrong" data-success="right" for="eventForm-date">Event Date</label>
+                                    <input type="date" class="form-control validate" name="date" min={{today}}>
+                                </div>
+                                <div class="form-group">
+                                    <label data-error="wrong" data-success="right" for="eventForm-description">Event Description</label>
+                                    <textarea class="form-control" rows="3" name="desc"></textarea>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label data-error="wrong" data-success="right" for="eventForm-date">Event Date</label>
-                                <input type="date" class="form-control validate" name="date" min={{today}}>
+                            <div class="modal-footer d-flex justify-content-center">
+                                <button class="btn btn-outline-primary">Create</button>
                             </div>
-                            <div class="form-group">
-                                <label data-error="wrong" data-success="right" for="eventForm-description">Event Description</label>
-                                <textarea class="form-control" rows="3" name="desc"></textarea>
-                            </div>
-                        </div>
-                        <div class="modal-footer d-flex justify-content-center">
-                            <button class="btn btn-deep-orange">Create</button>
                         </div>
                     </div>
-                </div>
-        </form>
+                </form>
             </div>
-            
-            <br><br>
 
-            <h3>Events</h3>
             <table class="event_table table-responsive filetable">
                 <tr class="" style="background-color: white;">
                     <th>Event Name</th>
@@ -73,7 +72,7 @@
                     {{!-- EDIT EVENT cell --}}
                     <td class="event_text" style="text-align: center; width: 127px;">
                         {{!-- EDIT EVENT button: Reveals modal --}}
-                        <button class="event_button btn btn-outline-primary" type="button" data-toggle="modal" data-target="#editEventForm{{event_uuid}}">Edit event</button>
+                        <button class="event_button btn btn-outline-primary" type="button" data-toggle="modal" data-target="#editEventForm{{event_uuid}}">Edit Event</button>
                         
                         {{!-- EDIT EVENT modal --}}
                         <div class="modal fade" id="editEventForm{{event_uuid}}" tabindex="-1" role="dialog" aria-labelledby="editEventFormLabel" aria-hidden="true">
@@ -103,7 +102,7 @@
                                             </div>
                                         </div>
                                         <div class="modal-footer d-flex justify-content-center">
-                                            <button class="btn btn-deep-orange">Confirm</button>
+                                            <button class="btn btn-outline-primary">Confirm</button>
                                         </div>
                                     </div>
                                 </div>

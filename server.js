@@ -552,6 +552,17 @@ app.get('/admin/useraccounts/:account_uuid', checkAdmin, async (request, respons
         }
     });
 
+    hbs.registerHelper("checkCountry", (formValue, dbValue) => {
+        console.log(formValue);
+        console.log(dbValue);
+        if (dbValue == formValue) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    });
+
     response.render('administrator/user.hbs', {
         title: `${user.firstName} ${user.lastName}'s Profile`,
         heading: `${user.firstName} ${user.lastName}`,

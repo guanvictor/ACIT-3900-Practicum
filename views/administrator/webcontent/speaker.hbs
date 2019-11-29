@@ -13,8 +13,10 @@
         {{> menu}}
     
         <h1>{{heading}}</h1>
-
+        <br><br>
+        <div class="user-account-jumbotron">
         <button class="btn btn-outline-success" data-toggle="modal" data-target="#newSpeakerForm">New Speaker</button>
+        <br><br>
         <div class="modal fade" id="newSpeakerForm{{speaker_id}}" tabindex="-1" role="dialog"
             aria-labelledby="newSpeakerFormLabel" aria-hidden="true">
             <form method="post" action="/addSpeaker" id="newspeaker_form">
@@ -177,7 +179,7 @@
             {{/each}}
         </table>
         </div>
+        </div>
     </div>
 </body>
-{{> footer}}
 </html>

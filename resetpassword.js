@@ -2,7 +2,7 @@ const nodemailer = require('nodemailer');
 const mailGun = require('nodemailer-mailgun-transport');
 const api_key = require('./api_key.js');
 const crypto = require('crypto');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const db = require('./database.js');
 
 const auth = api_key.auth;

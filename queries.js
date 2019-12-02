@@ -5,7 +5,7 @@ const db = require("./database");
 
 const fs = require("fs");
 
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const saltRounds = 10;
 
 const uuidv4 = require('uuid/v4');

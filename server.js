@@ -486,15 +486,6 @@ app.get('/admin/webcontent/calendar', checkAdmin, async (request, response) => {
     });
 });
 
-app.get('/admin/webcontent/contact', checkAdmin, async (request, response) => {
-    response.render("administrator/webcontent/contact.hbs", {
-        title: 'Admin - Contact',
-        heading: 'Manage Contact Page Content',
-        webcontent_contactisActive: true,
-        webcontent_isActive: true
-    });
-});
-
 app.get('/admin/webcontent', checkAdmin, async (request, response) => {
     response.render("administrator/webcontent.hbs", {
         title: "Website Content",

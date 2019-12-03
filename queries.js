@@ -257,19 +257,39 @@ ADMIN PANEL - user accounts page.
 Deletes user based on account_uuid.
 */
 const deleteUser = async (request, response) => {
+    let user_uuid = await request.user.account_uuid;
     let account_uuid = await request.body.account_uuid;
 
+    // Prevents deletion of own account
+    if (user_uuid == account_uuid) {
+        console.log('Cannot delete own account.');
+        return response.redirect('/admin/useraccounts');
+    }
+
     let con = db.getDb();
-    let sql = "DELETE FROM accounts WHERE account_uuid=?";
+    let sql = "SELECT isadmin, isSU FROM accounts WHERE account_uuid=?";
 
     con.query(sql, account_uuid, (err, result) => {
         if (err) {
             throw err;
         }
 
-        console.log(`User ${account_uuid} successfully deleted by admin`);
+        // Check to see if user is an admin before deletion
+        if (result[0].isadmin == 1 || result[0].isSU == 1) {
+            console.log("Cannot delete admin account - must demote first");
+        } else {
+            sql = "DELETE FROM accounts WHERE account_uuid=?";
+            
+            con.query(sql, account_uuid, (err, result) => {
+                if (err) {
+                    throw err;
+                }
 
-        return response.redirect("/admin/useraccounts");
+                console.log(`User ${account_uuid} successfully deleted by admin`);
+            });
+        }
+
+        return response.redirect('/admin/useraccounts');
     });
 };
 

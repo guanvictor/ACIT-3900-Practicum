@@ -90,9 +90,9 @@
                         <button class="btn btn-outline-primary user_account_button" type="button" data-toggle="modal" data-target="#editSpeakerForm{{speaker_id}}">Edit</button>
                         <div class="modal fade" id="editSpeakerForm{{speaker_id}}" tabindex="-1" role="dialog"
                             aria-labelledby="editSpeakerFormLabel" aria-hidden="true">
-                            <form method="post" action="/editSpeaker" id="editspeaker_form">
-                                <input type="hidden" name="speaker_id" value="{{speaker_id}}">
-                                <div id="editSpeaker" class="modal-dialog" role="document">
+                            <form method="post" action="/uploadSpeaker" id="editspeaker_form" enctype="multipart/form-data">
+                            {{!-- <form method="post" action="/editSpeaker" id="editspeaker_form"> --}}
+                                <div id="editSpeaker" class="modal-dialog" role="document" >
                                     <div class="modal-content">
                                         <div class="modal-header text-center">
                                             <h4 class="modal-title w-100 font-weight-bold">Edit Speaker</h4>
@@ -100,8 +100,14 @@
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                     </div>
-                        
+
                                     <div class="modal-body">
+                                        <div class="form-row">
+                                            <img src="/images/speakers/{{imageName}}" alt="{{firstName}} {{lastName}}" class="img-thumbnail mx-auto d-block" style="max-width: 200px">
+                                            <div class="form-group">
+                                                <input type="file" name="upload"><br>
+                                            </div>
+                                        </div><br>
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 <label data-error="wrong" data-success="right" for="speakerForm-fname">First Name</label>
@@ -128,6 +134,7 @@
                                             <label data-error="wrong" data-success="right" for="speakerForm-bio">Biography</label>
                                             <textarea class="form-control" rows="3" name="biography">{{biography}}</textarea>
                                         </div>
+                                        <input type="hidden" name="speaker_id" value="{{speaker_id}}">
                                         <div class="modal-footer d-flex justify-content-center">
                                             <button class="btn btn-deep-orange">Confirm</button>
                                         </div>

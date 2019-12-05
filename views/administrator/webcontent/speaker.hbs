@@ -102,10 +102,14 @@
                                     </div>
 
                                     <div class="modal-body">
-                                        <div class="form-row">
+                                        <div class="form-row speaker_img_container">
                                             <img src="/images/speakers/{{imageName}}" alt="{{firstName}} {{lastName}}" class="img-thumbnail mx-auto d-block" style="max-width: 200px">
-                                            <div class="form-group">
-                                                <input type="file" name="upload"><br>
+                                            <div class="custom-file col-md-9">
+                                                <input type="file" name="upload" class="custom-file-input" id="upload_img"><br>
+                                                <label class="custom-file-label" for="upload_img">Click to select speaker image</label>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <a href="/removeSpeakerImg/{{speaker_id}}/{{imageName}}" class="btn btn-danger" role="button">Remove Img</a>
                                             </div>
                                         </div><br>
                                         <div class="form-row">

@@ -49,6 +49,7 @@ const deleteFile = async (request, response) => {
 };
 
 // adds speaker image
+// updates speaker information
 // used in admin/webcontent/speakers
 const uploadSpeaker = (request, response) => {
     let form = new formidable.IncomingForm(),
@@ -84,6 +85,30 @@ const uploadSpeaker = (request, response) => {
     response.redirect('/admin/webcontent/speakers');
 };
 
+// removes speaker image
+// sets to default image named 'default_speaker.png'
+// used in admin/webcontent/speakers
+const removeSpeakerImg = (request, response) => {
+    let speaker_uuid = request.params.speaker_uuid;
+    let file_path = `./public/images/speakers/${request.params.img_name}`;
+
+    // removes database file pointer and sets to default
+    let con = db.getDb();
+    let sql = "UPDATE speakers SET imageName='default_speaker.png' WHERE speaker_id=?";
+    con.query(sql, speaker_uuid, (err, result) => {
+        if(err) throw(err);
+    });
+
+    // removes image from folder
+    fs.unlink(file_path, (err) => {
+        if (err) console.log(`Could not delete ${file_path}`);
+
+        console.log(`${file_path} was deleted`);
+    });
+
+    response.redirect('/admin/webcontent/speakers');
+};
+
 // updates about event page
 // used in admin/webcontent/about
 const updateAbout = async (request, response) => {
@@ -96,12 +121,9 @@ const updateAbout = async (request, response) => {
     let timeEnd = request.body.about_hr2;
     let desc = request.body.about_desc;
 
-    //TODO: add if (gmaps is empty), check syntax if not
     let gmaps = request.body.aboutGmaps;
 
-
     if (gmaps != '' && gmaps != undefined) {
-        //TDOO: check regex
         let regex = /https:[^"]*/;
         let array = regex.exec(gmaps);
 
@@ -153,5 +175,6 @@ router.post("/deleteFile", deleteFile);
 router.post("/updateAbout", updateAbout);
 router.post("/updateCalendar", updateCalendar);
 router.post("/uploadSpeaker", uploadSpeaker);
+router.get("/removeSpeakerImg/:speaker_uuid/:img_name", removeSpeakerImg);
 
 module.exports = router;

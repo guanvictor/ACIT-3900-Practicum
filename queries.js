@@ -111,6 +111,19 @@ let getRow = () => {
     });
 };
 
+let getCalendar = () => {
+    return new Promise((resolve, reject) => {
+        let con = db.getDb();
+        
+        let sql = "SELECT * FROM calendar";
+
+        con.query(sql, (err, result) => {
+            if (err) reject(err);
+            resolve(result[0].link);
+        });
+    });
+};
+
 /*
 ADMIN PANEL - user accounts page.
 Retrives all currently-registered users.
@@ -553,6 +566,7 @@ module.exports = {
     getRSVPS: getRSVPS,
     getFiles: getFiles,
     getRow: getRow,
+    getCalendar: getCalendar,
     getAllUsers: getAllUsers,
     getUser: getUser,
     getSU: getSU,

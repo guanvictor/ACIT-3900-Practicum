@@ -318,10 +318,14 @@ app.get('/speaker', async (request, response) => {
 });
 
 // Calendar Page
-app.get('/calendar', (request, response) => {
+app.get('/calendar', async (request, response) => {
+    let calendar_link = await queries.getCalendar();
+    console.log(calendar_link);
+
     response.render("calendar.hbs", {
         title: "Calendar",
-        heading: "Calendar"
+        heading: "Calendar",
+        link: calendar_link
     });
 });
 
@@ -512,7 +516,8 @@ app.get('/admin/adduser/type', checkAdmin, (request, response) => {
     response.render("registration_choose.hbs", {
         title: "Add a New User",
         heading: "Who are you Adding?",
-        inAdminPanel: inAdminPanel
+        inAdminPanel: inAdminPanel,
+        ua_isActive: true
     });
 });
 
@@ -533,7 +538,8 @@ app.get('/admin/adduser/:account_type', checkAdmin, (request, response) => {
         type: type,
         type_sponsor: type_sponsor,
         type_vendor: type_vendor,
-        type_attendee: type_attendee
+        type_attendee: type_attendee,
+        ua_isActive: true
     });
 });
 

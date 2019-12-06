@@ -1,8 +1,6 @@
 const formidable = require('formidable');
 const express = require("express");
 const fs = require("fs");
-const uuidv4 = require('uuid/v4');
-const util = require('util');
 
 const db = require("./database.js");
 
@@ -39,7 +37,6 @@ const deleteFile = async (request, response) => {
     let file_path = await request.body.path;
     
     fs.unlink(file_path, (err) => {
-        //TODO: add error
         if (err) console.log(err);
         
         console.log(`${file_path} was deleted`);
@@ -48,66 +45,6 @@ const deleteFile = async (request, response) => {
     response.redirect('/admin/webcontent/home');
 };
 
-// adds speaker image
-// updates speaker information
-// used in admin/webcontent/speakers
-const uploadSpeaker = (request, response) => {
-    let form = new formidable.IncomingForm(),
-        value_array = [];
-    let uuid = uuidv4();
-    let path = './public/images/speakers/';
-    let filename = 'default_speaker.png';
-
-    form.parse(request);
-
-    form.on('field', (name, field) => {
-        value_array.push(field);
-    });
-    
-    form.on('fileBegin', (name, file) => {
-        if (file.name != ''){
-            let name_split = (file.name).split(".");
-            filename = uuid + "." + name_split[name_split.length - 1];
-            file.path = path + filename;
-        }
-    });
-
-    form.on('end', () => {
-        let values = [value_array[1], value_array[0], value_array[2], value_array[4], value_array[3], value_array[5], filename, value_array[6]];
-        let con = db.getDb();
-        let sql = "UPDATE speakers SET lastName=?, firstName=?, topic=?, time=?, location=?, biography=?, imageName=? WHERE speaker_id=?";
-
-        con.query(sql, values, (err, result) => {
-            if (err) throw (err);
-        });
-    });
-
-    response.redirect('/admin/webcontent/speakers');
-};
-
-// removes speaker image
-// sets to default image named 'default_speaker.png'
-// used in admin/webcontent/speakers
-const removeSpeakerImg = (request, response) => {
-    let speaker_uuid = request.params.speaker_uuid;
-    let file_path = `./public/images/speakers/${request.params.img_name}`;
-
-    // removes database file pointer and sets to default
-    let con = db.getDb();
-    let sql = "UPDATE speakers SET imageName='default_speaker.png' WHERE speaker_id=?";
-    con.query(sql, speaker_uuid, (err, result) => {
-        if(err) throw(err);
-    });
-
-    // removes image from folder
-    fs.unlink(file_path, (err) => {
-        if (err) console.log(`Could not delete ${file_path}`);
-
-        console.log(`${file_path} was deleted`);
-    });
-
-    response.redirect('/admin/webcontent/speakers');
-};
 
 // updates about event page
 // used in admin/webcontent/about
@@ -169,12 +106,9 @@ const updateCalendar = async (request, response) => {
     response.redirect('/admin/webcontent/calendar');
 };
 
-
 router.post("/upload", upload);
 router.post("/deleteFile", deleteFile);
 router.post("/updateAbout", updateAbout);
 router.post("/updateCalendar", updateCalendar);
-router.post("/uploadSpeaker", uploadSpeaker);
-router.get("/removeSpeakerImg/:speaker_uuid/:img_name", removeSpeakerImg);
 
 module.exports = router;

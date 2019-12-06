@@ -6,7 +6,8 @@ $('form').on('submit', (e) => {
 
     $('#messages').removeClass('hide').addClass('alert alert-success alert-dismissible').slideDown().show();
     $('#messages_content').html('<h4>Password reset link sent. The email will appear in your inbox shortly.</h4>');
-    $('#modal').modal('show');
+    $('#modal').appendTo("body").modal('show');
+    
 
     setTimeout(() => {
         window.location.reload();

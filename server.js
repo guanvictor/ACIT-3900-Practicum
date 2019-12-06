@@ -95,10 +95,12 @@ app.get("/", async (request, response) => {
     let sponsorImgs = await queries.getFiles(sponsorFolder);
     let carouselFolder = './public/images/index/carousel';
     let carouselImgs = await queries.getFiles(carouselFolder);
+    let homeTitle = await queries.getHomeTitle();
 
     response.render("home.hbs", {
         title: "Home",
         heading: "Home",
+        homeTitle: homeTitle.title,
         sponsorImgs: sponsorImgs,
         carouselImgs: carouselImgs
     });
@@ -424,6 +426,7 @@ app.get('/admin/webcontent/home', checkAdmin, async (request, response) => {
     let sponsorImgs = await queries.getFiles(sponsorFolder);
     let carouselFolder = './public/images/index/carousel';
     let carouselImgs = await queries.getFiles(carouselFolder);
+    let homeTitle = await queries.getHomeTitle();
 
     response.render("administrator/webcontent/home.hbs", {
         title: 'Admin - Home',
@@ -431,7 +434,8 @@ app.get('/admin/webcontent/home', checkAdmin, async (request, response) => {
         carouselImgs: carouselImgs,
         sponsorImgs: sponsorImgs,
         webcontent_homeisActive: true,
-        webcontent_isActive: true
+        webcontent_isActive: true,
+        homeTitle: homeTitle.title
     });
 });
 

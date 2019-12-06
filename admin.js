@@ -6,7 +6,7 @@ const db = require("./database.js");
 
 const router = express.Router();
 
-// adds file
+// adds carousel image
 // used in admin/webcontent/home
 const upload = (request, response) => {
     let form = new formidable.IncomingForm();
@@ -31,13 +31,12 @@ const upload = (request, response) => {
     response.redirect('/admin/webcontent/home');
 };
 
-// deletes file
+// deletes carousel image
 // used in admin/webcontent/home
 const deleteFile = async (request, response) => {
     let file_path = await request.body.path;
     
     fs.unlink(file_path, (err) => {
-        //TODO: add error
         if (err) console.log(err);
         
         console.log(`${file_path} was deleted`);
@@ -45,6 +44,7 @@ const deleteFile = async (request, response) => {
 
     response.redirect('/admin/webcontent/home');
 };
+
 
 // updates about event page
 // used in admin/webcontent/about
@@ -58,12 +58,9 @@ const updateAbout = async (request, response) => {
     let timeEnd = request.body.about_hr2;
     let desc = request.body.about_desc;
 
-    //TODO: add if (gmaps is empty), check syntax if not
     let gmaps = request.body.aboutGmaps;
 
-
     if (gmaps != '' && gmaps != undefined) {
-        //TDOO: check regex
         let regex = /https:[^"]*/;
         let array = regex.exec(gmaps);
 
@@ -108,7 +105,6 @@ const updateCalendar = async (request, response) => {
     });
     response.redirect('/admin/webcontent/calendar');
 };
-
 
 router.post("/upload", upload);
 router.post("/deleteFile", deleteFile);

@@ -548,6 +548,47 @@ const getAgendaItems = () => {
     });
 };
 
+/*
+ADMIN PANEL - Website Contents -> Home
+Changes title that is displayed on title bar on home page.
+*/
+const changeHomeTitle = async (request, response) => {
+    let homeTitle = await request.body.homeTitle;
+
+    let con = db.getDb();
+    let sql = "UPDATE homeTitle SET title=? WHERE homeTitleID=1";
+
+    con.query(sql, homeTitle, (err, result) => {
+        if (err) {
+            throw (err);
+        }
+
+        console.log(`Updated title to ${homeTitle}`);
+
+        return response.redirect('admin/webcontent/home');
+    });
+    
+};
+
+/*
+ADMIN PANEL - Website Contents -> Home
+Retrieves current title to display on home page.
+*/
+const getHomeTitle = () => {
+    return new Promise((resolve, reject) => {
+        let con = db.getDb();
+        let sql = "SELECT title FROM homeTitle WHERE homeTitleID = 1";
+
+        con.query(sql, (err, result) => {
+            if (err) {
+                reject (err);
+            }
+
+            resolve(result[0]);
+        });
+    });
+};
+
 router.post('/editUser', editUser);
 router.post('/deleteUser', deleteUser);
 router.post('/changeAdminStatus', changeAdminStatus);
@@ -557,6 +598,7 @@ router.post('/deleteFeedback', deleteFeedback);
 router.post('/addNewUser', addNewUser);
 router.post('/addAgendaItem', addAgendaItem);
 router.post('/deleteAgendaItem', deleteAgendaItem);
+router.post('/changeHomeTitle', changeHomeTitle);
 
 module.exports = {
     eventPromise: eventPromise,
@@ -574,5 +616,6 @@ module.exports = {
     getNonAdmins: getNonAdmins,
     getAllFeedback: getAllFeedback,
     getAgendaItems: getAgendaItems,
+    getHomeTitle: getHomeTitle,
     router: router
 };

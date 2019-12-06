@@ -631,14 +631,14 @@ app.post('/resetpassword', async (req, res) => {
     var token = "";
     setTimeout(() => {
         token = resetPassword.generateToken();
-        console.log(`inside of timeout ${token}`);
+        console.log(`generating token... ${token}`);
         current_tokens[`${token}`] = email;
         resetPassword.sendMail(email, token);
 
     }, 2000);
     // console.log(await resetPassword.realToken);
     // let token = resetPassword.generateToken();
-    console.log(`outside of timeout: ${resetPassword.generateToken()}`);
+    console.log(`assigned token to email: ${resetPassword.generateToken()}`);
 
     console.log(resetPassword.generateToken());
 
@@ -662,7 +662,7 @@ app.post('/resetpassword/:token', (request, response) => {
     console.log("email found: " + email);
     resetPassword.changepassword(email, password).then((result) => {
         console.log(`${resetPassword.changepassword()}`);
-        response.redirect('/login');
+        response.redirect('/passwordchanged');
 
     }).catch((err) => {
         console.log(err);
@@ -683,6 +683,13 @@ app.post('/resetpassword/:token', (request, response) => {
 //     });
 
 // });
+
+app.get('/passwordchanged', (request, response) => {
+    response.render("passwordchanged.hbs", {
+        title: "Password Changed",
+        heading: "Password Successfully Changed."
+    });
+});
 
 
 
